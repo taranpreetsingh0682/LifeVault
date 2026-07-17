@@ -1,4 +1,6 @@
+<!-- Home Page UI completed  -->
 <!doctype html>
+
 <html lang="en">
   <head>
     <!-- Required meta tags -->
