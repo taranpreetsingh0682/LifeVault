@@ -1,3 +1,4 @@
+<!-- Completed UI of Dashboard Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
