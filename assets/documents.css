@@ -98,3 +98,61 @@ ALL CATEGORIES */
   height: 40px;
   margin: 11px 6px;
 }
+
+/* ===========
+pdfs */
+.pdf-card{
+  min-height: 211px;
+
+  border-style: solid;
+  margin: 37px 0px;
+  border-radius: 22px;
+
+}
+.pdf-doc{
+  width: 19% !important;
+  flex: 0 0 19%;
+
+}
+.middle-menu{
+  display: flex;
+  justify-content: end;
+}
+
+
+.middle-menu a{
+  font-size: 12px;
+  margin: 9px 9px;
+}
+.pdf{
+  margin: -35px 70px;
+  color: red;
+}
+
+.pdf i{
+  font-size: 60px;
+}
+.text-field{
+  margin: 40px 46px;
+}
+.text-field span{
+  font-size: 16px;
+  color: black;
+}
+.education{
+  margin: -35px 43px;
+}
+.education span{
+  font-size: 9px;
+  background: #ffa5004d;
+  padding: 6px 9px;
+  border-radius: 11px;
+}
+.education p{
+  font-size: 9px;
+  margin: 13px 5px;
+}
+.education h6{
+  font-size: 9px;
+  margin: -9px 5px;
+}
