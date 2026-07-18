@@ -1,3 +1,4 @@
+<!-- Registration page ui completed -->
 <!doctype html>
 <html lang="en">
   <head>
