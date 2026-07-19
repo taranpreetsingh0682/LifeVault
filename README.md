@@ -56,7 +56,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📊 Dashboard
 
-*(Coming Soon)*
+![Dashboard](Screenshots/Dashboard.png.png)
 
 ---
 

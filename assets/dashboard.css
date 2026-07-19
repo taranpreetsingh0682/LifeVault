@@ -133,6 +133,7 @@ Main body content of dashboard*/
 .welcome{
   display: flex;
   justify-content: space-between;
+  margin: -14px 4px;
 }
 
 
@@ -778,7 +779,7 @@ Quick access*/
 DOCUMENT CATEGORIES */
 
 .container-category{
-  margin: 26px 12px;
+  margin: 28px 28px;
   width: 179px;
   height: 352px;
   border-style: groove;
@@ -900,6 +901,7 @@ FOOTER */
 
 .container-footer{
   width: 100vw;
+  margin: -32px 16px;
 
 }
 .footer{
