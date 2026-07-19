@@ -38,7 +38,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 🏠 Home Page
 
-![Home](Screenshots/Home.png)
+![Home](Screenshots/Home.png.png)
 
 ---
 
