@@ -111,7 +111,7 @@
   </div>
 
   <div class="feature-item">
-    <i class="bi bi-shield-lock">
+    <i class="bi bi-shield-lock-fill">
 
     </i>
     <h4>
@@ -124,7 +124,39 @@
 <div class="register-image"
   <img src="<?= base_url('assets/images/register.png'); ?>" alt="Register">
        </div>
-       
+       <div class="final">
+    <i class="bi bi-lock"></i>
+       </div>
+
+       <div class="final-sec">
+      
+          <span>
+            Secure
+          </span>
+      
+       </div>
+
+       <hr class="line">
+       <div class="final-third">
+        <i class="bi bi-file-earmark"></i>
+       </div>
+
+       <div class="text">
+       <span>
+        Organised
+       </span>
+       </div>
+
+       <hr class="line">
+
+       <div class="final-fourth">
+        <i class="bi bi-cloud"></i>
+       </div>
+       <div class="text-4">
+        <span>
+          Accessible
+        </span>
+       </div>
        </div> 
     
 

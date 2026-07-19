@@ -198,6 +198,7 @@ FEATURE-ITEM FOR LEFT-PANEL */
 }
 .feature-item i{
 transition: .3s;
+color: darkslategrey;
 }
 .feature-item :hover i{
     transform: scale(1.15);
@@ -205,6 +206,74 @@ transition: .3s;
 }
 .feature-item span{
     font-size: 18px;
+}
+
+.final{
+    display: flex;
+    justify-content: center;
+}
+  
+
+
+
+
+.final i{
+    font-size: 30px;
+}
+.final-sec{
+    display: flex;
+    justify-content: center;
+}
+.final-sec span{
+    font-size: 30px;
+    margin: -19px;
+    transition:0.3s;
+    transform: scale(1.15);
+}
+.final-sec:hover{
+    background: white;
+    transform: translateY(8px);
+    padding: 12px;
+}
+
+/* ====
+LINE */
+.line{
+    margin: 32px -33px;
+    padding: 1px 2px;
+}
+.final-third{
+    display: flex;
+    justify-content: center;
+}
+.final-third i{
+    font-size: 30px;
+    margin: -9px;
+}
+.text{
+    display: flex;
+    justify-content: center;
+}
+.text span{
+    font-size: 30px;
+
+}
+.final-fourth{
+    display: flex;
+    justify-content: center;
+}
+.final-fourth i{
+    font-size: 30px;
+}
+.text-4{
+    display: flex;
+    justify-content: center;
+
+}
+.text-4 span{
+    margin: -22px;
+    font-size: 30px;
+
 }
 
 
@@ -232,9 +301,9 @@ LOGO FOR SHIELD LOCK */
 PARAGRAPH  */
 .paragraph-item h6{
     color: rgb(0, 0, 0);
-    font-weight: 100;
-    font-family: "Inter",sans-serif;
-    font-size: 22px;
+    
+    
+    font-size: 24px;
    
    
 }

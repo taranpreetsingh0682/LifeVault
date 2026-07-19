@@ -50,7 +50,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📝 Registration Page
 
-*(Coming Soon)*
+![Register](Screenshots/Register.png.png)
 
 ---
 
