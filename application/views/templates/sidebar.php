@@ -40,7 +40,7 @@
     <span>Documents</span>
   </a>
 
-  <a href="<?= site_url('Uploads/uploads'); ?>">
+  <a href="<?= site_url('Upload/upload'); ?>">
     <i class="bi bi-cloud-arrow-up-fill"></i>
     <span>Uploads</span>
   </a>
