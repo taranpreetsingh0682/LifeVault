@@ -1,3 +1,4 @@
+<?php $controller = $this->router->fetch_class(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,32 +30,30 @@
 
  <nav class="menu-item">
 
-    <div class="navbar-logo">
-    <i class="bi bi-shield-lock-fill">
-
-    </i>
-    <h4>
-    LifeVault
-    </h4>
-   </div>
-  <a href="<?= site_url('Dashboard/dashboard');  ?>">
+    
+  <a href="<?= site_url('Dashboard/dashboard');  ?>"
+  class="<?= ($controller =='Dashboard')? 'active': ''; ?>">
     <i class="bi bi-house-door-fill"></i>
+    
     <span>
       Dashboard
     </span>
   </a>
 
-  <a href="<?= site_url('Documents/documents'); ?>">
+  <a href="<?= site_url('Documents/documents'); ?>"
+  class="<?= ($controller =='Document')? 'active': ''; ?>">
     <i class="bi bi-folder-fill"></i>
     <span>Documents</span>
   </a>
 
-  <a href="<?= site_url('Upload/upload'); ?>">
+  <a href="<?= site_url('Upload/upload'); ?>"
+  class="<?= ($controller == 'Upload')? 'active': ''; ?>">
     <i class="bi bi-cloud-arrow-up-fill"></i>
     <span>Uploads</span>
   </a>
 
-  <a href="<?= site_url('Important/important'); ?>">
+  <a href="<?= site_url('Important/important'); ?>"
+  class="<?= ($controller =='Important')? 'active': ''; ?>">
     <i class="bi bi-star-fill"></i>
     <span>Important</span>
   </a>
@@ -67,21 +66,24 @@
 </div>
  
 
-  <a href="<?= site_url('Profile/profile'); ?>">
+  <a href="<?= site_url('Profile/profile'); ?>"
+  class="<?= ($controller=='Profile')? 'active': ''; ?>">
     <i class="bi bi-person-circle"></i>
     <span>
       Profile
     </span>
   </a>
 
-  <a href="<?= site_url('Settings/settings'); ?>">
+  <a href="<?= site_url('Settings/settings'); ?>"
+  class="<?= ($controller == 'Settings')? 'active': ''; ?>">
     <i class="bi bi-gear-fill"></i>
     <span>
       Settings
     </span>
   </a>
 
-  <a href="<?= site_url('Logout/logout'); ?>">
+  <a href="<?= site_url('Logout/logout'); ?>"
+  class="<?= ($controller =='Logout')? 'active': ''; ?>">
     <i class="bi bi-box-arrow-right"></i>
     <span>
       Logout

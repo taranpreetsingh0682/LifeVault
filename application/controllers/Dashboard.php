@@ -4,7 +4,7 @@ Class Dashboard extends CI_Controller{
   public function  construct()
   {
     parent::  construct();
-    $this->load->view('User_model');
+    $this->load->model('User_model');
   }
 
   public function dashboard(){

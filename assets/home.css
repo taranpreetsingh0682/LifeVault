@@ -25,9 +25,9 @@ body{
 
 .container-fluid{
 
-    box-shadow:0 3px 10px rgba(14, 37, 215, 0.807);
-    height: 93px;
-    background: rgb(99, 99, 199);
+    
+    margin: -2px 2px;
+    
     
 }
 
@@ -36,11 +36,13 @@ FOR NAVBAR */
 .navbar{
     padding: 0 30px;
     display: flex;
-    border-style: outset;
-    border-color: #140de6a8;
+    
+    margin: 3px -21px;
     align-items: center;
     justify-content: space-between;
-    height: 86px;
+    height: 58px;
+    background: white;
+    border-bottom: 1px solid #E5E7EB;
     
 }
 /* =================
@@ -71,11 +73,20 @@ margin: 0;
 .navbar-menu a{
     font-size: 22px;
     font-weight: 500;
-    color: #140de6;
+    color: #a0a0a0;
+    text-decoration: none;
 }
 .navbar-menu a:hover{
-    color:#000000;
-    transform: translateY(-2px);
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 8px;
+}
+.navbar-menu a.active {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 8px;
+    padding: 1px 21px;
+     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 

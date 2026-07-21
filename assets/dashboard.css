@@ -5,8 +5,9 @@
   
 }
 .navbar{
-  margin: 0px 170px;
-  width: 92%;
+  margin: 1px 0px;
+ width: 100vw;
+ box-sizing: border-box;
   padding: 1px 1px;
   border-style: inset;
 }
@@ -16,12 +17,12 @@
 
 /* =================
 navbar logo */
-.navbar-logo{
+.navbar-logo {
     font-size: 23px;
    margin-right: auto;
     color: blue;
    display: flex;
-    gap: 10px;
+    gap: 35px;
     align-items: center;
     display: flex;
    
@@ -100,7 +101,7 @@ SIDEBAR CSS */
   min-height: 100%;
   border-style: inset;
   padding: 19px 0px;
-  margin: -76px -7px;
+  margin: -3px -7px;
   background-color: #ffffff;
 }
 .menu-item{
@@ -124,11 +125,29 @@ SIDEBAR CSS */
   text-decoration: none;
 
   border-radius: 12px;
+  transition: all 0.3s ease;
   
 }
 .menu-item a:hover{
-  background: rgba(0, 0, 0, 0.173);
-  color:rgba(0, 0, 0, 0.362)
+  background: #f2f4f7;
+  color:#2563eb;
+}
+.menu-item a:hover i{
+  color: #2563eb;
+}
+
+/* =======
+active page */
+.menu-item a.active{
+  background: #2563eb;
+  color: #fff;
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25);
+}
+.menu-item a.active i{
+  color: #fff;
+}
+.menu-item a.active span{
+  color: white;
 }
 
 .account{
@@ -918,6 +937,7 @@ FOOTER */
 .container-footer{
   width: 100vw;
   margin: -32px 16px;
+  height: 108px;
 
 }
 .footer{

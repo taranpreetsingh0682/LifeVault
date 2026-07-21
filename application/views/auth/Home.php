@@ -1,4 +1,7 @@
 <!-- Home Page UI completed  -->
+ <?php
+$method = $this->router->fetch_method();
+?>
 <!doctype html>
 
 <html lang="en">
@@ -43,9 +46,16 @@
 <!-- Home landing page -->
 
 <div class="navbar-menu">
-  <a href="<?= site_url('Auth/Home'); ?>"><i class="bi bi-house-fill"></i>Home</a>
-  <a href="<?= site_url('Auth/login'); ?>"><i class="bi bi-key-fill"></i>Login</a>
-  <a href="<?= site_url('Auth/register'); ?>"><i class="bi bi-person-fill-add"></i>Register</a>
+  <a href="<?= site_url('Auth/Home'); 
+  ?>"
+  class="<?= ($method =='Home')? 'active': ''; ?>">
+  <i class="bi bi-house"></i>Home</a>
+
+  <a href="<?= site_url('Auth/login'); 
+  ?>" class="<?= ($method=='Login')? 'active': ''; ?>"><i class="bi bi-key"></i>Login</a>
+
+  <a href="<?= site_url('Auth/register'); ?>"
+  class="<?= ($method=='register')? 'active': ''; ?>"><i class="bi bi-person-add"></i>Register</a>
   
 </div>
 

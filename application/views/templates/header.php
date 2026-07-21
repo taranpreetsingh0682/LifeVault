@@ -37,7 +37,14 @@
 <nav class="navbar navbar-dark">
   <!-- Navbar logo -->
 
+<div class="navbar-logo">
+    <i class="bi bi-shield-lock-fill">
 
+    </i>
+    <h4>
+    LifeVault
+    </h4>
+   </div>
 
   <div class="search-bar">
      <form class="d-flex">
