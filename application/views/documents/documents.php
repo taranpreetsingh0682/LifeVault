@@ -127,9 +127,38 @@
         </div>
       </div>
 
+  <div class="row">
+        <div class="col-md-3 pdf-doc">
+<div class="pdf-card">
+  <div class="middle-menu">
+    
 
-      <div id="root">
-      </div>
+<a href="#">
+  <i class="bi bi-three-dots-vertical"></i>
+</a>
+
+  </div>
+  <div class="pdf">
+    <i class="bi bi-file-earmark-pdf"></i>
+  </div>
+  <div class="text-field">
+    <span>
+      10th_Certificate.pdf
+    </span>
+  </div>
+
+  <div class="education">
+    <span>Education</span>
+    <p>
+  20 May,2025
+    </p>
+
+    <h6>
+      2.4 MB
+    </h6>
+  </div>
+      
+        
         </div>
       </div>
       

@@ -28,6 +28,15 @@
  <aside class="sidebar">
 
  <nav class="menu-item">
+
+    <div class="navbar-logo">
+    <i class="bi bi-shield-lock-fill">
+
+    </i>
+    <h4>
+    LifeVault
+    </h4>
+   </div>
   <a href="<?= site_url('Dashboard/dashboard');  ?>">
     <i class="bi bi-house-door-fill"></i>
     <span>
@@ -49,6 +58,14 @@
     <i class="bi bi-star-fill"></i>
     <span>Important</span>
   </a>
+
+  <hr class="sidebar-line">
+<div class="account">
+  <span>
+    Accounts
+  </span>
+</div>
+ 
 
   <a href="<?= site_url('Profile/profile'); ?>">
     <i class="bi bi-person-circle"></i>

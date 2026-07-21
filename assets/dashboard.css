@@ -1,12 +1,12 @@
 .container-fluid{
-  margin: -2px;
+  margin: -15px 159px;
   background-color: white;
   padding: 11px;
   
 }
 .navbar{
-  margin: 4px;
-  width: 100vw;
+  margin: 0px 170px;
+  width: 92%;
   padding: 1px 1px;
   border-style: inset;
 }
@@ -17,18 +17,18 @@
 /* =================
 navbar logo */
 .navbar-logo{
-    font-size: 29px;
+    font-size: 23px;
    margin-right: auto;
     color: blue;
    display: flex;
     gap: 10px;
     align-items: center;
     display: flex;
-    justify-content: space-between;
+   
 }
 .navbar-logo h4{
-font-size: 29px;
-margin: 0;
+font-size: 23px;
+margin: -23px;
 font-weight: bold;
 
 }
@@ -43,7 +43,9 @@ SEARCH PANEL */
 
 .form-control{
   border-radius: 11px;
+  
   border-style: double;
+  margin: 14px 20px;
 }
 .btn-outline-success{
   border-radius: 11px;
@@ -70,6 +72,12 @@ PROFILE SECTION */
   align-items: center;
   color: blue;
 }
+.complete-icon{
+  display: flex;
+  justify-content: end;
+}
+
+
 
 /* ===============
 NOTIFICATION BELL */
@@ -88,16 +96,19 @@ NOTIFICATION BELL */
 SIDEBAR CSS */
 
 .sidebar{
-  width: 175px;
-  min-height: 100vh;
+  min-width: 12%;
+  min-height: 100%;
   border-style: inset;
   padding: 19px 0px;
-  margin: -16px 13px;
+  margin: -76px -7px;
   background-color: #ffffff;
+}
+.menu-item{
+  margin: -19px 6px;
 }
 
 .menu-item i{
-  font-size: 25px;
+  font-size: 26px;
   padding: 14px 17px;
 }
 .menu-item span{
@@ -119,6 +130,10 @@ SIDEBAR CSS */
   background: rgba(0, 0, 0, 0.173);
   color:rgba(0, 0, 0, 0.362)
 }
+
+.account{
+  margin: 14px 21px;
+}
 /* ================
 Main body content of dashboard*/
 .dashboard-layout{
@@ -127,13 +142,14 @@ Main body content of dashboard*/
 
 .main-content{
   flex: 1px;
-  padding: 13px 21px;
+  padding: 7px 14px;
+  margin: 6px 33px;
  
 }
 .welcome{
   display: flex;
   justify-content: space-between;
-  margin: -14px 4px;
+  margin: 13px 7px;
 }
 
 

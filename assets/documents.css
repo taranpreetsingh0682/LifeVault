@@ -91,12 +91,14 @@ ALL CATEGORIES */
   border-style: dotted;
   width: 200px;
   height: 40px;
+  background: blue;
 }
 .sort{
   border-radius: 11px;
   width: 218px;
   height: 40px;
   margin: 11px 6px;
+  background: blue;
 }
 
 /* ===========

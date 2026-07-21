@@ -32,19 +32,12 @@
 
 
     <!-- left header -->
-     <div class="container-fluid">
+     <!-- <div class="container"> -->
 
 <nav class="navbar navbar-dark">
   <!-- Navbar logo -->
 
-   <div class="navbar-logo">
-    <i class="bi bi-shield-lock-fill">
 
-    </i>
-    <h4>
-    LifeVault
-    </h4>
-   </div>
 
   <div class="search-bar">
      <form class="d-flex">
@@ -52,23 +45,24 @@
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
-  <i class="bi bi-bell-fill"></i>
+  
 
   <div class="profile-section">
+    <div class="complete-icon">
     <i class="bi bi-person-circle profile-icon"></i>
 
 
     <span class="profile-name">Taranpreet singh</span>
     
+  
   </div>
-
   <i class="bi bi-chevron-down"></i>
 </nav>
 
 
 
 
-     </div>
+<!-- </div> -->
    
     
   </body>
