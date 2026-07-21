@@ -1,4 +1,4 @@
-<!-- Home Page UI completed  -->
+<!-- Update the navbar of Home Page UI   -->
  <?php
 $method = $this->router->fetch_method();
 ?>
