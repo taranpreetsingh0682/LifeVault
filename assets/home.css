@@ -136,18 +136,33 @@ margin: 0;
 
     width:100%;
 
-    background:linear-gradient(
-        358deg,
-        #a0bfec,
-        #ffffff
-    );
+   
 
     color:rgb(7, 7, 7);
 
     padding: 0px 8px;
+    margin-top: -58px;
+
+    background-color: #F6F7FB;
+background-image: radial-gradient(#E4E8F5 13px, transparent 1px);
+background-size: 21px 23px;
 
 
 }
+/* ======
+text-field */
+.text-field h2{
+    font-weight: 800;
+}
+.text-field h1{
+    font-weight: 900;
+}
+.text-field h3{
+    font-weight: 900;
+    font-size: 38px;
+    color: #6464F6;
+}
+
 .document-section{
   margin: 25px;
   padding: 0px 67px;
@@ -288,7 +303,7 @@ display: flex;
 /* ============================
 FEATURE-ITEM FOR LEFT-PANEL */
 
-.feature-item{
+ .feature-item{
     padding: 1px;
     color: #140de6;
     display: flex;
@@ -297,9 +312,9 @@ FEATURE-ITEM FOR LEFT-PANEL */
     border-radius: 12px;
     transition: 0.4s ease;
 }
-/* .feature-item h4{
+ .feature-item h4{
     margin: 0;
-} */
+} 
 .feature-item:hover{
     background:#eef2ff;
     transform: translateX(8px);
@@ -313,36 +328,238 @@ transition: .3s;
 }
 .feature-item span{
     font-size: 18px;
+} 
+
+.btn-register{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 5px 12px;
+    border-radius: 18px;
+
+    background: linear-gradient(135deg,#4F46E5,#3B82F6);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    box-shadow: 0 10px 25px rgba(79,70,229,.25);
+    transition: .3s ease;
+    margin: 4px 8px;
+}
+
+.btn-register:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(79,70,229,.35);
+    color: #fff;
+}
+
+.btn-register i{
+    font-size: 18px;
+}
+
+/* =====
+trust-rating */
+
+
+.trust-section{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+
+/* Users */
+
+.trust-users{
+    display:flex;
+    align-items:center;
+}
+
+.user-circle{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    border:3px solid white;
+    margin-left:-10px;
+}
+
+.user-circle:first-child{
+    margin-left:0;
+}
+
+.user1{
+    background:#4F46E5;
+}
+
+.user2{
+    background:#0EA5E9;
+}
+
+.user3{
+    background:#22C55E;
+}
+
+.user4{
+    background:#F59E0B;
+}
+
+/* Text */
+
+.trust-text{
+    color:#6B7280;
+    font-size:15px;
+}
+
+.trust-text strong{
+    color:#111827;
+    font-weight:700;
+}
+
+/* Rating */
+
+.trust-rating{
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+.trust-rating i{
+    color:#FBBF24;
+    font-size:14px;
+}
+
+.trust-rating span{
+    margin-left:8px;
+    color:#6B7280;
+    font-size:15px;
 }
 
 
+/* ==========
+WHY  LIFEVAULT */
+.after-container{
+    margin: 7px 107px;
+    padding: 0px;
+}
 
 
+.why-vault{
+    display: flex;
+    justify-content: center;
+}
 
+.why-vault span{
+    font-size: 12px;
+    
+}
+.text-vault{
+    display: flex;
+    justify-content: center;
+
+}
+.text-vault span{
+    font-size: 25px;
+    font-weight: 700;
+    margin: -15px;
+}
+.p-vault{
+    display: flex;
+    justify-content: center;
+}
+
+/* =========
+cards */
+
+.registration{
+       flex: 0 0 auto;
+    width: 22%;
+    border:3px solid #EEF0F5;
+    padding: 32px;
+    border-radius: 22px;
+    margin: 11px 117px;
+    min-height: 180px;
+}
+.icon{
+    flex: 0 0 auto;
+    width: 14%;
+    border:2px solid #EEF0F5;
+    border-radius: 7px;
+    margin :-6px 1px;
+
+    min-height: 34px;
+    background: #673ab717;
+
+
+}
+.icon i{
+    margin: 4px -7px;
+     color: #6464F6;
+     font-size: 17px;
+
+
+}
+.text-reg{
+    margin: 5px -15px;
+
+}
+.text-reg span{
+    font-weight: 600;
+}
+.text-p{
+    margin: -7px -16px;
+}
+.text-p p{
+    max-width: 700;
+    font-size: 12px;
+}
+.output{
+    display: flex;
+    justify-content: center;
+}
 
 /* ====================
 LOGO FOR SHIELD LOCK */
 
 .logo-item{
-    padding: 1px;
+    padding: 60px 3px;
     color: #140de6;
-    display: flex;
+   display: flex;
     gap: 6px;
     align-items: center;
+    margin: 21px -11px;
+}
+.logo-item i{
+    margin: 9px;
+    background: white;
+    border-bottom: 1px solid;
 }
 .logo-item h4{
-    margin: 0;
+    margin: -15px;
     font-size: 19px;
 }
-
+.h4-text{
+    display: flex;
+}
 
 /* ===================
 PARAGRAPH  */
 .paragraph-item h6{
-    color: rgb(0, 0, 0);
-    font-weight: 100;
-    font-family: "Inter",sans-serif;
+    color: #667805;
+    font-weight: 400;
     font-size: 22px;
+    line-height: 1.65;
+    max-width: 700px;
+
    
    
 }

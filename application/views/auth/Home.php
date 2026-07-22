@@ -67,72 +67,154 @@ $method = $this->router->fetch_method();
     
        <div class="container">
     <div class="logo-item">
-       <i class="bi bi-shield-lock-fill">
+       <i class="bi bi-shield-lock">
    
        </i>
+       <div class="h4-text">
        <h4 style="color: blue;">
-        Secure,Private,Yours
+        Secure . Private . Yours
        </h4>
+       </div>
     </div>
+    <div class="text-field">
        <h2>
         Secure Your
        </h2>
        <h1 style="color: black;">Important Documents</h1>
-       <h1>
+       <h3>
         For Life
-       </h1>
+       </h3>
+    </div>
        
      
        <div class="paragraph-item">
-       <p>
+       
         <h6>
           LifeVault is your smart digital vault tpo store,organize and protect your important documents and memories.
         </h6>        
 
         
-       </p>
+       
        </div>
       
-  <div class="feature-item">
-    <i class="bi bi-person-fill">
+ <a href="<?= site_url('Auth/register'); ?>" class="btn-register">
+    <i class="bi bi-person-plus"></i>
+    Create free account
+</a>
 
-    </i>
-    <h4>Secure Registration
+<div class="trust-section">
 
-    </h4>
-    <p>
-      Your data is encrypted and protected from unauthorized access.
-    </p>
-    
-   
-    
-  </div>
+    <div class="trust-users">
+        <div class="user-circle user1">TS</div>
+        <div class="user-circle user2">RK</div>
+        <div class="user-circle user3">AM</div>
+        <div class="user-circle user4">
+            <i class="bi bi-plus"></i>
+        </div>
+    </div>
 
-  <div class="feature-item">
-   <i class="bi bi-file-earmark-text-fill">
+    <div class="trust-text">
+        <strong>12,000+</strong> people trust LifeVault
+    </div>
 
-   </i>
-   <h4>
-    Supported Documents
-   </h4>
-   <p>
-    Upload and organize your important documents,including identity cards, certificates,results and PDFs.
-   </p>
-   
-  </div>
+    <div class="trust-rating">
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-half"></i>
 
-  <div class="feature-item">
-    <i class="bi bi-shield-lock">
+        <span>4.9 / 5</span>
+    </div>
 
-    </i>
-    <h4>
-      Why Choose LifeVault?
-    </h4>
-    <p>
-      Protect your personal and official documents with advanced security, cloud accessibility, and an organized digital vault.
-    </p>
-  </div>
+</div>
+
+
 </section>
+<hr class="after-container">
+
+<div class="why-vault">
+  <span>
+    WHY LIFEVAULT
+  </span>
+</div>
+<div class="text-vault">
+  <span>
+    Built for security and simplicity
+  </span>
+</div>
+<div class="p-vault">
+  <p>
+    Everything you need to keep your important documents safe , organized, and accessible.
+  </p>
+</div>
+<!-- <div class="row"> -->
+  <div class="output">
+  <div class="col-md-3 registration">
+<div class="row">
+  <div class="col-md-3 icon">
+    <i class="bi bi-person-add"></i>
+  </div>
+</div>
+<div class="text-reg">
+  <span>
+    Secure Registration
+  </span>
+</div>
+
+<div class="text-p">
+  <p>
+    Your data is encrypted end-to-end and protected from unauthorized access at every step.
+  </p>
+</div>
+  </div>
+
+
+<!-- second card -->
+  
+  <div class="col-md-3 registration">
+<div class="row">
+  <div class="col-md-3 icon">
+    <i class="bi bi-file-earmark-text"></i>
+  </div>
+</div>
+<div class="text-reg">
+  <span>
+    Secure Documents
+  </span>
+</div>
+
+<div class="text-p">
+  <p>
+    Upload and organize identity cards,certificates,reality,images,and PDFs in one place.
+  </p>
+</div>
+  </div>
+
+
+
+<!-- third card -->
+
+    <div class="col-md-3 registration">
+<div class="row">
+  <div class="col-md-3 icon">
+    <i class="bi bi-cloud"></i>
+  </div>
+</div>
+<div class="text-reg">
+  <span>
+    Cloud Accessibility
+  </span>
+</div>
+
+<div class="text-p">
+  <p>
+   Access your organized digital vault from anywhere, on any device, whenever you need it.
+  </p>
+</div>
+    </div>
+  </div>
+
 
 <section class="document-supported">
 <div class="container-file">
