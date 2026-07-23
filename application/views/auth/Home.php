@@ -132,7 +132,8 @@ $method = $this->router->fetch_method();
 
 </section>
 <hr class="after-container">
-
+<div class="section-vault">
+  <div class="container-vault">
 <div class="why-vault">
   <span>
     WHY LIFEVAULT
@@ -148,76 +149,24 @@ $method = $this->router->fetch_method();
     Everything you need to keep your important documents safe , organized, and accessible.
   </p>
 </div>
-<!-- <div class="row"> -->
-  <div class="output">
-  <div class="col-md-3 registration">
-<div class="row">
-  <div class="col-md-3 icon">
-    <i class="bi bi-person-add"></i>
-  </div>
 </div>
-<div class="text-reg">
-  <span>
-    Secure Registration
-  </span>
 </div>
-
-<div class="text-p">
-  <p>
-    Your data is encrypted end-to-end and protected from unauthorized access at every step.
-  </p>
-</div>
-  </div>
-
-
-<!-- second card -->
   
-  <div class="col-md-3 registration">
-<div class="row">
-  <div class="col-md-3 icon">
-    <i class="bi bi-file-earmark-text"></i>
-  </div>
-</div>
-<div class="text-reg">
-  <span>
-    Secure Documents
-  </span>
-</div>
-
-<div class="text-p">
-  <p>
-    Upload and organize identity cards,certificates,reality,images,and PDFs in one place.
-  </p>
-</div>
-  </div>
 
 
 
-<!-- third card -->
 
-    <div class="col-md-3 registration">
-<div class="row">
-  <div class="col-md-3 icon">
-    <i class="bi bi-cloud"></i>
-  </div>
-</div>
-<div class="text-reg">
-  <span>
-    Cloud Accessibility
-  </span>
-</div>
 
-<div class="text-p">
-  <p>
-   Access your organized digital vault from anywhere, on any device, whenever you need it.
-  </p>
-</div>
-    </div>
-  </div>
 
 
 <section class="document-supported">
+
 <div class="container-file">
+  <div class="file">
+    <span>
+      WHAT YOU CAN STORE
+    </span>
+  </div>
 <div class="child-file">
   <span>
     Supported Documents
@@ -225,48 +174,210 @@ $method = $this->router->fetch_method();
 </div>
 
 <div class="title-line"></div>
+<!-- Identity Card -->
 
-<div class="doc-card">
-     <!-- <img src="<?= base_url('assets/images/aadhar.png'); ?>" alt="Aadhar"> -->
-
-     <a href="#">
-      <i class="bi-person-badge-fill"></i>
-     </a>
- <a href="#">
-   <i class="bi bi-person-vcard-fill"></i>
- </a>
-    
-<a href="#">
-  <i class="bi bi-patch-check-fill"></i>
-</a>
-    
-<a href="#">
-  <i class="bi-file-earmark-pdf-fill"></i>
-</a>
-    
-<a href="#">
-  <i class="bi-image-fill"></i>
-</a>
+<div class="row">
+<div class=" col-md-3 doc-card">
+   <div class="row">
+    <div class="col-md-3 icons">
+      <i class="bi bi-person-vcard"></i>
      
-    <a href="#">
- <i class="bi-clipboard2-check-fill"></i>
-    </a>
+    </div>
+
+   </div>
+   <div class="s-mid">
+    <span>
+        Identity
+      </span>
+   </div>
+  
+
+</div>
+
+
+<div class=" col-md-3 doc-card">
+   <div class="row">
+    <div class="col-md-3 icons">
+      <i class="bi bi-person"></i>
+     
+    </div>
+
+   </div>
+   <div class="s-mid">
+    <span>
+     Contact
+      </span>
+   </div>
+
+</div>
+
+<div class=" col-md-3 doc-card">
+   <div class="row">
+    <div class="col-md-3 icons">
+      <i class="bi bi-patch-check"></i>
+     
+    </div>
+
+   </div>
+   <div class="s-mid">
+    <span>
+      Certificates
+      </span>
+   </div>
+</div>
+
+
+
+<div class=" col-md-3 doc-card">
+   <div class="row">
+    <div class="col-md-3 icons">
+      <i class="bi bi-file-earmark-pdf"></i>
+     
+    </div>
+
+   </div>
+   <div class="s-mid">
+    <span >    
+      PDFs
+</span>
+   </div>
+</div>
+
+
+<div class=" col-md-3 doc-card">
+   <div class="row">
+    <div class="col-md-3 icons">
+      <i class="bi bi-image"></i>
+     
+    </div>
+
+   </div>
+   <div class="s-mid">
+    <span>
+        Images
+      </span>
+   </div>
+
+</div>
+
+
+
+<div class=" col-md-3 doc-card">
+   <div class="row">
+    <div class="col-md-3 icons">
+      <i class="bi bi-clipboard-check"></i>
+     
+    </div>
+
+   </div>
+   <div class="s-mid">
+    <span>
+        Records
+      </span>
+   </div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+
+
+<section class="working">
+  <div class="container-work">
+    <div class="text-fields">
+      <span>
+        GETTING STARTED
+      </span>
+    </div>
+
+    <div class="how-works">
+      <span>
+        How LifeVault works
+      </span>
+
+    </div>
+
+    <div class="p-texts">
+      <p>
+        Three simple steps to a fully organized , secure digital vault.
+      </p>
+
+    </div>
+
+    <!-- step-1 -->
+     <div class="row">
+<div class="col-md-3 step-card">
+    <div class="step-number">
+      
+        01
+      
+    </div>
+<div class="accounts-mid">
+  <span>
+    Create your account
+  </span>
+</div>
+<div class="p-mid">
+  <p>
+    Sign up in seconds with secure,encrypted registration.
+  </p>
+</div>
+  </div>
+<!-- step-2 -->
+
+
+<div class="col-md-3 step-card">
+    <div class="step-number">
+      
+        02
+      
+    </div>
+<div class="accounts-mid">
+  <span>
+    Upload your documents
+  </span>
+</div>
+<div class="p-mid">
+  <p>
+    Add IDs,certificates,and files-sorted into categories automatically.
+  </p>
+</div>
+  </div>
     
+  <!-- 3rd step -->
+
+
+  <div class="col-md-3 step-card">
+    <div class="step-number">
+      
+        03
+      
+    </div>
+<div class="accounts-mid">
+  <span>
+    Access anywhere,anytime
+  </span>
 </div>
-
-
-
-
-
-
+<div class="p-mid">
+  <p>
+    Retrieve or share your documents securely from any device.
+  </p>
 </div>
+  </div>
+     </div>
+
+  </div>
 
 
-
-
-
-
-
+ 
 </section>
 
 <section class="document-section">
@@ -297,31 +408,7 @@ $method = $this->router->fetch_method();
      
 </div>
 
-<footer>
-  <div class="footer-container">
-    <div class="footer-logo">
-      <i class="bi bi-shield-lock-fill"></i>
-      <h4>
-        LifeVault
-      </h4>
-     
-    </div>
-    <div class="footer-p">
-      <p>
-        Your Trusted Digital Document Vault
-      </p>
-    </div>
 
-    <div class="footer-copyright">
-      <p>
-        © 2026 LifeVault. All Rights Reserved.
-      </p>
-    </div>
-
-  
-
-  </div>
-</footer>
 
    <script src="<?= base_url('assets/vault.js'); ?>"></script>
   </body>

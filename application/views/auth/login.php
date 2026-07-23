@@ -50,7 +50,7 @@ $method = $this->router->fetch_method();
   <i class="bi bi-house"></i>Home</a>
 
   <a href="<?= site_url('Auth/login'); 
-  ?>" class="<?= ($method=='Login')? 'active': ''; ?>"><i class="bi bi-key"></i>Login</a>
+  ?>" class="<?= ($method=='login')? 'active': ''; ?>"><i class="bi bi-key"></i>Login</a>
 
   <a href="<?= site_url('Auth/register'); ?>"
   class="<?= ($method=='register')? 'active': ''; ?>"><i class="bi bi-person-add"></i>Register</a>
