@@ -161,7 +161,7 @@ $method = $this->router->fetch_method();
 
 <section class="document-supported">
 
-<div class="container-file">
+<div class="container-fluid  file-documents">
   <div class="file">
     <span>
       WHAT YOU CAN STORE
@@ -177,6 +177,7 @@ $method = $this->router->fetch_method();
 <!-- Identity Card -->
 
 <div class="row">
+  <div class="middle">
 <div class=" col-md-3 doc-card">
    <div class="row">
     <div class="col-md-3 icons">
@@ -277,6 +278,7 @@ $method = $this->router->fetch_method();
    </div>
 
 </div>
+  </div>
 
 
 </div>
@@ -291,7 +293,7 @@ $method = $this->router->fetch_method();
 
 
 <section class="working">
-  <div class="container-work">
+  <div class="container-fluid works-segment">
     <div class="text-fields">
       <span>
         GETTING STARTED
@@ -314,6 +316,7 @@ $method = $this->router->fetch_method();
 
     <!-- step-1 -->
      <div class="row">
+      <div class="middle-set">
 <div class="col-md-3 step-card">
     <div class="step-number">
       
@@ -373,6 +376,7 @@ $method = $this->router->fetch_method();
 </div>
   </div>
      </div>
+     </div>
 
   </div>
 
@@ -381,9 +385,9 @@ $method = $this->router->fetch_method();
 </section>
 
 <section class="document-section">
-  <div class="container-document">
+  <div class="container-fluid document">
     <div class="child_div">
-    <i  class="bi bi-shield-lock-fill" style="color: white;"></i>
+    <i  class="bi bi-shield-lock-fill" ></i>
     <h5>
       Ready to Secure your documents ?
     </h5>
@@ -405,11 +409,80 @@ $method = $this->router->fetch_method();
 
 </section>
 
-     
+     <footer>
+      <div class="container-fluid footer-home">
+        <div class="footer-complete">
+        <div class="footer-mid">
+        <div class="project-name">
+          <i class="bi bi-shield-lock-fill"></i>
+
+          <span>
+            LifeVault
+          </span>
+        </div>
+        <div class="project-p">
+          <p>
+            Your trusted digital document vault-secure,private,and always yours.
+          </p>
+        </div>
+        </div>
+
+    <div class="footer-column">
+    <span>PRODUCT</span>
+
+
+    <ul>
+
+
+  
+    <li>
+    
+    <a href="<?= site_url('Dashboard/dashboard'); ?>">Dashboard</a>
+    </li>
+
+
+    <li>
+    <a href="<?= site_url('Documents/documents'); ?>">Documents</a>
+    </li>
+
+<li>
+    <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
+</li>
+</ul>
+    </div>
+        
+
+ <div class="footer-legal">
+<span>
+  LEGAL
+</span>
+
+<ul>
+  <li>
+    <a href="#">Privacy Policy</a>
+  </li>
+
+    <li>
+    <a href="#">Terms of Service</a>
+  </li>
+</ul>
+  </div>   
+
+
+</div>
+<hr class="footer-line">
+        
+<div class="footer-reserved">
+  <span>
+    © 2026 LifeVault. All rights reserved.
+  </span>
+</div>
+ </div>
+</footer>
 </div>
 
 
 
-   <script src="<?= base_url('assets/vault.js'); ?>"></script>
+
   </body>
 </html>

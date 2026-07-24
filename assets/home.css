@@ -167,14 +167,14 @@ text-field */
   padding: 0px 67px;
 
 }
-.container-document{
+.document{
   background: linear-gradient(90deg, #0B1933 0%, #3046C7 100%);
-  padding: 8px 1px; 
-
+  padding: 10px 42px; 
   margin: 3px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
   
 }
 .container-document i{
@@ -240,7 +240,7 @@ justify-content: center;
     justify-content: center;
 }
 
-.container-file{
+.file-documents{
    
     margin: 3px;
     background-color: #ffffff;
@@ -277,12 +277,22 @@ IMAGES AADHAR */
 
     
 }
+
+.middle{
+    display: flex;
+    justify-content: center;
+}
+
+.middle-set{
+    display: flex;
+    justify-content: center;
+}
 .icons{
     display: flex;
     justify-content: center;
     background-color: #F1EDFF;
     border-radius: 14px;
-    margin: 0px 51px;
+    margin: 0px 62px;
 }
 .icons i{
     color: #6C63FF;
@@ -295,7 +305,7 @@ IMAGES AADHAR */
 
 /* ============
 .container-work */
-.container-work{
+.works-segment{
     background: #d5f0fc;
     min-height: 123px;
 }
@@ -561,7 +571,7 @@ WHY  LIFEVAULT */
     justify-content: center;
 }
 .container-vault{
-    background: antiquewhite;
+    background: #2196f359;
 }
 
 /* ====================
@@ -621,8 +631,87 @@ email and password font size */
 
 /* ===================
 FOOTER */
+.footer-home{
+    min-height: 145px;
+    background-color: #0B1628;
+}
+
+.project-name{
+    color: white;
+    
+}
+.project-name i{
+    font-size: 20px;
+}
+.project-p{
+color: #8A9BB8;
+
+}
+.project-p p{
+    font-size: 12px;
+}
+.project-name span{
+    font-size: 20px;
+}
+
+.footer-complete{
+    display: flex;
+    justify-content: space-between;
+    padding: 29px 0px;
+}
+
+.footer-column span{
+    font-size: 17px;
+    color: white;
+
+}
+
+.footer-column a{
+    color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+.footer-column ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-column li{
+    padding: 0;
+    margin: 12px 0px;
+}
+
+.footer-legal span{
+    font-size: 17px;
+    color: white;
+}
+.footer-legal ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-legal li{
+    padding: 0;
+    margin: 12px 0px;
+}
+.footer-legal a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.footer-line{
+    color:  #8A9BB8;
+    padding: 1px 6px;
+}
 
 
+.footer-reserved{
+    display: flex;
+    justify-content: center;
+}
+.footer-reserved span{
+    font-size: 14px;
+    color: #8A9BB8;
+}
 /* =========================
    FILE INPUT
 ========================= */
