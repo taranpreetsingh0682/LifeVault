@@ -554,50 +554,86 @@ Don't have an account */
 
 /* ===================
 FOOTER */
-.footer-container{
-    height: 110px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 25px 0;
-}
-.footer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 30px;
-    height: 80px;
-}
-.footer-logo{
-    font-size: 24px;
-    color: blue;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    
-}
-.footer-logo h4{
-    font-size: 22px;
-    margin: 0;
-}
-.footer-p{
-    font-size: 15px;
-    color: rgb(0, 0, 0);
-    display: flex;
-    margin-top: -2px;
-    gap: 10px;
-    align-items: center;
+.footer-home{
+    min-height: 145px;
+    background-color: #0B1628;
 }
 
-.footer-copyright{
-    font-size: 14px;
-    margin-top: -17px;
-    color: #000000;
+.project-name{
+    color: white;
+    
+}
+.project-name i{
+    font-size: 20px;
+}
+.project-p{
+color: #8A9BB8;
+
+}
+.project-p p{
+    font-size: 12px;
+}
+.project-name span{
+    font-size: 20px;
+}
+
+.footer-complete{
     display: flex;
-    gap: 10px;
-    align-items: center;
+    justify-content: space-between;
+    padding: 29px 0px;
+}
+
+.footer-column span{
+    font-size: 17px;
+    color: white;
+
+}
+
+.footer-column a{
+    color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+.footer-column ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-column li{
+    padding: 0;
+    margin: 12px 0px;
+}
+
+.footer-legal span{
+    font-size: 17px;
+    color: white;
+}
+.footer-legal ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-legal li{
+    padding: 0;
+    margin: 12px 0px;
+}
+.footer-legal a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.footer-line{
+    color:  #8A9BB8;
+    padding: 1px 6px;
+}
+
+
+.footer-reserved{
+    display: flex;
+    justify-content: center;
+}
+.footer-reserved span{
+    font-size: 14px;
+    color: #8A9BB8;
 }
 
 

@@ -402,30 +402,76 @@ $method = $this->router->fetch_method();
 </section>
 
 <footer>
-  <div class="footer-container">
-    <div class="footer-logo">
-      <i class="bi bi-shield-lock-fill"></i>
-      <h4>
-        LifeVault
-      </h4>
-     
-    </div>
-    <div class="footer-p">
-      <p>
-        Your Trusted Digital Document Vault
-      </p>
-    </div>
+      <div class="container-fluid footer-home">
+        <div class="footer-complete">
+        <div class="footer-mid">
+        <div class="project-name">
+          <i class="bi bi-shield-lock-fill"></i>
 
-    <div class="footer-copyright">
-      <p>
-        © 2026 LifeVault. All Rights Reserved.
-      </p>
-    </div>
+          <span>
+            LifeVault
+          </span>
+        </div>
+        <div class="project-p">
+          <p>
+            Your trusted digital document vault-secure,private,and always yours.
+          </p>
+        </div>
+        </div>
+
+    <div class="footer-column">
+    <span>PRODUCT</span>
+
+
+    <ul>
+
 
   
+    <li>
+    
+    <a href="<?= site_url('Dashboard/dashboard'); ?>">Dashboard</a>
+    </li>
 
-  </div>
+
+    <li>
+    <a href="<?= site_url('Documents/documents'); ?>">Documents</a>
+    </li>
+
+<li>
+    <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
+</li>
+</ul>
+    </div>
+        
+
+ <div class="footer-legal">
+<span>
+  LEGAL
+</span>
+
+<ul>
+  <li>
+    <a href="#">Privacy Policy</a>
+  </li>
+
+    <li>
+    <a href="#">Terms of Service</a>
+  </li>
+</ul>
+  </div>   
+
+
+</div>
+<hr class="footer-line">
+        
+<div class="footer-reserved">
+  <span>
+    © 2026 LifeVault. All rights reserved.
+  </span>
+</div>
+ </div>
 </footer>
+
 
    <script src="<?= base_url('assets/vault.js'); ?>"></script>
   </body>
