@@ -408,7 +408,7 @@ $method = $this->router->fetch_method();
 
 
 </section>
-
+<!-- Updated footer ui -->
      <footer>
       <div class="container-fluid footer-home">
         <div class="footer-complete">
