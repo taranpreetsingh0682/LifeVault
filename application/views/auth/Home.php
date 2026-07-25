@@ -78,19 +78,22 @@ $method = $this->router->fetch_method();
     </div>
     <div class="text-field">
        <h2>
-        Secure Your
+        Every important
        </h2>
-       <h1 style="color: black;">Important Documents</h1>
+       <h1 style="color: black;"> Document,</h1>
        <h3>
-        For Life
+        One 
        </h3>
+       <h4>
+        Vault away.
+       </h4>
     </div>
        
      
        <div class="paragraph-item">
        
         <h6>
-          LifeVault is your smart digital vault tpo store,organize and protect your important documents and memories.
+          LifeVault is your smart digital vault to store,organize and protect your important documents and memories--encrypted , Indexed , and ready whenever you need them.
         </h6>        
 
         
@@ -133,7 +136,7 @@ $method = $this->router->fetch_method();
 </section>
 <hr class="after-container">
 <div class="section-vault">
-  <div class="container-vault">
+  <div class="container  vault-support">
 <div class="why-vault">
   <span>
     WHY LIFEVAULT
@@ -149,8 +152,89 @@ $method = $this->router->fetch_method();
     Everything you need to keep your important documents safe , organized, and accessible.
   </p>
 </div>
+
+<div class="row">
+  <div class="middle">
+  <div class="col-md-3  vault-card">
+    <div class="vault-icon">
+      <i class="bi bi-shield-check"></i>
+
+   
+    </div>
+    <div class="vault-span">
+       <span>
+        Bank-grade encrypted
+      </span>
+    </div>
+
+    <div class="vault-p">
+      <p>
+        Every file is encrypted at upload and in storage , so only you hold the key to your vault.
+      </p>
+    </div>
+  </div> 
+
+<!-- 2nd card -->
+
+
+ <div class="col-md-3  vault-card">
+    <div class="vault-icon">
+      <i class="bi bi-shield-check"></i>
+
+   
+    </div>
+    <div class="vault-span">
+       <span>
+        Smart organization
+      </span>
+    </div>
+
+    <div class="vault-p">
+      <p>
+        Documents are auto-sorted into categorized with tags , search , and filters , so you can find them instantly. 
+      </p>
+    </div>
+ </div>
+  
+
+<!-- 3rd card -->
+
+
+ <div class="col-md-3  vault-card">
+    <div class="vault-icon">
+      <i class="bi bi-person"></i>
+
+   
+    </div>
+    <div class="vault-span">
+       <span>
+        Access Anywhere 
+      </span>
+    </div>
+
+    <div class="vault-p">
+      <p>
+        Securely access your documents anytime, anywhere-on any device you own or trust. 
+      </p>
+    </div>
+ 
+ 
+ </div>
+  </div>
+
+
+</div>
+
+  
+  
 </div>
 </div>
+
+
+
+
+
+
   
 
 

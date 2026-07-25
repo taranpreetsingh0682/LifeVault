@@ -25,14 +25,76 @@
   <title>footer Dashboard</title>
 </head>
 <body>
-<footer>
-<div class="container-footer">
-  <div class="footer">
-    <p>
-      @ 2026 LifeVault. all rights reserved.
-    </p>
-  </div>
+
+ <footer>
+      <div class="container-fluid footer-home">
+        <div class="footer-complete">
+        <div class="footer-mid">
+        <div class="project-name">
+          <i class="bi bi-shield-lock-fill"></i>
+
+          <span>
+            LifeVault
+          </span>
+        </div>
+        <div class="project-p">
+          <p>
+            Your trusted digital document vault-secure,private,and always yours.
+          </p>
+        </div>
+        </div>
+
+    <div class="footer-column">
+    <span>PRODUCT</span>
+
+
+    <ul>
+
+
+  
+    <li>
+    
+    <a href="<?= site_url('Dashboard/dashboard'); ?>">Dashboard</a>
+    </li>
+
+
+    <li>
+    <a href="<?= site_url('Documents/documents'); ?>">Documents</a>
+    </li>
+
+<li>
+    <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
+</li>
+</ul>
+    </div>
+        
+
+ <div class="footer-legal">
+<span>
+  LEGAL
+</span>
+
+<ul>
+  <li>
+    <a href="#">Privacy Policy</a>
+  </li>
+
+    <li>
+    <a href="#">Terms of Service</a>
+  </li>
+</ul>
+  </div>   
+
+
 </div>
+<hr class="footer-line">
+        
+<div class="footer-reserved">
+  <span>
+    © 2026 LifeVault. All rights reserved.
+  </span>
+</div>
+ </div>
 </footer>
 </body>
 </html>

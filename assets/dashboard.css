@@ -934,14 +934,86 @@ IMAGES */
 /* ===================
 FOOTER */
 
-.container-footer{
-  width: 100vw;
-  margin: -32px 16px;
-  height: 108px;
+.footer-home{
+    min-height: 145px;
+    background-color: #0B1628;
+}
+
+.project-name{
+    color: white;
+    
+}
+.project-name i{
+    font-size: 20px;
+}
+.project-p{
+color: #8A9BB8;
 
 }
-.footer{
-  display: flex;
-  justify-content: center;
+.project-p p{
+    font-size: 12px;
 }
+.project-name span{
+    font-size: 20px;
+}
+
+.footer-complete{
+    display: flex;
+    justify-content: space-between;
+    padding: 29px 0px;
+}
+
+.footer-column span{
+    font-size: 17px;
+    color: white;
+
+}
+
+.footer-column a{
+    color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+.footer-column ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-column li{
+    padding: 0;
+    margin: 12px 0px;
+}
+
+.footer-legal span{
+    font-size: 17px;
+    color: white;
+}
+.footer-legal ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-legal li{
+    padding: 0;
+    margin: 12px 0px;
+}
+.footer-legal a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.footer-line{
+    color:  #8A9BB8;
+    padding: 1px 6px;
+}
+
+
+.footer-reserved{
+    display: flex;
+    justify-content: center;
+}
+.footer-reserved span{
+    font-size: 14px;
+    color: #8A9BB8;
+}
+
 

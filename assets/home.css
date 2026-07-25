@@ -152,14 +152,20 @@ background-size: 21px 23px;
 text-field */
 .text-field h2{
     font-weight: 800;
+    font-size: 39px;
 }
 .text-field h1{
     font-weight: 900;
 }
 .text-field h3{
     font-weight: 900;
-    font-size: 38px;
+    font-size: 42px;
     color: #6464F6;
+}
+.text-field h4{
+
+    font-size: 40px;
+    font-weight: 700;
 }
 
 .document-section{
@@ -243,7 +249,7 @@ justify-content: center;
 .file-documents{
    
     margin: 3px;
-    background-color: #ffffff;
+    background-color:#F8F7F0;
     padding: 8px 1px;
     justify-content: space-between;
     align-items: center;
@@ -273,8 +279,8 @@ IMAGES AADHAR */
     width: 153px;
     min-height: 109px;
     border-radius: 14px;
-    margin: 34px;
-
+    margin: 24px;
+    background-color: white;
     
 }
 
@@ -306,7 +312,7 @@ IMAGES AADHAR */
 /* ============
 .container-work */
 .works-segment{
-    background: #d5f0fc;
+    background-color: #0D1235;
     min-height: 123px;
 }
 .text-fields{
@@ -314,9 +320,9 @@ IMAGES AADHAR */
     justify-content: center;
 }
 .text-fields span{
-    font-weight: 500;
+    font-weight: 700;
     font-size: 12px;
-    color: blue;
+    color: #C9A227;
 }
 .how-works{
     display: flex;
@@ -326,12 +332,16 @@ IMAGES AADHAR */
 .how-works span{
     font-weight: 800;
     font-size: 25px;
+    color: white;
 
 }
 .p-texts{
     display: flex;
     justify-content: center;
 
+}
+.p-texts p{
+    color: white;
 }
 
 
@@ -358,6 +368,7 @@ STEP CARD */
 .accounts-mid span{
     font-size: 12px;
     font-weight: 700;
+    color: white;
 }
 .p-mid{
     display: flex;
@@ -366,7 +377,7 @@ STEP CARD */
 
 .p-mid p{
     font-size: 11px;
-    
+    color: white;
 }
 .step-number{
     background-color: #5865f2;
@@ -570,10 +581,42 @@ WHY  LIFEVAULT */
     display: flex;
     justify-content: center;
 }
-.container-vault{
-    background: #2196f359;
+.vault-support{
+    background: white;
 }
 
+
+.vault-card{
+    border: 2px solid #51565c5c;
+    width: 291px;
+    min-height: 140px;
+    margin: 46px;
+    border-radius: 11px;
+    background-color: #F8F7F0;
+
+}
+.vault-span{
+    
+    
+    font-weight: 700;
+    padding: 2px 0px;
+    margin: 5px;
+}
+.vault-p{
+    font-size: 12px;
+}
+.vault-icon{
+    padding: 14px 7px;
+}
+
+
+.vault-icon i{
+    font-size: 23px;
+    background-color: #1B1E48;
+    color: #C9A227;
+    border-radius: 11px;
+    padding: 7px;
+}
 /* ====================
 LOGO FOR SHIELD LOCK */
 
