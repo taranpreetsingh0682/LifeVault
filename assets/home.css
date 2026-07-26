@@ -348,9 +348,12 @@ IMAGES AADHAR */
 /* =====
 STEP CARD */
 .step-card{
-    margin: 60px;
-    width: 381px;
+    margin: 12px;
+    width: 298px;
     min-height: 123px;
+    background-color: #1b1f43;
+    border: 2px solid;
+    border-radius: 11px;
 
 }
 
@@ -359,37 +362,40 @@ STEP CARD */
 .step-number{
     display: flex;
     justify-content: center;
+    
 }
 
 .accounts-mid{
     display: flex;
-    justify-content: center;
+    
 }
 .accounts-mid span{
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 700;
     color: white;
+    margin: 3px 17px;
 }
 .p-mid{
     display: flex;
-    justify-content: center;
+    
 }
 
 .p-mid p{
-    font-size: 11px;
-    color: white;
+    font-size: 13px;
+    color: #d3d6c6;
+    margin: 0px 16px;
 }
 .step-number{
-    background-color: #5865f2;
-    color: white;
+   
+    color: #C9A227;
     border-radius: 50%;
     font-size: 17px;
     font-weight: 700;
-    box-shadow: 0 10px 25px rgba(88,101,242,0.25);
     align-items: center;
-    margin: 0 auto 18px;
+    margin: 11px 18px;
     height: 52px;
     width: 52px;
+    border: 1px solid;
 }
 
 /* ======
@@ -404,7 +410,46 @@ doc-card */
     margin: 9px;
 }
 
+/* =============
+Users trust */
+.users-trust{
+    min-height: 103px;
+    border: 1px solid;
+    margin: -8px 0px;
+}
 
+
+.users-card{
+  
+    min-height: 123px;
+    align-items: center;
+    margin: 15px 3px;
+    width: 218px;
+}
+.users-text{
+     font-size: 32px;
+    font-weight: 600;
+    color: #0B2A80;
+    font-style: normal;
+    font-family: emoji;
+    display: flex;
+    justify-content: center;
+}
+
+
+.users-p{
+    display: flex;
+    justify-content: center;
+    margin: -15px 0px;
+}
+.users-p p{
+    font-size: 13px;
+
+}
+.users-card:not(:last-child) {
+    border-right: 2px solid #E5E7EB;
+    min-height: 70px;
+}
 /* ============================
 FEATURE-ITEM FOR LEFT-PANEL */
 
@@ -590,7 +635,7 @@ WHY  LIFEVAULT */
     border: 2px solid #51565c5c;
     width: 291px;
     min-height: 140px;
-    margin: 46px;
+    margin: 12px;
     border-radius: 11px;
     background-color: #F8F7F0;
 

@@ -468,6 +468,76 @@ $method = $this->router->fetch_method();
  
 </section>
 
+
+<section class="view-section">
+
+
+  <div class="container-fluid users-trust">
+
+  <div class="middle">
+   <div  class="row">
+    <div class="col-md-3 users-card">
+      <div class="users-text">
+      <span>
+        12K+
+      </span>
+      </div>
+<div class="users-p">
+    <p>
+      Users trust
+    </p>
+   </div>
+    </div>
+
+<!-- 2nd card -->
+
+    <div class="col-md-3 users-card">
+      <div class="users-text">
+      <span>
+        256-bit
+      </span>
+      </div>
+<div class="users-p">
+    <p>
+      AES Encryption
+    </p>
+   </div>
+
+    </div>
+<!-- 3rd card -->
+  <div class="col-md-3 users-card">
+    <div class="users-text">
+      <span>
+        99.9%
+      </span>
+      </div>
+  <div class="users-p">
+    <p>
+      Uptime
+    </p>
+   </div>
+
+    </div>
+
+    <!-- 4th card -->
+    <div class="col-md-3 users-card">
+    <div class="users-text">
+      <span>
+        4.9/5
+      </span>
+      </div>
+  <div class="users-p">
+    <p>
+      Average rating
+    </p>
+   </div>
+
+    </div>
+
+   </div>
+  
+</section>
+
 <section class="document-section">
   <div class="container-fluid document">
     <div class="child_div">
