@@ -174,13 +174,14 @@ text-field */
 
 }
 .document{
-  background: linear-gradient(90deg, #0B1933 0%, #3046C7 100%);
+  background-color:#0D1235;
   padding: 10px 42px; 
   margin: 3px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
+  border-radius: 18px;
   
 }
 .container-document i{
@@ -216,15 +217,16 @@ display: flex;
 align-items: center;
 justify-content: center;
 }
-.child-btn:hover{
-   
-}
-.child-btn a{
-    font-size: 22px;
-    font-weight: initial;
-    border-radius: 23px;
-}
 
+.child-btn a{
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 11px;
+}
+.btn-light{
+    color: #000;
+    background-color: #efb80c;
+}
 
 .document-supported{
     margin: 25px;
@@ -414,7 +416,7 @@ doc-card */
 Users trust */
 .users-trust{
     min-height: 103px;
-    border: 1px solid;
+    border: 2px solid #00000017;
     margin: -8px 0px;
 }
 
@@ -489,13 +491,13 @@ transition: .3s;
     padding: 5px 12px;
     border-radius: 18px;
 
-    background: linear-gradient(135deg,#4F46E5,#3B82F6);
-    color: #fff;
+    
+    color: #000000;
     text-decoration: none;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 
-    box-shadow: 0 10px 25px rgba(79,70,229,.25);
+    background-color: #efb80c;
     transition: .3s ease;
     margin: 4px 8px;
 }
@@ -729,7 +731,8 @@ FOOTER */
     
 }
 .project-name i{
-    font-size: 20px;
+    font-size: 23px;
+    color:  #C9A227;
 }
 .project-p{
 color: #8A9BB8;
@@ -739,7 +742,8 @@ color: #8A9BB8;
     font-size: 12px;
 }
 .project-name span{
-    font-size: 20px;
+    font-size: 23px;
+    font-family: emoji;
 }
 
 .footer-complete{
@@ -791,7 +795,62 @@ color: #8A9BB8;
     padding: 1px 6px;
 }
 
+/* =====
+FOOTER COMPANY */
 
+.footer-company span{
+    
+    font-size: 17px;
+    color: white;
+}
+
+.footer-company ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-company li{
+    padding: 0;
+    margin: 11px 0px;
+
+}
+.footer-company a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+
+
+/* ======
+SOCIAL  */
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #29305F;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 18px;
+
+    transition: 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color:  #C9A227;
+    transform: translateY(-3px);
+}
 .footer-reserved{
     display: flex;
     justify-content: center;

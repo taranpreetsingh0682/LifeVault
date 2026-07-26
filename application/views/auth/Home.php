@@ -541,7 +541,7 @@ $method = $this->router->fetch_method();
 <section class="document-section">
   <div class="container-fluid document">
     <div class="child_div">
-    <i  class="bi bi-shield-lock-fill" ></i>
+  
     <h5>
       Ready to Secure your documents ?
     </h5>
@@ -568,7 +568,7 @@ $method = $this->router->fetch_method();
         <div class="footer-complete">
         <div class="footer-mid">
         <div class="project-name">
-          <i class="bi bi-shield-lock-fill"></i>
+          <i class="bi bi-shield-lock"></i>
 
           <span>
             LifeVault
@@ -579,6 +579,26 @@ $method = $this->router->fetch_method();
             Your trusted digital document vault-secure,private,and always yours.
           </p>
         </div>
+
+        <div class="social-icons">
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-facebook"></i>
+    </a>
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-twitter"></i>
+    </a>
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-linkedin"></i>
+    </a>
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-instagram"></i>
+    </a>
+
+</div>
         </div>
 
     <div class="footer-column">
@@ -600,11 +620,40 @@ $method = $this->router->fetch_method();
     </li>
 
 <li>
+    <a href="<?= site_url('Storage/storage'); ?>">Storage</a>
+</li>
+
+<li>
     <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
 </li>
 </ul>
     </div>
-        
+<div class="footer-company">
+  <span>
+    COMPANY
+  </span>
+
+  <ul>
+    <li>
+      <a href="<?= site_url('About/about');  ?>">About</a>
+    </li>
+
+      <li>
+      <a href="<?= site_url('Security/security');  ?>">Security</a>
+    </li>
+
+
+      <li>
+      <a href="<?= site_url('Careers/career');  ?>">Career</a>
+    </li>
+
+
+
+      <li>
+      <a href="<?= site_url('Contact/contact');  ?>">Contact</a>
+    </li>
+  </ul>
+</div>
 
  <div class="footer-legal">
 <span>
