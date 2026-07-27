@@ -23,20 +23,14 @@ body{
    TOP HEADER
 ========================= */
 
-.container-fluid{
 
-    
-    
-    margin: -2px 2px;
-    
-}
 /* ===================
 FOR NAVBAR */
 .navbar{
-     padding: 0 30px;
+    
     display: flex;
     
-    margin: 3px -21px;
+    
     align-items: center;
     justify-content: space-between;
     height: 58px;
@@ -47,32 +41,38 @@ FOR NAVBAR */
 /* =================
 navbar logo */
 .navbar-logo{
-    font-size: 22px;
+    font-size: 23px;
    margin-right: auto;
-    color: blue;
+    color: #0D1235;
    display: flex;
     gap: 10px;
     align-items: center;
 }
 .navbar-logo h4{
-font-size: 22px;
+font-size: 23px;
 margin: 0;
+font-family: emoji;
+color: #0D1235;
+font-weight: 700;
 
+}
+.bg-light{
+    background-color: #ffffff;
 }
 
 .navbar-menu{
     font-size: 22px;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 15px;
     
    
 
 }
 .navbar-menu a{
-      font-size: 22px;
+    font-size: 17px;
     font-weight: 500;
-    color: #a0a0a0;
+    color: #0D1235;
     text-decoration: none;
 }
 .navbar-menu a:hover{
@@ -81,12 +81,13 @@ margin: 0;
     border-radius: 8px;
 }
 .navbar-menu a.active {
-    background-color: #2563eb;
+    background-color: #0D1235;
     color: white;
-    border-radius: 8px;
-    padding: 1px 21px;
-     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    border-radius: 22px;
+    padding: 6px 14px;
+     
 }
+
 
 
 .container-fluid h1{
@@ -108,19 +109,6 @@ margin: 0;
 .main-box{
 
     display:flex;
-    border-style: dashed;
-    border-color: #140de6;
-
-    width:100%;
-
-    background:rgb(255, 255, 255);
-
-    border-radius:15px;
-
-    overflow:hidden;
-
-    box-shadow:
-    0 15px 40px rgba(12, 69, 228, 0.832);
 
 }
 
@@ -133,17 +121,10 @@ margin: 0;
 
 .left-panel{
 
-    width:60%;
-
-    background:linear-gradient(
-        180deg,
-        #fbfcfc,
-        #0800ff62
-    );
-
-    color:rgb(7, 7, 7);
-
-    padding:70px 35px;
+    width:50%;
+    padding:23px 49px;
+    background-color: #0D1235;
+    border-radius: 4px;
 
 
 }
@@ -158,10 +139,10 @@ margin: 0;
 
 .left-panel h2{
 
-    margin-top:40px;
+    
 
-    font-size:25px;
-
+    font-size:30px;
+    color: white;
     font-weight:700;
 
 }
@@ -177,7 +158,9 @@ margin: 0;
 
 }
 .left-panel h1{
-    font-size: 24px;
+    font-size: 32px;
+    color: antiquewhite;
+    font-family: emoji;
 }
 .left-panel h4{
     color: #140de6;
@@ -187,8 +170,8 @@ margin: 0;
 FEATURE-ITEM FOR LEFT-PANEL */
 
 .feature-item{
-    padding: 1px;
-    color: #140de6;
+    
+    color: #cac9d7;
     display: flex;
     gap: 15px;
     align-items: center;
@@ -221,7 +204,7 @@ transition: .3s;
 LOGO FOR SHIELD LOCK */
 
 .logo-item{
-    padding: 1px;
+    
     color: #140de6;
     display: flex;
     gap: 10px;
@@ -229,15 +212,15 @@ LOGO FOR SHIELD LOCK */
 }
 .logo-item h4{
     margin: 0;
+    padding: 41px 0px;
 }
 
 
 /* ===================
 PARAGRAPH  */
 .paragraph-item h6{
-    color: rgb(47, 62, 223);
-    font-family: "Inter",sans-serif;
-    font-size: 24px;
+    color: rgb(174,175,189);
+    font-size: 20px;
    
    
 }
@@ -245,7 +228,8 @@ PARAGRAPH  */
 email and password font size */
 
 .col-md-6{
-   width: 123%;
+   width: 100%;
+   padding: 0px 11px;
 }
 
 
@@ -260,29 +244,30 @@ email and password font size */
 
 .right-panel{
 
-    width:50%;
-    
-    padding:40px;
-    border-radius: 45px;
+    width:48%;
+    border-radius: 4px;
     display: flex;
+    
     flex-direction: column;
     justify-content: flex-start;
+    background: #f8f9fa;
+    border: 2px solid #f1ecec;
+    padding: 38px 40px;
+    background-color: white;
+
     
 
-    margin: 20px;
-    border-style: dashed;
-    border-color: #ff6500;
 
-    background: #f8f9fa;
+   
 
-    color:rgb(6, 6, 6);
+    
 
 }
 /* ================
 star icons */
 .text-primary{
-    color: blue;
-    font-size: 22px;
+    
+    
 }
 /* =====================
 Forget link */
@@ -291,26 +276,27 @@ Forget link */
     font-size: 14px;
     display: flex;
     justify-content: flex-end;
-    margin-top: 0;
+    padding: 0px 50px;
+    
 }
 
 
 .forget-item a{
-    font-size: 16px;
-    padding-right: 1px;
+    font-size: 14px;
+    padding: 0px 10px;
+    text-decoration: none;
+    font-weight: 700;
 }
 
 /* ==============
 heading welcome */
-.text-center{
-    margin-top: -40px;
 
-}
 /* =================
 login to access your vault */
 .text-muted{
-    font-size: 14px;
-    margin-top: -11px;
+    font-size: 12px;
+    padding: 0px 12px;
+    
 }
 
 
@@ -319,9 +305,9 @@ login to access your vault */
 
 .form-label{
 
-    font-weight:400;
+    font-weight:700;
 
-    font-size:18px;
+    font-size:12px;
 
 }
 
@@ -346,7 +332,7 @@ login to access your vault */
 
 }
 .form-control::placeholder{
-    font-size: 22px;
+    font-size: 15px;
 }
 
 
@@ -358,11 +344,16 @@ login to access your vault */
     color:rgb(7, 6, 6);
 
     border:none;
+    font-size: 14px;
 
 }
 .input-group{
-    margin: 1px;
-    width: 423px;
+    margin: 0px;
+    width: 100%;
+    padding: 0px 0px;
+    background-color: #F7F6F4;
+    border: 2px solid #989191;
+    border-radius: 10px;
 }
 
 
@@ -389,15 +380,15 @@ login to access your vault */
 .btn-primary{
 
 
-    background:#140de6;
-    font-size: 11px;
+    background:#0D1235;
+    font-size: 13px;
 
     border:none;
-    /* margin-bottom: -100px; */
+    
 
-    padding:11px 188px;
+    padding:11px 203px;
 
-    border-radius:25px;
+    border-radius:8px;
 
     font-weight:600;
 
@@ -406,21 +397,28 @@ login to access your vault */
 CONTINUE WITH GMAIL */
 .google-btn{
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     text-align: center;
-    padding-right: 160px;
-    background: #ffffff;
-    border-radius: 25px;
-    margin-top: -30px;
-    padding-bottom: 10px;
-    padding: 9px 126px;
+    padding: 11px 151px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color: #11142D;
+    border-radius: 12px;
+    
+    
     
 }
 
 .col-12{
-    padding: 12px;
+    
     text-align: center;
 }
+
+.google-btn span{
+    font-size: 11px;
+}
+
+
 .google-btn:hover{
     background: #04040458;
 }
@@ -428,7 +426,6 @@ CONTINUE WITH GMAIL */
 DIVIDER FOR GMAIL */
 .divider{
     display: flex;
-    font-style: 12px;
     align-items: center;
     text-align: center;
     margin: 20px 0;
@@ -453,10 +450,14 @@ Don't have an account */
     font-size: 15px;
     padding-left: 168px;
 }
-.register-choose{
+.register-item span{
     font-size: 14px;
-    padding-left: 210px;
-    margin-top: -2px;
+    padding: 0px;
+}
+.register-item a{
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 700;
 }
 
 
@@ -471,11 +472,12 @@ Don't have an account */
     font-size: 1.5rem !important;
 }
 .h2,h2{
-    font-size: 1rem;
+    font-size: smaller;
+    font-weight: 700 !important;
+    font-family: emoji;
 }
-/* ======Footer  */
-
-
+/* ===================
+FOOTER */
 .footer-home{
     min-height: 145px;
     background-color: #0B1628;
@@ -486,7 +488,8 @@ Don't have an account */
     
 }
 .project-name i{
-    font-size: 20px;
+    font-size: 23px;
+    color:  #C9A227;
 }
 .project-p{
 color: #8A9BB8;
@@ -496,7 +499,8 @@ color: #8A9BB8;
     font-size: 12px;
 }
 .project-name span{
-    font-size: 20px;
+    font-size: 23px;
+    font-family: emoji;
 }
 
 .footer-complete{
@@ -548,7 +552,62 @@ color: #8A9BB8;
     padding: 1px 6px;
 }
 
+/* =====
+FOOTER COMPANY */
 
+.footer-company span{
+    
+    font-size: 17px;
+    color: white;
+}
+
+.footer-company ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-company li{
+    padding: 0;
+    margin: 11px 0px;
+
+}
+.footer-company a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+
+
+/* ======
+SOCIAL  */
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #29305F;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 18px;
+
+    transition: 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color:  #C9A227;
+    transform: translateY(-3px);
+}
 .footer-reserved{
     display: flex;
     justify-content: center;
@@ -557,7 +616,6 @@ color: #8A9BB8;
     font-size: 14px;
     color: #8A9BB8;
 }
-
 
 /* =========================
    FILE INPUT

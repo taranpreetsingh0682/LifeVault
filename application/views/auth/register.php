@@ -30,9 +30,9 @@ $method = $this->router->fetch_method();
 
 
 
-   <div class="container-fluid">
    
-<nav class="navbar navbar-dark bg-light">
+   
+<nav class="navbar navbar-dark ">
   <div class="navbar-logo">
     <i class="bi bi-shield-lock-fill">
 
@@ -48,18 +48,19 @@ $method = $this->router->fetch_method();
   <a href="<?= site_url('Auth/Home'); 
   ?>"
   class="<?= ($method =='Home')? 'active': ''; ?>">
-  <i class="bi bi-house"></i>Home</a>
+  Home</a>
 
   <a href="<?= site_url('Auth/login'); 
-  ?>" class="<?= ($method=='Login')? 'active': ''; ?>"><i class="bi bi-key"></i>Login</a>
+  ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
 
   <a href="<?= site_url('Auth/register'); ?>"
-  class="<?= ($method=='register')? 'active': ''; ?>"><i class="bi bi-person-add"></i>Register</a>
+  class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
   
 </div>
 
 </nav>
-   </div>
+   
+   
 
    <!-- <section class="container my-4 bg-dark text-light py-4 "> -->
     <section class="container my-5">
@@ -401,12 +402,12 @@ $method = $this->router->fetch_method();
    <?php echo form_close();?>
 </section>
 
-<footer>
+ <footer>
       <div class="container-fluid footer-home">
         <div class="footer-complete">
         <div class="footer-mid">
         <div class="project-name">
-          <i class="bi bi-shield-lock-fill"></i>
+          <i class="bi bi-shield-lock"></i>
 
           <span>
             LifeVault
@@ -417,6 +418,26 @@ $method = $this->router->fetch_method();
             Your trusted digital document vault-secure,private,and always yours.
           </p>
         </div>
+
+        <div class="social-icons">
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-facebook"></i>
+    </a>
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-twitter"></i>
+    </a>
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-linkedin"></i>
+    </a>
+
+    <a href="#" class="social-icon">
+        <i class="bi bi-instagram"></i>
+    </a>
+
+</div>
         </div>
 
     <div class="footer-column">
@@ -438,11 +459,40 @@ $method = $this->router->fetch_method();
     </li>
 
 <li>
+    <a href="<?= site_url('Storage/storage'); ?>">Storage</a>
+</li>
+
+<li>
     <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
 </li>
 </ul>
     </div>
-        
+<div class="footer-company">
+  <span>
+    COMPANY
+  </span>
+
+  <ul>
+    <li>
+      <a href="<?= site_url('About/about');  ?>">About</a>
+    </li>
+
+      <li>
+      <a href="<?= site_url('Security/security');  ?>">Security</a>
+    </li>
+
+
+      <li>
+      <a href="<?= site_url('Careers/career');  ?>">Career</a>
+    </li>
+
+
+
+      <li>
+      <a href="<?= site_url('Contact/contact');  ?>">Contact</a>
+    </li>
+  </ul>
+</div>
 
  <div class="footer-legal">
 <span>
@@ -471,6 +521,7 @@ $method = $this->router->fetch_method();
 </div>
  </div>
 </footer>
+</div>
 
 
    <script src="<?= base_url('assets/vault.js'); ?>"></script>

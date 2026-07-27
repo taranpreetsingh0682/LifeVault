@@ -23,20 +23,15 @@ body{
    TOP HEADER
 ========================= */
 
-.container-fluid{
 
-    
-    
-    
-}
 
 /* ===================
 FOR NAVBAR */
 .navbar{
-    padding: 0 30px;
+    
     display: flex;
     
-    margin: 3px -21px;
+    
     align-items: center;
     justify-content: space-between;
     height: 58px;
@@ -47,32 +42,38 @@ FOR NAVBAR */
 /* =================
 navbar logo */
 .navbar-logo{
-    font-size: 22px;
+    font-size: 23px;
    margin-right: auto;
-    color: blue;
+    color: #0D1235;
    display: flex;
     gap: 10px;
     align-items: center;
 }
 .navbar-logo h4{
-font-size: 22px;
+font-size: 23px;
 margin: 0;
+font-family: emoji;
+color: #0D1235;
+font-weight: 700;
 
+}
+.bg-light{
+    background-color: #ffffff;
 }
 
 .navbar-menu{
     font-size: 22px;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 15px;
     
    
 
 }
 .navbar-menu a{
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 500;
-    color: #a0a0a0;
+    color: #0D1235;
     text-decoration: none;
 }
 .navbar-menu a:hover{
@@ -81,11 +82,11 @@ margin: 0;
     border-radius: 8px;
 }
 .navbar-menu a.active {
-    background-color: #2563eb;
+    background-color: #0D1235;
     color: white;
-    border-radius: 8px;
-    padding: 1px 21px;
-     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    border-radius: 22px;
+    padding: 6px 14px;
+     
 }
 
 
@@ -131,7 +132,7 @@ margin: 0;
 ========================= */
 
 
-.container{
+.first-layout{
 
     width:100%;
 
@@ -143,8 +144,7 @@ margin: 0;
 
 
     background-color: #F6F7FB;
-background-image: radial-gradient(#E4E8F5 13px, transparent 1px);
-background-size: 21px 23px;
+
 
 
 }
@@ -281,7 +281,7 @@ IMAGES AADHAR */
     width: 153px;
     min-height: 109px;
     border-radius: 14px;
-    margin: 24px;
+    margin: 12px;
     background-color: white;
     
 }
@@ -452,6 +452,8 @@ Users trust */
     border-right: 2px solid #E5E7EB;
     min-height: 70px;
 }
+
+
 /* ============================
 FEATURE-ITEM FOR LEFT-PANEL */
 
@@ -596,7 +598,6 @@ trust-rating */
     font-size:15px;
 }
 
-
 /* ==========
 WHY  LIFEVAULT */
 .after-container{
@@ -612,6 +613,9 @@ WHY  LIFEVAULT */
 
 .why-vault span{
     font-size: 12px;
+    color: blue;
+    font-family: emoji;
+    font-weight: 700;
     
 }
 .text-vault{

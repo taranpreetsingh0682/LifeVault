@@ -23,19 +23,15 @@ body{
    TOP HEADER
 ========================= */
 
-.container-fluid{
 
-     margin: -2px 2px;
-    
-}
 
 /* ===================
 FOR NAVBAR */
 .navbar{
-       padding: 0 30px;
+    
     display: flex;
     
-    margin: 3px -21px;
+    
     align-items: center;
     justify-content: space-between;
     height: 58px;
@@ -46,32 +42,38 @@ FOR NAVBAR */
 /* =================
 navbar logo */
 .navbar-logo{
-    font-size: 22px;
+    font-size: 23px;
    margin-right: auto;
-    color: blue;
+    color: #0D1235;
    display: flex;
     gap: 10px;
     align-items: center;
 }
 .navbar-logo h4{
-font-size: 22px;
+font-size: 23px;
 margin: 0;
+font-family: emoji;
+color: #0D1235;
+font-weight: 700;
 
+}
+.bg-light{
+    background-color: #ffffff;
 }
 
 .navbar-menu{
     font-size: 22px;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 15px;
     
    
 
 }
 .navbar-menu a{
-   font-size: 22px;
+    font-size: 17px;
     font-weight: 500;
-    color: #a0a0a0;
+    color: #0D1235;
     text-decoration: none;
 }
 .navbar-menu a:hover{
@@ -79,14 +81,17 @@ margin: 0;
     color: #2563eb;
     border-radius: 8px;
 }
-
 .navbar-menu a.active {
-    background-color: #2563eb;
+    background-color: #0D1235;
     color: white;
-    border-radius: 8px;
-    padding: 1px 21px;
-     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    border-radius: 22px;
+    padding: 6px 14px;
+     
 }
+
+
+
+
 
 
 .container-fluid h1{
@@ -564,7 +569,8 @@ FOOTER */
     
 }
 .project-name i{
-    font-size: 20px;
+    font-size: 23px;
+    color:  #C9A227;
 }
 .project-p{
 color: #8A9BB8;
@@ -574,7 +580,8 @@ color: #8A9BB8;
     font-size: 12px;
 }
 .project-name span{
-    font-size: 20px;
+    font-size: 23px;
+    font-family: emoji;
 }
 
 .footer-complete{
@@ -626,7 +633,62 @@ color: #8A9BB8;
     padding: 1px 6px;
 }
 
+/* =====
+FOOTER COMPANY */
 
+.footer-company span{
+    
+    font-size: 17px;
+    color: white;
+}
+
+.footer-company ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-company li{
+    padding: 0;
+    margin: 11px 0px;
+
+}
+.footer-company a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+
+
+/* ======
+SOCIAL  */
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #29305F;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 18px;
+
+    transition: 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color:  #C9A227;
+    transform: translateY(-3px);
+}
 .footer-reserved{
     display: flex;
     justify-content: center;
@@ -635,7 +697,6 @@ color: #8A9BB8;
     font-size: 14px;
     color: #8A9BB8;
 }
-
 
 
 

@@ -31,9 +31,9 @@ $method = $this->router->fetch_method();
 
 
 
-   <div class="container-fluid">
+  
    
-<nav class="navbar navbar-dark bg-light">
+<nav class="navbar navbar-dark ">
   <div class="navbar-logo">
     <i class="bi bi-shield-lock-fill">
 
@@ -49,23 +49,23 @@ $method = $this->router->fetch_method();
   <a href="<?= site_url('Auth/Home'); 
   ?>"
   class="<?= ($method =='Home')? 'active': ''; ?>">
-  <i class="bi bi-house"></i>Home</a>
+  Home</a>
 
   <a href="<?= site_url('Auth/login'); 
-  ?>" class="<?= ($method=='Login')? 'active': ''; ?>"><i class="bi bi-key"></i>Login</a>
+  ?>" class="<?= ($method=='Login')? 'active': ''; ?>">Login</a>
 
   <a href="<?= site_url('Auth/register'); ?>"
-  class="<?= ($method=='register')? 'active': ''; ?>"><i class="bi bi-person-add"></i>Register</a>
+  class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
   
 </div>
 
 </nav>
-   </div>
+   
 
    <!-- <section class="container my-4 bg-dark text-light py-4 "> -->
-    <section class="container my-5">
+    <section class=" my-5">
     
-       <div class="container">
+       <div class="container   first-layout">
     <div class="logo-item">
        <i class="bi bi-shield-lock">
    
@@ -129,14 +129,17 @@ $method = $this->router->fetch_method();
 
         <span>4.9 / 5</span>
     </div>
-
 </div>
+       
+       </div>
+    </section>
+   
 
 
-</section>
+
 <hr class="after-container">
 <div class="section-vault">
-  <div class="container  vault-support">
+  <div class="container vault-support">
 <div class="why-vault">
   <span>
     WHY LIFEVAULT
@@ -153,8 +156,9 @@ $method = $this->router->fetch_method();
   </p>
 </div>
 
-<div class="row">
-  <div class="middle">
+
+  <div class="row">
+         <div class="middle">
   <div class="col-md-3  vault-card">
     <div class="vault-icon">
       <i class="bi bi-shield-check"></i>
@@ -177,7 +181,7 @@ $method = $this->router->fetch_method();
 <!-- 2nd card -->
 
 
- <div class="col-md-3  vault-card">
+ <div class=" col-md-3 vault-card">
     <div class="vault-icon">
       <i class="bi bi-shield-check"></i>
 
@@ -193,43 +197,46 @@ $method = $this->router->fetch_method();
       <p>
         Documents are auto-sorted into categorized with tags , search , and filters , so you can find them instantly. 
       </p>
-    </div>
+
+
+
+
+
+</div>
  </div>
-  
 
-<!-- 3rd card -->
+  <!-- 3rd card -->
 
 
- <div class="col-md-3  vault-card">
+
+   <div class=" col-md-3 vault-card">
     <div class="vault-icon">
-      <i class="bi bi-person"></i>
+      <i class="bi bi-shield-check"></i>
 
    
     </div>
     <div class="vault-span">
        <span>
-        Access Anywhere 
+        Smart organization
       </span>
     </div>
 
     <div class="vault-p">
       <p>
-        Securely access your documents anytime, anywhere-on any device you own or trust. 
+        Documents are auto-sorted into categorized with tags , search , and filters , so you can find them instantly. 
       </p>
-    </div>
- 
- 
+
+
+
+
+
+</div>
  </div>
+  
+</div>
+</div>
   </div>
-
-
 </div>
-
-  
-  
-</div>
-</div>
-
 
 
 
@@ -682,7 +689,8 @@ $method = $this->router->fetch_method();
 </div>
  </div>
 </footer>
-</div>
+
+
 
 
 
