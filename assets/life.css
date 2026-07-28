@@ -132,8 +132,12 @@ font-weight: 700;
 
 .left-panel i{
 
-    font-size:24px;
-    color:#140de6;
+    font-size:12px;
+    color: #e1c45a;
+    padding: 10px 2px;
+  
+
+   
 }
 
 
@@ -159,8 +163,9 @@ font-weight: 700;
 }
 .left-panel h1{
     font-size: 32px;
-    color: antiquewhite;
+    
     font-family: emoji;
+    color: #E8D59A;
 }
 .left-panel h4{
     color: #140de6;
@@ -168,25 +173,37 @@ font-weight: 700;
 
 /* ============================
 FEATURE-ITEM FOR LEFT-PANEL */
+.features-setup{
+   /* just container */
+}
+
+
+
 
 .feature-item{
     
     color: #cac9d7;
     display: flex;
-    gap: 15px;
     align-items: center;
     border-radius: 12px;
     transition: 0.4s ease;
+    padding: 7px 0px;
 }
 /* .feature-item h4{
     margin: 0;
 } */
-.feature-item:hover{
+/* .feature-item:hover{
     background:#eef2ff;
     transform: translateX(8px);
-}
+} */
 .feature-item i{
 transition: .3s;
+color: #C6A64D;
+background-color: #312B3B;
+padding: 3px 11px;
+border: 1px solid #5C4A28;
+border-radius: 11px;
+
 }
 .feature-item :hover i{
     transform: scale(1.15);
@@ -194,6 +211,10 @@ transition: .3s;
 }
 .feature-item span{
     font-size: 18px;
+    font-style: normal;
+    padding: 6px 11px;
+    color: white;
+    background-color: none;
 }
 
 
@@ -209,10 +230,16 @@ LOGO FOR SHIELD LOCK */
     display: flex;
     gap: 10px;
     align-items: center;
+    background-color: #2B2946;
+    padding: 0px 5px;
+    margin: 41px 0px;
+    width: 276px;
+    border-radius: 11px;
+    border: 1px solid #4A4768;
 }
 .logo-item h4{
     margin: 0;
-    padding: 41px 0px;
+    color: #F3EEDC;
 }
 
 

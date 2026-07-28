@@ -589,10 +589,7 @@ $method = $this->router->fetch_method();
 
         <div class="social-icons">
 
-    <a href="#" class="social-icon">
-        <i class="bi bi-facebook"></i>
-    </a>
-
+    
     <a href="#" class="social-icon">
         <i class="bi bi-twitter"></i>
     </a>
@@ -601,10 +598,7 @@ $method = $this->router->fetch_method();
         <i class="bi bi-linkedin"></i>
     </a>
 
-    <a href="#" class="social-icon">
-        <i class="bi bi-instagram"></i>
-    </a>
-
+    
 </div>
         </div>
 

@@ -65,18 +65,20 @@ $method = $this->router->fetch_method();
     <section class="container my-5">
       <div class="main-box">
        <div class="left-panel">
+        
     <div class="logo-item">
-       <i class="bi bi-shield-lock-fill">
+       <i class="bi bi-circle-fill">
    
        </i>
-       <h4 style="color: blue;">
-        Secure,Private,Yours
+       <h4>
+        Secure.Private.Yours
        </h4>
     </div>
+        
        <h2>
         Secure Your Documents.
        </h2>
-       <h1 style="color: blue;">Protect Your Future.</h1>
+       <h1>Protect Your Future.</h1>
      
        <div class="paragraph-item">
        <p>
@@ -87,13 +89,13 @@ $method = $this->router->fetch_method();
         
        </p>
        </div>
-      
+    <div class="container  features-setup">
   <div class="feature-item">
-    <i class="bi bi-folder-check">
+    <i class="bi bi-check">
 
     </i>
     <span>
-      Easy Access
+      Easy Access to every document
     </span>
     
    
@@ -101,38 +103,29 @@ $method = $this->router->fetch_method();
   </div>
 
   <div class="feature-item">
-   <i class="bi bi-file-earmark-text-fill">
+   <i class="bi bi-file-earmark-text">
 
    </i>
    <span>
-    Digital Record
+    Digital records,always in sync
    </span>
   </div>
 
   <div class="feature-item">
-    <i class="bi bi-person-vcard">
-      <span>Aadhaar</span>
-    </i>
+    <i class="bi bi-credit-card"></i>
+      <span>Aadhaar & PAN, safely stored</span>
+    
   </div>
 
   <div class="feature-item">
-    <i class="bi bi-card-heading">
-      <span>PAN</span>
-    </i>
+    <i class="bi bi-award"></i>
+      <span>Certifications, verified & ready</span>
+    
   </div>
-  <div class="feature-item">
-    <i class="bi bi-award">
-      <span>Certifications</span>
-    </i>
-  </div>
+    </div>
+  
 
-  <div class="feature-item">
-    <i class="bi bi-file-earmark-pdf">
-      <span>
-        PDF
-      </span>
-    </i>
-  </div>
+ 
        </div> 
 
      <div class="right-panel">
@@ -230,6 +223,7 @@ $method = $this->router->fetch_method();
 <div class="col-12">
   
  <div class="col-12" >
+  
     <button  type="google" class="btn google-btn">Continue with Gmail</button>
  
   </div>
@@ -276,9 +270,7 @@ $method = $this->router->fetch_method();
 
         <div class="social-icons">
 
-    <a href="#" class="social-icon">
-        <i class="bi bi-facebook"></i>
-    </a>
+   
 
     <a href="#" class="social-icon">
         <i class="bi bi-twitter"></i>
@@ -288,9 +280,7 @@ $method = $this->router->fetch_method();
         <i class="bi bi-linkedin"></i>
     </a>
 
-    <a href="#" class="social-icon">
-        <i class="bi bi-instagram"></i>
-    </a>
+    
 
 </div>
         </div>

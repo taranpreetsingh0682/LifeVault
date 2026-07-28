@@ -113,20 +113,7 @@ font-weight: 700;
 .main-box{
 
     display:flex;
-    border-style: dashed;
-    border-color: #ff0018;
-
-    width:100%;
-
-    background:rgb(255, 255, 255);
-
-    border-radius:15px;
-
-    overflow:hidden;
-
-    box-shadow:
-    0 15px 40px rgba(12, 69, 228, 0.832);
-
+ 
 }
 
 
@@ -138,17 +125,14 @@ font-weight: 700;
 
 .left-panel{
 
-    width:60%;
+    width: 50%;
 
-    background:linear-gradient(
-        180deg,
-        #fd7e1457,
-        #251ee15c
-    );
+    background-color: #0D1235;
 
-    color:rgb(7, 7, 7);
 
-    padding:70px 35px;
+    padding: 23px 49px;
+    border-radius: 4px;
+
 
 
 }
@@ -156,18 +140,19 @@ font-weight: 700;
 
 .left-panel i{
 
-    font-size:24px;
-    color:blue;
+
+    
 }
 
 
 .left-panel h2{
 
-    margin-top:40px;
 
-    font-size:25px;
 
-    font-weight:700;
+    font-size: 30px;
+    color: white;
+    font-family: emoji;
+    padding: 25px 5px;
 
 }
 
@@ -183,8 +168,9 @@ font-weight: 700;
 
 }
 .left-panel h1{
-    font-size: 24px;
-    color: blue;
+    font-size: 30px;
+    color: #F3EEDC;
+    padding: 0px 5px;
     font-weight: bold;
 }
 .left-panel h4{
@@ -196,13 +182,14 @@ font-weight: 700;
 FEATURE-ITEM FOR LEFT-PANEL */
 
 .feature-item{
-    padding: 1px;
+    
     color: #140de6;
     display: flex;
     gap: 15px;
     align-items: center;
     border-radius: 12px;
     transition: 0.4s ease;
+    padding: 7px 0px;
 }
 /* .feature-item h4{
     margin: 0;
@@ -213,7 +200,11 @@ FEATURE-ITEM FOR LEFT-PANEL */
 }
 .feature-item i{
 transition: .3s;
-color: darkslategrey;
+color: #C6A64D;
+background-color: #312B3B;
+padding: 3px 11px;
+border: 1px solid #5C4A28;
+border-radius: 11px;
 }
 .feature-item :hover i{
     transform: scale(1.15);
@@ -221,6 +212,16 @@ color: darkslategrey;
 }
 .feature-item span{
     font-size: 18px;
+    font-style: normal;
+    padding: 12px 1px;
+    color: white;
+    
+}
+.feature-item p{
+    font-size: 15px;
+    color: #A8A7B8;
+    margin: 0;
+
 }
 
 .final{
@@ -300,25 +301,30 @@ LINE */
 LOGO FOR SHIELD LOCK */
 
 .logo-item{
-    padding: 1px;
-    color: #140de6;
+    
     display: flex;
     gap: 10px;
     align-items: center;
 }
+.logo-item i{
+    font-size: 17px;
+    color: #D4AF37;
+}
 .logo-item h4{
     margin: 0;
     font-size: 17px;
+    color: #F3EEDC;
 }
 
 
 /* ===================
 PARAGRAPH  */
 .paragraph-item h6{
-    color: rgb(0, 0, 0);
     
     
-    font-size: 24px;
+    color: #A8A7B8;
+
+    font-size: 20px;
    
    
 }
@@ -341,22 +347,20 @@ email and password font size */
 
 .right-panel{
 
-    width:50%;
+    width:48%;
     
-    padding:40px;
-    border-radius: 45px;
+    padding: 73px 61px;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     
 
-    margin: 20px;
-    border-style: dashed;
-    border-color: #ff6500;
+    border: 2px solid #f1ecec;
 
-    background: #f8f9fa;
+    background: white;
 
-    color:rgb(6, 6, 6);
+  
 
 }
 /* ================
@@ -424,13 +428,18 @@ login to access your vault */
     border-radius:8px;
 
     border:none;
+    background-color: #f8f9fa;
 
 }
 .form-control::placeholder{
-    font-size: 22px;
+    font-size: 13px;
 }
-
-
+.middle{
+    display: flex;
+}
+.col-md-6{
+    padding: 0px 0px;
+}
 .input-group-text{
 
     background: white;
@@ -439,12 +448,12 @@ login to access your vault */
     color:rgb(7, 6, 6);
 
     border:none;
-    size: 12px;
+    padding: 0;
 
 }
 .input-group{
     margin: 1px;
-    width: 423px;
+    width: 100%;
 }
 
 

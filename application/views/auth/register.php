@@ -67,17 +67,17 @@ $method = $this->router->fetch_method();
       <div class="main-box">
        <div class="left-panel">
     <div class="logo-item">
-       <i class="bi bi-shield-lock-fill">
+       <i class="bi bi-circle-fill">
    
        </i>
-       <h4 style="color: blue;">
+       <h4>
         Secure,Private,Yours
        </h4>
     </div>
        <h2>
-        Create Your
+        Create Your LifeVault
        </h2>
-       <h1 style="color: blue;">LifeVault.</h1>
+     
        <h1>
         Secure Your Future.
        </h1>
@@ -85,90 +85,64 @@ $method = $this->router->fetch_method();
      
        <div class="paragraph-item">
        <p>
-        <h6 style="font-family: Georgia, 'Times New Roman', Times, serif;" >
+        <h6>
           Create your LifeVault account to securely store,organize and protect your important documents anytime,anywhere.
         </h6>        
 
         
        </p>
        </div>
-      
+      <div class=" container features-view">
   <div class="feature-item">
-    <i class="bi bi-person-fill">
+    <i class="bi bi-shield">
 
     </i>
-    <h4>Secure Registration
-
-    </h4>
+    <div class="features-text">
+    <span>
+      Secure registration
+    </span>
+   
+    
+   
     <p>
       Your data is encrypted and protected from unauthorized access.
     </p>
-    
-   
-    
-  </div>
+    </div>
+  </div>  
 
   <div class="feature-item">
-   <i class="bi bi-file-earmark-text-fill">
+   <i class="bi bi-file-earmark-text">
 
    </i>
-   <h4>
-    Supported Documents
-   </h4>
-   <p>
-    Upload and organize your important documents,including identity cards, certificates,results and PDFs.
-   </p>
+   <div class="features-text">
+   <span>
+    Supported documents
+   </span>
    
+  <p>
+    Upload identity cards,certificates,results and PDFs, all in one
+  </p>
+   
+ 
+   </div>
   </div>
 
   <div class="feature-item">
-    <i class="bi bi-shield-lock-fill">
+    <i class="bi bi-shield-check">
 
     </i>
-    <h4>
+    <div class="features-text">
+    <span>
       Why Choose LifeVault?
-    </h4>
+    </span>
+
     <p>
-      Protect your personal and official documents with advanced security, cloud accessibility, and an organized digital vault.
+      Advanced security, cloud accessibility , and an organized digital vault
     </p>
+    </div>
   </div>
-<div class="register-image"
-  <img src="<?= base_url('assets/images/register.png'); ?>" alt="Register">
        </div>
-       <div class="final">
-    <i class="bi bi-lock"></i>
-       </div>
-
-       <div class="final-sec">
-      
-          <span>
-            Secure
-          </span>
-      
-       </div>
-
-       <hr class="line">
-       <div class="final-third">
-        <i class="bi bi-file-earmark"></i>
-       </div>
-
-       <div class="text">
-       <span>
-        Organized
-       </span>
-       </div>
-
-       <hr class="line">
-
-       <div class="final-fourth">
-        <i class="bi bi-cloud"></i>
-       </div>
-       <div class="text-4">
-        <span>
-          Accessible
-        </span>
-       </div>
-       </div> 
+  </div>   
     
 
      <div class="right-panel">
@@ -193,8 +167,7 @@ $method = $this->router->fetch_method();
     <?php echo form_open_multipart('auth/login',['class'=>'row g-3']);  ?>
 
 
-  <div class="row">
-  <div class="col-md-6">
+  
     <label for="validationcustom1" class="form-label">Full Name
       <span class="text-primary">*</span>
     </label>
@@ -212,8 +185,10 @@ $method = $this->router->fetch_method();
     required>
     </div>
     <br>
-  <div class="row">
-  <div class="col-md-6">
+   <div class="row">
+    <div class="col-md-6">
+      <div class="middle">
+        <div class="middle-2">
     <label for="validationcustom1" class="form-label">Phone Number
       <span class="text-primary">*</span>
     </label>
@@ -230,9 +205,10 @@ $method = $this->router->fetch_method();
     placeholder="Enter your phone number"
     required>
     </div>
+        </div>
 
-   <div class="col-md-6">
-
+  
+<div class="middle-3">
         <label class="form-label">
             Country
             <span class="text-primary">*</span>
@@ -264,12 +240,15 @@ $method = $this->router->fetch_method();
             </select>
 
         </div>
-
+</div>
+      </div>
     </div>
+   </div>
+    
 
  
     
-  <div class="col-md-6">
+  
   <label for="validationcustom1" class="form-label">Email Address
   <span class="text-primary">*</span>
   </label>
@@ -287,21 +266,29 @@ $method = $this->router->fetch_method();
     required>
 
   </div>
-</div>
 
 
-</div>
+
+
 
 
 
 
   
-  <div class="col-md-6">
-    <label for="validationcustom2" class="form-label">Password
+   
+<div class="row">
+
+<div class="col-md-6">
+
+  <div class="middle">
+
+    <div class="middle-2">
+
+     <label for="validationcustom2" class="form-label">Password
       <span class="text-primary">*</span>
     </label>
-
     <div class="input-group">
+       
       <span class="input-group-text">
         <i class="bi bi-lock"></i>
       </span>
@@ -322,11 +309,12 @@ $method = $this->router->fetch_method();
   <i class="bi bi-eye" id="eyeIcon"></i></span>
     
     </div>
+    
+    </div>
+  
+  
 
-  </div>
-  </div>
-
-   <div class="col-md-6">
+   <div class="middle-3">
     <label for="validationcustom2" class="form-label">Confirm Password
       <span class="text-primary">*</span>
     </label>
@@ -352,17 +340,21 @@ $method = $this->router->fetch_method();
   <i class="bi bi-eye" id="eyeIcon"></i></span>
     
     </div>
-
+   </div>
+    
   </div>
-  </div>
-
+</div>
+</div>
+  
+  
+  
 
   
 
-    <div class="col-12" >
+    
     <button  type="login" class="btn btn-primary">Login</button>
  
-  </div>
+  
      
   <!-- Divider for gmail -->
 
@@ -373,7 +365,6 @@ $method = $this->router->fetch_method();
   </div>
        
 
-<div class="col-12">
   <button type="gmail" class="btn google-btn">
     <i class="bi bi-google">
     
@@ -381,25 +372,24 @@ $method = $this->router->fetch_method();
  
     Continue with Gmail
   </button>
-</div>
+
 
 <div class="register-item">
   <span>
     Don't have an account?
   </span>
   
-  </a>
-</div>
-
-<div class="register-choose">
   <a href="<?= site_url('auth/login'); ?>" class="login-link">
 
   Login
   </a>
-    
+  
 </div>
-</div>
+
+
+
    <?php echo form_close();?>
+     </div>
 </section>
 
  <footer>
@@ -421,9 +411,7 @@ $method = $this->router->fetch_method();
 
         <div class="social-icons">
 
-    <a href="#" class="social-icon">
-        <i class="bi bi-facebook"></i>
-    </a>
+   
 
     <a href="#" class="social-icon">
         <i class="bi bi-twitter"></i>
@@ -433,9 +421,7 @@ $method = $this->router->fetch_method();
         <i class="bi bi-linkedin"></i>
     </a>
 
-    <a href="#" class="social-icon">
-        <i class="bi bi-instagram"></i>
-    </a>
+    
 
 </div>
         </div>
