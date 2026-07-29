@@ -63,9 +63,10 @@ $method = $this->router->fetch_method();
    
 
    <!-- <section class="container my-4 bg-dark text-light py-4 "> -->
-    <section class=" my-5">
+    <section class="Home-first my-5">
     
        <div class="container   first-layout">
+    <div class="Middle">
     <div class="logo-item">
        <i class="bi bi-shield-lock">
    
@@ -130,6 +131,7 @@ $method = $this->router->fetch_method();
         <span>4.9 / 5</span>
     </div>
 </div>
+</div>
        
        </div>
     </section>
@@ -137,7 +139,7 @@ $method = $this->router->fetch_method();
 
 
 
-<hr class="after-container">
+
 <div class="section-vault">
   <div class="container vault-support">
 <div class="why-vault">
@@ -195,7 +197,7 @@ $method = $this->router->fetch_method();
 
     <div class="vault-p">
       <p>
-        Documents are auto-sorted into categorized with tags , search , and filters , so you can find them instantly. 
+        Documents are auto-sorted into categories,Identity cards,PDFs and certificates 
       </p>
 
 
@@ -217,13 +219,13 @@ $method = $this->router->fetch_method();
     </div>
     <div class="vault-span">
        <span>
-        Smart organization
+        Access anywhere
       </span>
     </div>
 
     <div class="vault-p">
       <p>
-        Documents are auto-sorted into categorized with tags , search , and filters , so you can find them instantly. 
+        Retrieve or share any document securely from your phone , tablet or desktop-anytime.
       </p>
 
 
@@ -269,10 +271,12 @@ $method = $this->router->fetch_method();
 
 <div class="row">
   <div class="middle">
-<div class=" col-md-3 doc-card">
+<div class=" col-md-2 col-6 doc-card">
    <div class="row">
-    <div class="col-md-3 icons">
+    <div class="middle">
+    <div class="col-md-2 col-6 icons">
       <i class="bi bi-person-vcard"></i>
+    </div>
      
     </div>
 
@@ -287,9 +291,10 @@ $method = $this->router->fetch_method();
 </div>
 
 
-<div class=" col-md-3 doc-card">
-   <div class="row">
-    <div class="col-md-3 icons">
+<div class=" col-md-2 col-6 doc-card">
+   <div class="middle">
+    <div class="col-md-2 col-6 icons">
+
       <i class="bi bi-person"></i>
      
     </div>
@@ -303,14 +308,16 @@ $method = $this->router->fetch_method();
 
 </div>
 
-<div class=" col-md-3 doc-card">
-   <div class="row">
-    <div class="col-md-3 icons">
+<div class=" col-md-2 col-6 doc-card">
+   <div class="middle">
+    <div class="col-md-2 col-6 icons">
+
       <i class="bi bi-patch-check"></i>
      
     </div>
-
    </div>
+
+   
    <div class="s-mid">
     <span>
       Certificates
@@ -320,14 +327,16 @@ $method = $this->router->fetch_method();
 
 
 
-<div class=" col-md-3 doc-card">
-   <div class="row">
-    <div class="col-md-3 icons">
+<div class=" col-md-2 col-6 doc-card">
+   <div class="middle">
+    <div class="col-md-2 col-6 icons">
+
       <i class="bi bi-file-earmark-pdf"></i>
      
     </div>
-
    </div>
+
+   
    <div class="s-mid">
     <span >    
       PDFs
@@ -336,9 +345,9 @@ $method = $this->router->fetch_method();
 </div>
 
 
-<div class=" col-md-3 doc-card">
-   <div class="row">
-    <div class="col-md-3 icons">
+<div class=" col-md-2 col-6 doc-card">
+   <div class="middle">
+      <div class="col-md-2 col-6 icons">
       <i class="bi bi-image"></i>
      
     </div>
@@ -354,10 +363,10 @@ $method = $this->router->fetch_method();
 
 
 
-<div class=" col-md-3 doc-card">
-   <div class="row">
-    <div class="col-md-3 icons">
-      <i class="bi bi-clipboard-check"></i>
+<div class=" col-md-2 col-6 doc-card">
+   <div class="middle">
+    <div class="col-md-2 col-6 icons">
+  <i class="bi bi-clipboard-check"></i>
      
     </div>
 
@@ -408,7 +417,8 @@ $method = $this->router->fetch_method();
     <!-- step-1 -->
      <div class="row">
       <div class="middle-set">
-<div class="col-md-3 step-card">
+<div class="col-md-3
+step-card">
     <div class="step-number">
       
         01
@@ -428,7 +438,8 @@ $method = $this->router->fetch_method();
 <!-- step-2 -->
 
 
-<div class="col-md-3 step-card">
+<div class="col-md-3
+step-card">
     <div class="step-number">
       
         02
@@ -449,7 +460,8 @@ $method = $this->router->fetch_method();
   <!-- 3rd step -->
 
 
-  <div class="col-md-3 step-card">
+  <div class="col-md-3
+  step-card">
     <div class="step-number">
       
         03
@@ -498,7 +510,8 @@ $method = $this->router->fetch_method();
 
 <!-- 2nd card -->
 
-    <div class="col-md-3 users-card">
+    <div class="col-md-3
+    users-card">
       <div class="users-text">
       <span>
         256-bit

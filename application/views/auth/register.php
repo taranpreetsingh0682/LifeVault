@@ -142,6 +142,16 @@ $method = $this->router->fetch_method();
     </div>
   </div>
        </div>
+<!-- <div class="feature-parent">
+       <hr class="feature-line">
+</div> -->
+
+
+<div class="Secure-item">
+  <i class="bi bi-lock"></i>
+  <i class="bi bi-file-earmark"></i>
+  <i class="bi bi-cloud"></i>
+</div>
   </div>   
     
 
@@ -352,7 +362,7 @@ $method = $this->router->fetch_method();
   
 
     
-    <button  type="login" class="btn btn-primary">Login</button>
+    <button  type="login" class="btn btn-primary">Create account</button>
  
   
      
@@ -376,7 +386,7 @@ $method = $this->router->fetch_method();
 
 <div class="register-item">
   <span>
-    Don't have an account?
+    Already have an account?
   </span>
   
   <a href="<?= site_url('auth/login'); ?>" class="login-link">

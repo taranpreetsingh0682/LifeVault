@@ -34,7 +34,7 @@ FOR NAVBAR */
     
     align-items: center;
     justify-content: space-between;
-    height: 58px;
+    padding: 0px 223px;
     background: white;
     border-bottom: 1px solid #E5E7EB;
     
@@ -131,7 +131,16 @@ font-weight: 700;
    LEFT PANEL
 ========================= */
 
+/* ==========
+Section */
 
+.Home-first{
+    background-color: #F8F7F0;
+}
+
+.Middle{
+    padding-left: 127px;
+}
 .first-layout{
 
     width:100%;
@@ -140,10 +149,10 @@ font-weight: 700;
 
     color:rgb(7, 7, 7);
 
-    padding: 0px 8px;
+    padding: 21px 8px;
 
 
-    background-color: #F6F7FB;
+    
 
 
 
@@ -175,7 +184,7 @@ text-field */
 }
 .document{
   background-color:#0D1235;
-  padding: 17px 34px; 
+  padding: 17px 25px; 
   margin: 3px;
   display: flex;
   justify-content: space-between;
@@ -229,8 +238,7 @@ justify-content: center;
 }
 
 .document-supported{
-    margin: 25px;
-    padding: 0px 67px;
+    background-color: #F8F7F0;
 }
 
 .file{
@@ -250,9 +258,9 @@ justify-content: center;
 
 .file-documents{
    
-    margin: 3px;
+    
     background-color:#F8F7F0;
-    padding: 8px 1px;
+    padding: 21px 239px;
     justify-content: space-between;
     align-items: center;
 
@@ -277,12 +285,12 @@ IMAGES AADHAR */
 
 
 .doc-card{
-    border: 2px solid #E2E8F0;;
-    width: 153px;
-    min-height: 109px;
+    border: 2px solid #E2E8F0;
     border-radius: 14px;
-    margin: 12px;
+
     background-color: white;
+    margin: 5px;
+
     
 }
 
@@ -300,7 +308,8 @@ IMAGES AADHAR */
     justify-content: center;
     background-color: #F1EDFF;
     border-radius: 14px;
-    margin: 0px 62px;
+    margin: auto;
+    padding: 4px 23px;
 }
 .icons i{
     color: #6C63FF;
@@ -310,12 +319,16 @@ IMAGES AADHAR */
     margin: 0px 28px;
 }
 
-
+/* ========
+section */
+.working{
+    background-color: #0D1235;
+}
 /* ============
 .container-work */
 .works-segment{
     background-color: #0D1235;
-    min-height: 123px;
+    padding: 20px 70px;
 }
 .text-fields{
     display: flex;
@@ -350,9 +363,8 @@ IMAGES AADHAR */
 /* =====
 STEP CARD */
 .step-card{
-    margin: 12px;
-    width: 298px;
-    min-height: 123px;
+   
+    margin: 18px;
     background-color: #1b1f43;
     border: 2px solid;
     border-radius: 11px;
@@ -415,9 +427,9 @@ doc-card */
 /* =============
 Users trust */
 .users-trust{
-    min-height: 103px;
-    border: 2px solid #00000017;
-    margin: -8px 0px;
+    
+    border: 1px solid #00000017;
+    margin: auto;
 }
 
 
@@ -442,7 +454,7 @@ Users trust */
 .users-p{
     display: flex;
     justify-content: center;
-    margin: -15px 0px;
+    
 }
 .users-p p{
     font-size: 13px;
@@ -639,9 +651,7 @@ WHY  LIFEVAULT */
 
 .vault-card{
     border: 2px solid #51565c5c;
-    width: 291px;
-    min-height: 140px;
-    margin: 12px;
+    margin: 18px;
     border-radius: 11px;
     background-color: #F8F7F0;
 
@@ -675,12 +685,12 @@ LOGO FOR SHIELD LOCK */
     
     color: #140de6;
    display: flex;
-    gap: 6px;
+    gap: 20px;
     align-items: center;
     
 }
 .logo-item i{
-    margin: 9px;
+    
     background: white;
     border-bottom: 1px solid;
 }
@@ -719,15 +729,16 @@ email and password font size */
 }
 
 .document-section{
-  margin: 25px;
+  padding: 21px 182px;
 }
 
 
 /* ===================
 FOOTER */
 .footer-home{
-    min-height: 145px;
+    
     background-color: #0B1628;
+    padding: 12px 194px;
 }
 
 .project-name{
@@ -855,10 +866,7 @@ SOCIAL  */
     background-color:  #C9A227;
     transform: translateY(-3px);
 }
-.footer-reserved{
-    display: flex;
-    justify-content: center;
-}
+
 .footer-reserved span{
     font-size: 14px;
     color: #8A9BB8;

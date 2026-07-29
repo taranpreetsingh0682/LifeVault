@@ -34,7 +34,7 @@ FOR NAVBAR */
     
     align-items: center;
     justify-content: space-between;
-    height: 58px;
+    padding: 0px 223px;
     background: white;
     border-bottom: 1px solid #E5E7EB;
     
@@ -224,13 +224,30 @@ border-radius: 11px;
 
 }
 
+
+
+/* =======
+secure */
+
+.Secure-item{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 138px;
+    padding: 2px 57px;
+}
+.Secure-item i{
+    color: #C6A64D;
+    font-size: 20px;
+    border: 1px solid #5C4A28;
+    border-radius: 23px 23px;
+    padding: 5px 9px;
+
+}
+
 .final{
     display: flex;
     justify-content: center;
 }
-  
-
-
 
 
 .final i{
@@ -378,8 +395,14 @@ Forget link */
     justify-content: flex-end;
     margin-top: 0;
 }
-
-
+.feature-line{
+    padding:1px 1px;
+    color: antiquewhite;
+}
+.feature-parent{
+    display: flex;
+    align-items: end;
+}
 .forget-item a{
     font-size: 16px;
     padding-right: 1px;
@@ -480,8 +503,8 @@ login to access your vault */
 .btn-primary{
 
 
-    background:#140de6;
-    font-size: 11px;
+    background-color: #0D1235;
+    font-size: 15px;
 
     border:none;
     /* margin-bottom: -100px; */
@@ -496,13 +519,14 @@ login to access your vault */
 /* =====================
 CONTINUE WITH GMAIL */
 .google-btn{
-    font-size: 13px;
+    font-size: 14px;
+    color: #0D1235;
     font-weight: 600;
     text-align: center;
     padding-right: 160px;
-    background: #ffffff;
+    background-color: transparent;
+    border: 1px solid #ddd;
     border-radius: 25px;
-    margin-top: -30px;
     padding-bottom: 10px;
     padding: 9px 126px;
     
@@ -542,12 +566,15 @@ Don't have an account */
 
 .register-item{
     font-size: 15px;
-    padding-left: 168px;
+    display: flex;
+    justify-content: center;
 }
-.register-choose{
-    font-size: 14px;
-    padding-left: 210px;
-    margin-top: -2px;
+.register-item a{
+     
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 2px 5px;
 }
 
 
@@ -569,7 +596,7 @@ Don't have an account */
 /* ===================
 FOOTER */
 .footer-home{
-    min-height: 145px;
+    padding: 12px 194px;
     background-color: #0B1628;
 }
 

@@ -33,7 +33,7 @@ FOR NAVBAR */
     
     align-items: center;
     justify-content: space-between;
-    height: 58px;
+    padding: 0px 223px;
     background: white;
     border-bottom: 1px solid #E5E7EB;
     
@@ -506,7 +506,7 @@ Don't have an account */
 /* ===================
 FOOTER */
 .footer-home{
-    min-height: 145px;
+    padding: 12px 194px;
     background-color: #0B1628;
 }
 
