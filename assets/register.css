@@ -132,7 +132,7 @@ font-weight: 700;
 
     padding: 23px 49px;
     border-radius: 4px;
-
+   position: relative;
 
 
 }
@@ -152,7 +152,8 @@ font-weight: 700;
     font-size: 30px;
     color: white;
     font-family: emoji;
-    padding: 25px 5px;
+    padding: 0px 6px;
+    margin: 0;
 
 }
 
@@ -168,7 +169,7 @@ font-weight: 700;
 
 }
 .left-panel h1{
-    font-size: 30px;
+    font-size: 27px;
     color: #F3EEDC;
     padding: 0px 5px;
     font-weight: bold;
@@ -181,6 +182,11 @@ font-weight: 700;
 /* ============================
 FEATURE-ITEM FOR LEFT-PANEL */
 
+
+.features-view{
+    padding: 10px 0px;
+}
+
 .feature-item{
     
     color: #140de6;
@@ -189,15 +195,12 @@ FEATURE-ITEM FOR LEFT-PANEL */
     align-items: center;
     border-radius: 12px;
     transition: 0.4s ease;
-    padding: 7px 0px;
+    padding: 8px 0px;
 }
 /* .feature-item h4{
     margin: 0;
 } */
-.feature-item:hover{
-    background:#eef2ff;
-    transform: translateX(8px);
-}
+
 .feature-item i{
 transition: .3s;
 color: #C6A64D;
@@ -228,21 +231,50 @@ border-radius: 11px;
 
 /* =======
 secure */
+.secure-line{
+    position: absolute;
+    bottom: 0;
+    color:antiquewhite
+}
+
 
 .Secure-item{
     display: flex;
-    justify-content: space-between;
-    margin-top: 138px;
-    padding: 2px 57px;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 48px;
+    right: 20px;
+    left: 20px;
+
 }
 .Secure-item i{
     color: #C6A64D;
     font-size: 20px;
-    border: 1px solid #5C4A28;
+    border: 2px solid #5C4A28;
     border-radius: 23px 23px;
     padding: 5px 9px;
 
 }
+.Secure-item span{
+    color: #ffffff;
+    text-align: center;
+}
+.lock{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.files{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.clouds{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 
 .final{
     display: flex;
@@ -320,11 +352,13 @@ LOGO FOR SHIELD LOCK */
 .logo-item{
     
     display: flex;
-    gap: 10px;
+    gap: 2px;
     align-items: center;
+    margin: 0;
+    padding: 16px 3px;
 }
 .logo-item i{
-    font-size: 17px;
+    font-size: 13px;
     color: #D4AF37;
 }
 .logo-item h4{
@@ -366,7 +400,7 @@ email and password font size */
 
     width:48%;
     
-    padding: 73px 61px;
+    padding: 13px 50px;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -411,14 +445,14 @@ Forget link */
 /* ==============
 heading welcome */
 .text-center{
-    margin-top: -40px;
+    
 
 }
 /* =================
 login to access your vault */
 .text-muted{
     font-size: 12px;
-    margin-top: -11px;
+    
 }
 
 
@@ -590,6 +624,7 @@ Don't have an account */
 }
 .h2,h2{
     font-size: 13px;
+    margin: 0;
 }
 
 

@@ -84,13 +84,13 @@ $method = $this->router->fetch_method();
        
      
        <div class="paragraph-item">
-       <p>
+       
         <h6>
           Create your LifeVault account to securely store,organize and protect your important documents anytime,anywhere.
         </h6>        
 
         
-       </p>
+      
        </div>
       <div class=" container features-view">
   <div class="feature-item">
@@ -147,13 +147,45 @@ $method = $this->router->fetch_method();
 </div> -->
 
 
+
 <div class="Secure-item">
+  <div class="lock">
+    <div class="icon-mid">
   <i class="bi bi-lock"></i>
+    </div>
+
+<span>
+  Secure
+</span>
+  
+  
+  </div>
+  <div class="files">
+    <div class="icon-mid">
   <i class="bi bi-file-earmark"></i>
+    </div>
+  
+  <span>
+    Organized
+  </span>
+  
+
+  </div>
+  <div class="clouds">
+<div class="icon-mid">
   <i class="bi bi-cloud"></i>
 </div>
-  </div>   
-    
+      
+  <span>
+    Accessible
+  </span>
+      
+ 
+  </div>
+</div>
+       </div>
+       
+
 
      <div class="right-panel">
 
