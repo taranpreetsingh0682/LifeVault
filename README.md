@@ -44,7 +44,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 🔑 Login Page
 
-![Login](Screenshots/Loginpage.png.png)
+![Login](Screenshots/Login-Page-UI.png.png)
 
 ---
 
