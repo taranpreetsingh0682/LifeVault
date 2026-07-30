@@ -174,7 +174,7 @@ font-weight: 700;
 /* ============================
 FEATURE-ITEM FOR LEFT-PANEL */
 .features-setup{
-   /* just container */
+   padding: 0;
 }
 
 
@@ -203,6 +203,7 @@ background-color: #312B3B;
 padding: 3px 11px;
 border: 1px solid #5C4A28;
 border-radius: 11px;
+font-size: 19px;
 
 }
 .feature-item :hover i{
@@ -228,18 +229,19 @@ LOGO FOR SHIELD LOCK */
     
     color: #140de6;
     display: flex;
-    gap: 10px;
+    gap: 4px;
     align-items: center;
     background-color: #2B2946;
     padding: 0px 5px;
     margin: 41px 0px;
-    width: 276px;
-    border-radius: 11px;
+    width: 189px;
+    border-radius: 26px;
     border: 1px solid #4A4768;
 }
 .logo-item h4{
     margin: 0;
     color: #F3EEDC;
+    font-size: 15px;
 }
 
 
@@ -247,7 +249,9 @@ LOGO FOR SHIELD LOCK */
 PARAGRAPH  */
 .paragraph-item h6{
     color: rgb(174,175,189);
-    font-size: 20px;
+    font-size: 23px;
+    font-weight: 400;
+    padding: 0px 0px;
    
    
 }
@@ -256,7 +260,7 @@ email and password font size */
 
 .col-md-6{
    width: 100%;
-   padding: 0px 11px;
+   padding: 0px 42px;
 }
 
 
@@ -303,7 +307,9 @@ Forget link */
     font-size: 14px;
     display: flex;
     justify-content: flex-end;
-    padding: 0px 50px;
+    padding: 0px 56px;
+    margin: 0 1px 15px;
+
     
 }
 
@@ -436,10 +442,7 @@ CONTINUE WITH GMAIL */
     
 }
 
-.col-12{
-    
-    text-align: center;
-}
+
 
 .google-btn span{
     font-size: 11px;
@@ -475,7 +478,9 @@ Don't have an account */
 
 .register-item{
     font-size: 15px;
-    padding-left: 168px;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
 }
 .register-item span{
     font-size: 14px;
@@ -485,6 +490,7 @@ Don't have an account */
     font-size: 14px;
     text-decoration: none;
     font-weight: 700;
+    padding: 0;
 }
 
 
@@ -635,10 +641,7 @@ SOCIAL  */
     background-color:  #C9A227;
     transform: translateY(-3px);
 }
-.footer-reserved{
-    display: flex;
-    justify-content: center;
-}
+
 .footer-reserved span{
     font-size: 14px;
     color: #8A9BB8;

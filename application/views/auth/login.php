@@ -205,31 +205,31 @@ $method = $this->router->fetch_method();
 </a>
 
   </div>
-
-    <div class="col-12" >
+<div class="row">
+    <div class="col-md-6" >
     <button  type="login" class="btn btn-primary">Login</button>
  
   </div>
      
   <!-- Divider for gmail -->
 
-  <div class="divider">
+  <div class=" col-md-6 divider">
     <span>
       OR
     </span>
   </div>
        
 
-<div class="col-12">
+<div class="col-md-6">
   
- <div class="col-12" >
+ <div class="middle" >
   
     <button  type="google" class="btn google-btn">Continue with Gmail</button>
  
   </div>
 </div>
      
-  
+</div>
 
 
 <div class="register-item">
