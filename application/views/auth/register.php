@@ -206,187 +206,138 @@ $method = $this->router->fetch_method();
 
 
 </div>
+<div class="container  fields-set">
     <?php echo form_open_multipart('auth/login',['class'=>'row g-3']);  ?>
 
 
-  
-    <label for="validationcustom1" class="form-label">Full Name
-      <span class="text-primary">*</span>
-    </label>
+        <div class="row ">
 
-    <div class="input-group">
-      <span class="input-group-text">
-        <i class="bi bi-person"></i>
-      </span>
+            <!-- Full Name -->
+            <div class="col-12">
+                <label class="form-label">
+                    Full Name <span class="text-primary">*</span>
+                </label>
 
-    <input type="name" 
-    name="name"
-    class="form-control" 
-    id="inputname" 
-    placeholder="Enter your full name"
-    required>
-    </div>
-    <br>
-   <div class="row">
-    <div class="col-md-6">
-      <div class="middle">
-        <div class="middle-2">
-    <label for="validationcustom1" class="form-label">Phone Number
-      <span class="text-primary">*</span>
-    </label>
+                <div class="input-group">
+                    
+                        <i class="bi bi-person"></i>
+                   
 
-    <div class="input-group">
-      <span class="input-group-text">
-        <i class="bi bi-phone"></i>
-      </span>
+                    <input type="text"
+                    
+                           class="form-control"
+                           placeholder="Enter your full name"
+                           >
+                           
+                </div>
+            </div>
 
-    <input type="phone" 
-    name="phone"
-    class="form-control" 
-    id="inputphone" 
-    placeholder="Enter your phone number"
-    required>
-    </div>
-        </div>
+            <!-- Phone Number -->
+             <div class="row g-2">
+              <div class="parent-set">
+            <div class="col-md-6">
+                <label class="form-label">
+                    Phone Number <span class="text-primary">*</span>
+                </label>
 
-  
-<div class="middle-3">
-        <label class="form-label">
-            Country
-            <span class="text-primary">*</span>
-        </label>
+                <div class="input-group">
+                    
+                        <i class="bi bi-phone"></i>
+                    
 
-        <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Enter your phone number">
+                </div>
+            </div>
 
-            <span class="input-group-text">
-                <i class="bi bi-geo-alt"></i>
-            </span>
+            <!-- Country -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Country <span class="text-primary">*</span>
+                </label>
 
-            <select name="country" class="form-select">
+                <div class="input-group">
+                    
+                        <i class="bi bi-geo-alt"></i>
+                    
 
-                <option selected>Choose</option>
-                <option>Afghanistan</option>
-                <option>Albania</option>
-                <option>Algeria</option>
-                <option>Australia</option>
-                <option>Austria</option>
-                <option>Bangladesh</option>
-                <option>Canada</option>
-                <option>India</option>
-                <option>New Zealand</option>
-                <option>Sri Lanka</option>
-                <option>UAE</option>
-                <option>United Kingdom</option>
-                <option>United States</option>
-
-            </select>
-
-        </div>
-</div>
-      </div>
-    </div>
-   </div>
-    
-
- 
-    
-  
-  <label for="validationcustom1" class="form-label">Email Address
-  <span class="text-primary">*</span>
-  </label>
-  
-  <div class="input-group">
-    <span class="input-group-text">
-      <i class="bi bi-envelope"></i>
-    </span>
-
-    <input type="email"
-    name="email"
-    class="form-control"
-    id="inputEmail4"
-    placeholder="Enter your email address"
-    required>
-
-  </div>
+                    <select class="form-select">
+                        <option selected>Choose Country</option>
+                        <option>India</option>
+                        <option>USA</option>
+                        <option>Canada</option>
+                    </select>
+                </div>
+            </div>
+            </div>
 
 
+             </div>
 
+            <!-- Email -->
+            <div class="col-12">
+                <label class="form-label">
+                    Email Address <span class="text-primary">*</span>
+                </label>
 
+                <div class="input-group">
+                    
+                        <i class="bi bi-envelope"></i>
+                    
 
+                    <input type="email"
+                           class="form-control"
+                           placeholder="Enter your email address"
+                           autocomplete="off">
+                </div>
+            </div>
 
+            <!-- Password -->
 
+            <div class="parent-set">
+            <div class="col-md-6">
+                <label class="form-label">
+                    Password <span class="text-primary">*</span>
+                </label>
 
-  
-   
-<div class="row">
+                <div class="input-group">
+                   
+                        <i class="bi bi-lock"></i>
+                    
 
-<div class="col-md-6">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Password"
+                           autocomplete="new-password">
 
-  <div class="middle">
+                    
+                        <i class="bi bi-eye"></i>
+                    
+                </div>
+            </div>
 
-    <div class="middle-2">
+            <!-- Confirm Password -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Confirm Password <span class="text-primary">*</span>
+                </label>
 
-     <label for="validationcustom2" class="form-label">Password
-      <span class="text-primary">*</span>
-    </label>
-    <div class="input-group">
-       
-      <span class="input-group-text">
-        <i class="bi bi-lock"></i>
-      </span>
+                <div class="input-group">
+                    
+                        <i class="bi bi-lock"></i>
+                    
 
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Confirm Password">
 
-    <input type="password" 
-    name="password"
-    autocomplete="new-password"
-    
-    class="form-control"
-    id="password"
-    placeholder="password"
-    required>
-
-    <span class="input-group-text"
-    onclick="showPassword()"
-    style="cursor:pointer;">
-  <i class="bi bi-eye" id="eyeIcon"></i></span>
-    
-    </div>
-    
-    </div>
-  
-  
-
-   <div class="middle-3">
-    <label for="validationcustom2" class="form-label">Confirm Password
-      <span class="text-primary">*</span>
-    </label>
-
-    <div class="input-group">
-      <span class="input-group-text">
-        <i class="bi bi-lock"></i>
-      </span>
-
-
-    <input type="password" 
-    name="password"
-    autocomplete="new-password"
-    
-    class="form-control"
-    id="password"
-    placeholder="confirm password"
-    required>
-
-    <span class="input-group-text"
-    onclick="showPassword()"
-    style="cursor:pointer;">
-  <i class="bi bi-eye" id="eyeIcon"></i></span>
-    
-    </div>
-   </div>
-    
-  </div>
-</div>
-</div>
+                
+                        <i class="bi bi-eye"></i>
+                    
+                </div>
+            </div>
+            </div>
   
   
   
@@ -432,6 +383,7 @@ $method = $this->router->fetch_method();
 
    <?php echo form_close();?>
      </div>
+</div>
 </section>
 
  <footer>

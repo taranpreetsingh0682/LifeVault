@@ -382,10 +382,9 @@ PARAGRAPH  */
 /* ==================
 email and password font size */
 
-.col-md-6{
+/* .col-md-6{
    width: 123%;
-}
-
+} */
 
 
 
@@ -398,7 +397,7 @@ email and password font size */
 
 .right-panel{
 
-    width:48%;
+    width:50%;
     
     padding: 13px 50px;
     border-radius: 4px;
@@ -419,6 +418,7 @@ star icons */
 .text-primary{
     color: blue;
     font-size: 16px;
+    display: contents;
 }
 /* =====================
 Forget link */
@@ -461,8 +461,9 @@ login to access your vault */
 
 .form-label{
 
-    font-weight:400;
-
+    font-weight:700;
+    display: flex;
+    justify-content: normal;
     font-size:12px;
 
 }
@@ -479,34 +480,26 @@ login to access your vault */
 .form-select{
 
 
-    height:50px;
-    font-size: 17px;
+    
+    font-size: 13px;
 
     border-radius:8px;
-
+    padding: 11px 9px;
     border:none;
-    background-color: #f8f9fa;
+    background-color: #efefef;
 
 }
 .form-control::placeholder{
     font-size: 13px;
 }
-.middle{
-    display: flex;
-}
-.col-md-6{
-    padding: 0px 0px;
-}
-.input-group-text{
 
-    background: white;
-   
 
-    color:rgb(7, 6, 6);
-
-    border:none;
-    padding: 0;
-
+.input-group i{
+    padding: 8px;
+    margin: 0;
+    background-color: #efefef;
+    color: #A7A4AF;
+    
 }
 .input-group{
     margin: 1px;
@@ -527,7 +520,10 @@ login to access your vault */
 }
 
 
-
+.parent-set{
+    display: flex;
+    justify-content: center;
+}
 
 /* =========================
    BUTTON
@@ -546,7 +542,7 @@ login to access your vault */
     padding:11px 188px;
 
     border-radius:25px;
-
+    margin: 13px 0px;
     font-weight:600;
 
 }
@@ -563,6 +559,7 @@ CONTINUE WITH GMAIL */
     border-radius: 25px;
     padding-bottom: 10px;
     padding: 9px 126px;
+    margin: 13px 0px;
     
 }
 
