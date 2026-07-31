@@ -236,7 +236,14 @@ secure */
     bottom: 0;
     color:antiquewhite
 }
-
+.line{
+    color: #A7A4AF;
+    padding: 1px 0px;
+    position: absolute;
+    bottom: 127px;
+    right: 85px;
+    left: 85px;
+}
 
 .Secure-item{
     display: flex;
@@ -499,7 +506,8 @@ login to access your vault */
     margin: 0;
     background-color: #efefef;
     color: #A7A4AF;
-    
+    border-radius: 8px;
+
 }
 .input-group{
     margin: 1px;
@@ -564,7 +572,7 @@ CONTINUE WITH GMAIL */
 }
 
 .col-12{
-    padding: 12px;
+    padding: 10px 6px;
     text-align: center;
 }
 .google-btn:hover{

@@ -147,7 +147,7 @@ $method = $this->router->fetch_method();
 </div> -->
 
 
-
+<hr class="line">
 <div class="Secure-item">
   <div class="lock">
     <div class="icon-mid">
@@ -233,7 +233,7 @@ $method = $this->router->fetch_method();
             </div>
 
             <!-- Phone Number -->
-             <div class="row g-2">
+             <div class="row g-1">
               <div class="parent-set">
             <div class="col-md-6">
                 <label class="form-label">
@@ -295,7 +295,7 @@ $method = $this->router->fetch_method();
 
             <!-- Password -->
 
-            <div class="parent-set">
+            <div class="parent-set g-1">
             <div class="col-md-6">
                 <label class="form-label">
                     Password <span class="text-primary">*</span>
