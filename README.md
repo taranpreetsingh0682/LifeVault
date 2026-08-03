@@ -62,9 +62,34 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📂 Documents Module
 
-*(In Development)*
+![Document](Screenshots/DocumentPage-UI.pmg.png)
 
 ---
+## 📂 Upload Module
+
+*(In Development)*
+
+
+
+## 📂 Important Module
+
+*(In Development)*
+
+
+
+## 📂 Profile Module
+
+*(In Development)*
+
+
+
+
+
+## 📂 Settings Module
+
+*(In Development)*
+
+
 
 # ✨ Planned Features
 
