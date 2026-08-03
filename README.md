@@ -56,7 +56,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📊 Dashboard
 
-![Dashboard](Screenshots/Dashboard.png.png)
+![Dashboard](Screenshots/DashboardPage-UI.png.png)
 
 ---
 
