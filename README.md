@@ -62,7 +62,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📂 Documents Module
 
-![Document](Screenshots/DocumentPage-UI.pmg.png)
+![Document](Screenshots/DocumentPage-UI.png.png)
 
 ---
 ## 📂 Upload Module
