@@ -132,7 +132,7 @@ LifeVault/
 | Login UI | ✅ Completed |
 | Registration UI | ✅ Completed |
 | Dashboard UI | ✅ Completed |
-| Documents Module | 🚧 In Progress |
+| Documents Module | ✅ Completed |
 | Backend Development | 🚧 In Progress |
 | Database Integration | 🚧 In Progress |
 | Deployment | ⏳ Pending |
