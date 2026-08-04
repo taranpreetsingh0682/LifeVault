@@ -67,7 +67,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 ---
 ## 📂 Upload Module
 
-*(In Development)*
+![Upload](Screenshots/UploadPage-UI.png.png)
 
 
 
