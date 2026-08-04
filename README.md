@@ -87,7 +87,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📂 Settings Module
 
-*(In Development)*
+![Settings](Screenshots/SettingsPage-UI.png.png)
 
 
 
