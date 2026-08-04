@@ -73,7 +73,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📂 Important Module
 
-*(In Development)*
+![Important](Screenshots/ImportantPage-UI.png.png)
 
 
 
