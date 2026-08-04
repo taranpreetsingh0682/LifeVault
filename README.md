@@ -79,7 +79,7 @@ The objective of this project is to provide a simple, secure, and user-friendly 
 
 ## 📂 Profile Module
 
-*(In Development)*
+![Profile](Screenshots/ProfilePage-UI.png.png)
 
 
 
