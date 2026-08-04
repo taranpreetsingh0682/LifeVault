@@ -1,21 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Profile extends CI_Controller {
+class Settings extends CI_Controller {
 
   public function __construct() {
     parent::__construct();
   }
 
-  public function profile() {
+  public function settings() {
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
-    $this->load->view('profile/profile');
+    $this->load->view('settings/settings');
     $this->load->view('templates/footer');
   }
 
   public function index() {
-    $this->profile();
+    $this->settings();
   }
 }
 ?>

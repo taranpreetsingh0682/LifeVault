@@ -27,16 +27,14 @@ body{
 /* ===================
 FOR NAVBAR */
 .navbar{
-    
     display: flex;
-    
-    
     align-items: center;
     justify-content: space-between;
-    padding: 0px 223px;
+    padding: 0.75rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
     background: white;
     border-bottom: 1px solid #E5E7EB;
-    
 }
 /* =================
 navbar logo */

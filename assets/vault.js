@@ -4,8 +4,32 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Elements
-  const filterPills = document.querySelectorAll('.filter-pill');
+  // -------------------------------------------------------------------------
+  // 0. Mobile Drawer Sidebar Toggle
+  // -------------------------------------------------------------------------
+  const mobileToggleBtn = document.getElementById('mobileSidebarToggle');
+  const mobileCloseBtn = document.getElementById('mobileSidebarClose');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  const sidebar = document.getElementById('appSidebar');
+
+  function openSidebar() {
+    if (sidebar) sidebar.classList.add('show');
+    if (sidebarOverlay) sidebarOverlay.classList.add('show');
+  }
+
+  function closeSidebar() {
+    if (sidebar) sidebar.classList.remove('show');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('show');
+  }
+
+  if (mobileToggleBtn) mobileToggleBtn.addEventListener('click', openSidebar);
+  if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeSidebar);
+  if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+  // -------------------------------------------------------------------------
+  // 1. Documents Page Category Filtering & Grid Switcher
+  // -------------------------------------------------------------------------
+  const filterPills = document.querySelectorAll('#categoryPillsGroup .filter-pill');
   const catRowItems = document.querySelectorAll('.cat-row-item');
   const searchInput = document.querySelector('.search-input');
   const sortSelect = document.getElementById('sortSelect');
@@ -19,13 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentCategory = 'All';
   let currentSearchQuery = '';
 
-  // -------------------------------------------------------------------------
-  // 1. Category Filtering
-  // -------------------------------------------------------------------------
   function applyFilters() {
+    if (!tableBody) return;
     const rows = tableBody.querySelectorAll('tr');
     let visibleCount = 0;
-    const totalCount = rows.length;
 
     rows.forEach(row => {
       const rowCategory = row.getAttribute('data-category') || '';
@@ -42,50 +63,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Update count text
     if (showingCountText) {
-      showingCountText.textContent = `Showing ${visibleCount} of 120 documents`;
+      showingCountText.textContent = `Showing ${visibleCount} of ${rows.length} documents`;
     }
 
-    // Refresh grid view if active
     if (gridViewContainer && !gridViewContainer.classList.contains('d-none')) {
       renderGridView();
     }
   }
 
-  // Filter Pill Clicks
-  filterPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
+  if (filterPills.length > 0) {
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentCategory = pill.getAttribute('data-category') || 'All';
 
-      currentCategory = pill.getAttribute('data-category') || 'All';
-      
-      // Highlight matching side category item
-      catRowItems.forEach(item => {
-        if (item.getAttribute('data-category') === currentCategory) {
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active');
-        }
+        catRowItems.forEach(item => {
+          if (item.getAttribute('data-category') === currentCategory) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        applyFilters();
       });
-
-      applyFilters();
     });
-  });
+  }
 
-  // Left Side Category Cards Click
-  catRowItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const cat = item.getAttribute('data-category');
-      const targetPill = Array.from(filterPills).find(p => p.getAttribute('data-category') === cat);
-      if (targetPill) {
-        targetPill.click();
-      }
+  if (catRowItems.length > 0) {
+    catRowItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const cat = item.getAttribute('data-category');
+        const targetPill = Array.from(filterPills).find(p => p.getAttribute('data-category') === cat);
+        if (targetPill) targetPill.click();
+      });
     });
-  });
+  }
 
-  // Search Input Event
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       currentSearchQuery = e.target.value.trim();
@@ -107,52 +123,49 @@ document.addEventListener('DOMContentLoaded', () => {
         starBtn.setAttribute('title', 'Star');
       } else {
         starBtn.classList.add('starred');
-        icon.className = 'bi bi-star-fill';
+        icon.className = 'bi bi-star-fill text-warning';
         starBtn.setAttribute('title', 'Unstar');
       }
     }
   });
 
   // -------------------------------------------------------------------------
-  // 3. View Switcher (List View vs Grid View)
+  // 3. Grid View Renderer
   // -------------------------------------------------------------------------
   function renderGridView() {
-    if (!gridViewContainer) return;
+    if (!gridViewContainer || !tableBody) return;
     gridViewContainer.innerHTML = '';
 
     const visibleRows = Array.from(tableBody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
 
     visibleRows.forEach(row => {
-      const name = row.getAttribute('data-name');
-      const category = row.getAttribute('data-category');
+      const name = row.getAttribute('data-name') || 'Document.pdf';
+      const category = row.getAttribute('data-category') || 'Identity';
       const cells = row.querySelectorAll('td');
-      const date = cells[2] ? cells[2].innerText : '';
-      const size = cells[3] ? cells[3].innerText : '';
-      const isStarred = row.querySelector('.star-btn').classList.contains('starred');
+      const date = cells[2] ? cells[2].innerText : 'Recently';
+      const size = cells[3] ? cells[3].innerText : '1.2 MB';
+      const isStarred = row.querySelector('.star-btn') ? row.querySelector('.star-btn').classList.contains('starred') : false;
 
-      // Determine badge type
       const fileExt = name.split('.').pop().toLowerCase();
-      let badgeClass = 'file-badge-pdf';
+      let badgeClass = 'badge-type-pdf';
       let badgeText = 'PDF';
 
-      if (fileExt === 'doc' || fileExt === 'docx') { badgeClass = 'file-badge-doc'; badgeText = 'DOC'; }
-      else if (fileExt === 'xls' || fileExt === 'xlsx') { badgeClass = 'file-badge-xls'; badgeText = 'XLS'; }
-      else if (fileExt === 'jpg' || fileExt === 'png' || fileExt === 'jpeg') { badgeClass = 'file-badge-jpg'; badgeText = 'JPG'; }
+      if (fileExt === 'doc' || fileExt === 'docx') { badgeClass = 'badge-type-doc'; badgeText = 'DOC'; }
+      else if (fileExt === 'xls' || fileExt === 'xlsx') { badgeClass = 'badge-type-xls'; badgeText = 'XLS'; }
+      else if (fileExt === 'jpg' || fileExt === 'png' || fileExt === 'jpeg') { badgeClass = 'badge-type-jpg'; badgeText = 'JPG'; }
 
       let catBadgeClass = 'badge-identity';
       if (category === 'Personal') catBadgeClass = 'badge-personal';
       else if (category === 'Education') catBadgeClass = 'badge-education';
       else if (category === 'Certificates') catBadgeClass = 'badge-certificates';
-      else if (category === 'Images') catBadgeClass = 'badge-images';
-      else if (category === 'Records') catBadgeClass = 'badge-records';
 
       const card = document.createElement('div');
       card.className = 'grid-doc-card';
       card.innerHTML = `
         <div class="grid-card-top">
-          <div class="file-badge-box ${badgeClass}">${badgeText}</div>
+          <span class="badge-file-type ${badgeClass}">${badgeText}</span>
           <button class="star-btn ${isStarred ? 'starred' : ''}">
-            <i class="bi ${isStarred ? 'bi-star-fill' : 'bi-star'}"></i>
+            <i class="bi ${isStarred ? 'bi-star-fill text-warning' : 'bi-star'}"></i>
           </button>
         </div>
         <div class="grid-card-body">
@@ -172,53 +185,142 @@ document.addEventListener('DOMContentLoaded', () => {
     listViewBtn.addEventListener('click', () => {
       listViewBtn.classList.add('active');
       gridViewBtn.classList.remove('active');
-      tableViewContainer.classList.remove('d-none');
-      gridViewContainer.classList.add('d-none');
+      if (tableViewContainer) tableViewContainer.classList.remove('d-none');
+      if (gridViewContainer) gridViewContainer.classList.add('d-none');
     });
 
     gridViewBtn.addEventListener('click', () => {
       gridViewBtn.classList.add('active');
       listViewBtn.classList.remove('active');
-      tableViewContainer.classList.add('d-none');
-      gridViewContainer.classList.remove('d-none');
+      if (tableViewContainer) tableViewContainer.classList.add('d-none');
+      if (gridViewContainer) gridViewContainer.classList.remove('d-none');
       renderGridView();
     });
   }
 
   // -------------------------------------------------------------------------
-  // 4. Sorting Functionality
+  // 4. Upload Page Interactive Drag & Drop Controller
   // -------------------------------------------------------------------------
-  if (sortSelect) {
-    sortSelect.addEventListener('change', () => {
-      const val = sortSelect.value;
-      const rows = Array.from(tableBody.querySelectorAll('tr'));
+  const dropzoneArea = document.getElementById('dropzoneArea');
+  const browseFilesBtn = document.getElementById('browseFilesBtn');
+  const fileDropInput = document.getElementById('fileDropInput');
+  const uploadQueueList = document.getElementById('uploadQueueList');
 
-      rows.sort((a, b) => {
-        const nameA = a.getAttribute('data-name').toLowerCase();
-        const nameB = b.getAttribute('data-name').toLowerCase();
+  if (browseFilesBtn && fileDropInput) {
+    browseFilesBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fileDropInput.click();
+    });
 
-        if (val === 'name_asc') return nameA.localeCompare(nameB);
-        if (val === 'name_desc') return nameB.localeCompare(nameA);
-        return 0;
+    if (dropzoneArea) {
+      dropzoneArea.addEventListener('click', () => {
+        fileDropInput.click();
       });
 
-      rows.forEach(r => tableBody.appendChild(r));
-      applyFilters();
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzoneArea.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzoneArea.classList.add('dragover');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzoneArea.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzoneArea.classList.remove('dragover');
+        }, false);
+      });
+
+      dropzoneArea.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFilesUpload(files);
+      });
+    }
+
+    fileDropInput.addEventListener('change', (e) => {
+      handleFilesUpload(e.target.files);
+    });
+  }
+
+  function handleFilesUpload(files) {
+    if (!files || files.length === 0 || !uploadQueueList) return;
+
+    Array.from(files).forEach(file => {
+      const ext = file.name.split('.').pop().toLowerCase();
+      let badgeClass = 'badge-type-pdf';
+      let badgeText = ext.toUpperCase().substring(0, 3);
+      if (['doc', 'docx'].includes(ext)) badgeClass = 'badge-type-doc';
+      else if (['xls', 'xlsx'].includes(ext)) badgeClass = 'badge-type-xls';
+      else if (['jpg', 'png', 'jpeg'].includes(ext)) badgeClass = 'badge-type-jpg';
+
+      const queueItem = document.createElement('div');
+      queueItem.className = 'queue-item';
+      queueItem.innerHTML = `
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <div class="file-name-wrap d-flex align-items-center gap-2">
+            <span class="badge-file-type ${badgeClass}">${badgeText}</span>
+            <span class="file-title-text">${file.name}</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="progress-percent">0%</span>
+            <span class="status-pill status-uploading">Uploading</span>
+          </div>
+        </div>
+        <div class="progress queue-progress-bar">
+          <div class="progress-bar bg-blue-progress" role="progressbar" style="width: 0%"></div>
+        </div>
+      `;
+
+      uploadQueueList.prepend(queueItem);
+
+      // Simulate upload progress animation
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 25) + 15;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          queueItem.querySelector('.progress-percent').textContent = '100%';
+          const statusPill = queueItem.querySelector('.status-pill');
+          statusPill.textContent = 'Done';
+          statusPill.className = 'status-pill status-done';
+          queueItem.querySelector('.progress-bar').style.width = '100%';
+          queueItem.querySelector('.progress-bar').className = 'progress-bar bg-emerald-progress';
+        } else {
+          queueItem.querySelector('.progress-percent').textContent = progress + '%';
+          queueItem.querySelector('.progress-bar').style.width = progress + '%';
+        }
+      }, 300);
     });
   }
 
   // -------------------------------------------------------------------------
-  // 5. Upload Modal Form Handler
+  // 5. Important Page Category Filter
   // -------------------------------------------------------------------------
-  const uploadForm = document.getElementById('uploadForm');
-  if (uploadForm) {
-    uploadForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Document uploaded successfully!');
-      const modalEl = document.getElementById('uploadModal');
-      const modal = bootstrap.Modal.getInstance(modalEl);
-      if (modal) modal.hide();
-      uploadForm.reset();
+  const impPills = document.querySelectorAll('#importantPillsGroup .filter-pill');
+  const impTableBody = document.getElementById('importantTableBody');
+
+  if (impPills.length > 0 && impTableBody) {
+    impPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        impPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const cat = pill.getAttribute('data-category');
+        const rows = impTableBody.querySelectorAll('tr');
+
+        rows.forEach(r => {
+          const rowCat = r.getAttribute('data-category') || '';
+          if (cat === 'All' || rowCat.toLowerCase() === cat.toLowerCase()) {
+            r.style.display = '';
+          } else {
+            r.style.display = 'none';
+          }
+        });
+      });
     });
   }
 

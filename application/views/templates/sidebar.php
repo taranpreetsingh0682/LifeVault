@@ -1,10 +1,18 @@
 <?php $controller = $this->router->fetch_class(); ?>
-<aside class="sidebar">
-  <div class="sidebar-brand">
-    <div class="brand-icon">
-      <i class="bi bi-shield-lock-fill"></i>
+<!-- Mobile Backdrop Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<aside class="sidebar" id="appSidebar">
+  <div class="sidebar-header-wrapper d-flex align-items-center justify-content-between">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <i class="bi bi-shield-lock-fill"></i>
+      </div>
+      <span class="brand-name">LifeVault</span>
     </div>
-    <span class="brand-name">LifeVault</span>
+    <button class="sidebar-close-btn d-lg-none" id="mobileSidebarClose" aria-label="Close menu">
+      <i class="bi bi-x-lg"></i>
+    </button>
   </div>
 
   <nav class="sidebar-menu">
@@ -53,23 +61,29 @@
       <div class="storage-subtext">3.2 GB available</div>
     </div>
 
-    <a href="<?= site_url('Auth/logout'); ?>" class="logout-link">
+    <a href="<?= site_url('Auth/login'); ?>" class="logout-link">
       <i class="bi bi-box-arrow-right"></i>
       <span>Logout</span>
     </a>
   </div>
 </aside>
+
 <div class="main-wrapper">
   <!-- Top Navigation Bar -->
   <header class="top-navbar">
-    <div class="search-container">
-      <form class="search-form d-flex align-items-center" onsubmit="return false;">
-        <div class="search-input-wrap">
-          <i class="bi bi-search search-icon"></i>
-          <input type="search" class="form-control search-input" placeholder="Search documents..." aria-label="Search">
-        </div>
-        <button class="btn btn-search-outline ms-2" type="submit">Search</button>
-      </form>
+    <div class="d-flex align-items-center gap-2">
+      <button class="mobile-toggle-btn d-lg-none" id="mobileSidebarToggle" type="button" aria-label="Open sidebar">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="search-container">
+        <form class="search-form d-flex align-items-center" onsubmit="return false;">
+          <div class="search-input-wrap">
+            <i class="bi bi-search search-icon"></i>
+            <input type="search" class="form-control search-input" placeholder="Search documents..." aria-label="Search">
+          </div>
+          <button class="btn btn-search-outline ms-2 d-none d-sm-inline-block" type="submit">Search</button>
+        </form>
+      </div>
     </div>
 
     <div class="user-action-group">
@@ -77,12 +91,12 @@
         <i class="bi bi-bell"></i>
       </button>
 
-      <div class="user-profile-pill">
+      <a href="<?= site_url('Profile/profile'); ?>" class="user-profile-pill text-decoration-none">
         <div class="avatar-circle">TS</div>
-        <div class="user-meta">
+        <div class="user-meta d-none d-sm-block">
           <span class="user-name">Taranpreet Singh</span>
           <span class="user-plan">Premium Plan</span>
         </div>
-      </div>
+      </a>
     </div>
   </header>

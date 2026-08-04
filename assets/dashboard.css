@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LifeVault - Dashboard Styling (Vanilla CSS + Bootstrap 5 Integration)
+  
    ========================================================================== */
 
 :root {
@@ -308,6 +308,7 @@ body {
 
 .user-meta {
   display: flex;
+  justify-content: center;
   flex-direction: column;
 }
 
@@ -321,6 +322,7 @@ body {
 .user-plan {
   font-size: 0.725rem;
   color: var(--text-muted);
+  display: flex;
 }
 
 /* --------------------------------------------------------------------------
@@ -805,8 +807,53 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Responsive Rules
+   Mobile Drawer Sidebar & Responsive Rules
    -------------------------------------------------------------------------- */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1040;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+  display: block;
+}
+
+.mobile-toggle-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #0f172a;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.sidebar-close-btn:hover {
+  color: #ffffff;
+}
+
 @media (max-width: 1200px) {
   .stat-cards-row {
     flex-wrap: wrap;
@@ -821,22 +868,56 @@ body {
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991.98px) {
   .app-layout {
     flex-direction: column;
   }
 
   .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 270px;
+    min-width: 270px;
+    height: 100vh;
+    z-index: 1050;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+
+  .main-wrapper {
     width: 100%;
-    height: auto;
-    position: static;
+    margin-left: 0;
   }
 
   .top-navbar {
-    padding: 1rem;
+    padding: 0.85rem 1rem;
   }
 
   .dashboard-content {
-    padding: 1rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .search-input-wrap .search-input {
+    width: 180px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .search-input-wrap .search-input {
+    width: 130px;
+  }
+
+  .user-name, .user-plan {
+    display: none;
+  }
+
+  .stat-cards-row .col {
+    flex: 0 0 100%;
   }
 }

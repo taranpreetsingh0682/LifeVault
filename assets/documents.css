@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LifeVault - Documents Page CSS (Matching UI Mockup & Screenshot)
+   LifeVault - Documents, Upload, Important, Profile & Settings Page CSS
    ========================================================================== */
 
 /* Main Container Layout */
@@ -122,7 +122,6 @@
   color: #0f172a;
   cursor: pointer;
   transition: all 0.2s ease;
-
 }
 
 .sort-select:focus {
@@ -332,90 +331,69 @@
 }
 
 /* --------------------------------------------------------------------------
-   Right Main Panel: Documents Data Table Card
+   Table & Grid Common Styles
    -------------------------------------------------------------------------- */
-.main-documents-card {
+.main-documents-card, .upload-card, .setting-card, .profile-hero-card, .profile-nav-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-  overflow: hidden;
+  padding: 1.25rem;
 }
 
-.documents-table-wrap {
-  overflow-x: auto;
-}
-
-.table-documents {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+.vault-table {
   margin-bottom: 0;
+  width: 100%;
 }
 
-.table-documents th {
+.vault-table th {
   font-size: 0.725rem;
   font-weight: 700;
   color: #94a3b8;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.1rem;
   border-bottom: 1px solid #f1f5f9;
   background-color: #ffffff;
-  white-space: nowrap;
 }
 
-.table-documents td {
-  padding: 0.95rem 1.25rem;
+.vault-table td {
+  padding: 0.9rem 1.1rem;
   border-bottom: 1px solid #f8fafc;
   vertical-align: middle;
   font-size: 0.875rem;
   color: #334155;
-  transition: background-color 0.15s ease;
 }
 
-.table-documents tbody tr:hover {
-  background-color: #fdfbf7;
+.vault-table tr:hover td {
+  background-color: #faf8f5;
 }
 
-.table-documents tbody tr.highlight-row {
-  background-color: #fefcf6;
-}
-
-/* File Badge Icons inside Table */
-.file-badge-box {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  font-weight: 800;
-  font-size: 0.65rem;
-  display: flex;
+/* Badge Styles */
+.badge-file-type {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.65rem;
   color: #ffffff;
-  flex-shrink: 0;
   letter-spacing: 0.5px;
+  min-width: 34px;
 }
 
-.file-badge-pdf { background-color: #ef4444; }
-.file-badge-doc { background-color: #2563eb; }
-.file-badge-xls { background-color: #10b981; }
-.file-badge-jpg { background-color: #f59e0b; }
+.badge-type-pdf { background-color: #ef4444; }
+.badge-type-doc { background-color: #2563eb; }
+.badge-type-xls { background-color: #10b981; }
+.badge-type-jpg { background-color: #f59e0b; }
 
-.file-name-text {
-  font-weight: 700;
-  color: #0f172a;
-  font-size: 0.9rem;
-}
-
-/* Category Pill Badges in Table */
 .table-cat-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 700;
-  line-height: 1.2;
 }
 
 .badge-identity { background-color: #ebe9fe; color: #5b21b6; }
@@ -425,162 +403,352 @@
 .badge-images { background-color: #fce7f3; color: #be185d; }
 .badge-records { background-color: #f1f5f9; color: #475569; }
 
-/* Star & Action Controls */
 .star-btn {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px;
   font-size: 1.1rem;
   color: #cbd5e1;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition: all 0.2s ease;
 }
 
-.star-btn:hover {
-  transform: scale(1.15);
-}
-
-.star-btn.starred, .star-btn i.bi-star-fill {
+.star-btn.starred, .star-btn:hover {
   color: #f59e0b;
 }
 
-.action-menu-btn {
+.action-dots-btn {
   background: transparent;
   border: none;
   color: #94a3b8;
-  cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
-  font-size: 1.1rem;
-  transition: all 0.15s ease;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-.action-menu-btn:hover {
+.action-dots-btn:hover {
   background-color: #f1f5f9;
   color: #0f172a;
 }
 
-/* --------------------------------------------------------------------------
-   Table Footer / Pagination Bar
-   -------------------------------------------------------------------------- */
-.table-footer-bar {
+.dropdown-content-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.25rem;
-  border-top: 1px solid #f1f5f9;
-  background-color: #ffffff;
-  flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
 }
 
-.footer-showing-text {
-  font-size: 0.85rem;
+.dropdown-content-item:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* --------------------------------------------------------------------------
+   UPLOAD PAGE SPECIFIC STYLES (MATCHING UI MOCKUP EXACTLY)
+   -------------------------------------------------------------------------- */
+.upload-dropzone-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.dropzone-area {
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  background-color: #ffffff;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25 ease;
+  cursor: pointer;
+}
+
+.dropzone-area:hover, .dropzone-area.dragover {
+  border-color: #6366f1;
+  background-color: #f5f3ff;
+}
+
+.cloud-icon-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background-color: #eff6ff;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.dropzone-heading {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.dropzone-subtext {
+  font-size: 0.9rem;
   color: #64748b;
+  margin-bottom: 1.25rem;
+}
+
+.btn-browse-files {
+  background-color: #d97706;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.75rem;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+  transition: all 0.2s ease;
+  margin-bottom: 1.25rem;
+}
+
+.btn-browse-files:hover {
+  background-color: #b45309;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.3);
+}
+
+.dropzone-supported-text {
+  font-size: 0.775rem;
+  color: #94a3b8;
   font-weight: 500;
 }
 
-.pagination-group {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+/* Upload Queue Styling */
+.card-section-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
 }
 
-.page-btn {
-  min-width: 36px;
-  height: 36px;
-  padding: 0 0.6rem;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background-color: #ffffff;
-  color: #475569;
-  font-size: 0.85rem;
+.queue-count-badge {
+  font-size: 0.775rem;
+  color: #64748b;
   font-weight: 600;
+}
+
+.queue-item {
+  background-color: #faf8f5;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.file-title-text {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.progress-percent {
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.status-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+.status-uploading { background-color: #ede9fe; color: #6d28d9; }
+.status-done { background-color: #dcfce7; color: #15803d; }
+.status-queued { background-color: #f1f5f9; color: #64748b; }
+
+.queue-progress-bar {
+  height: 4px;
+  background-color: #e2e8f0;
+  border-radius: 10px;
+  margin-top: 0.4rem;
+}
+
+.bg-blue-progress { background-color: #2563eb; }
+.bg-emerald-progress { background-color: #10b981; }
+.bg-queued-progress { background-color: #cbd5e1; }
+
+/* Upload Tips Icons */
+.tip-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.icon-shield-purple { background-color: #eff6ff; color: #3b82f6; }
+.icon-tag-amber { background-color: #fef3c7; color: #d97706; }
+.icon-star-emerald { background-color: #dcfce7; color: #10b981; }
+.icon-alert-pink { background-color: #ffe4e6; color: #e11d48; }
+
+.tip-text {
+  font-size: 0.85rem;
+  color: #475569;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.view-all-link {
+  color: #3b82f6;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   IMPORTANT PAGE STYLES
+   -------------------------------------------------------------------------- */
+.important-stat-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.imp-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.imp-stat-label {
+  font-size: 0.775rem;
+  color: #64748b;
+  font-weight: 600;
+  display: block;
+}
+
+.imp-stat-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* --------------------------------------------------------------------------
+   PROFILE PAGE STYLES
+   -------------------------------------------------------------------------- */
+.profile-hero-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fdfbf7 100%);
+  border: 1px solid #e2e8f0;
+}
+
+.avatar-big-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+}
+
+.avatar-edit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-
 }
 
-.page-btn:hover {
+.profile-user-name {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.custom-profile-pills .nav-link {
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  text-align: left;
+  transition: all 0.2s ease;
+  margin-bottom: 0.25rem;
+}
+
+.custom-profile-pills .nav-link:hover {
   background-color: #f8fafc;
   color: #0f172a;
-  border-color: #cbd5e1;
 }
 
-.page-btn.active {
+.custom-profile-pills .nav-link.active {
   background-color: #0f172a;
   color: #ffffff;
-  border-color: #0f172a;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
 }
 
-.page-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.profile-input {
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.profile-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.custom-switch {
+  width: 2.75em !important;
+  height: 1.4em !important;
+  cursor: pointer;
 }
 
 /* --------------------------------------------------------------------------
-   Grid View Layout (when toggled to Grid mode)
+   SETTINGS PAGE STYLES
    -------------------------------------------------------------------------- */
-.documents-grid-view {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
-  padding: 1.25rem;
+.setting-select {
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-weight: 600;
 }
 
-.grid-doc-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 1.1rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 180px;
-  transition: all 0.2s ease;
-}
-
-.grid-doc-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  border-color: #cbd5e1;
-}
-
-.grid-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 0.85rem;
-}
-
-.grid-card-body {
-  margin-bottom: 0.85rem;
-}
-
-.grid-doc-name {
-  font-size: 0.925rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.4rem;
-  line-height: 1.3;
-  word-break: break-word;
-}
-
-.grid-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: #64748b;
-  padding-top: 0.65rem;
-  border-top: 1px solid #f8fafc;
-}
-
-/* Mobile Responsive Tweaks */
+/* --------------------------------------------------------------------------
+   RESPONSIVE MEDIA QUERIES FOR ALL SCREENS
+   -------------------------------------------------------------------------- */
 @media (max-width: 991.98px) {
   .documents-container {
     padding: 1.25rem 1rem 2.5rem 1rem;
@@ -604,5 +772,32 @@
 
   .sort-select {
     width: 100%;
+  }
+
+  .dropzone-area {
+    padding: 2rem 1rem;
+  }
+
+  .dropzone-heading {
+    font-size: 1.15rem;
+  }
+
+  .profile-hero-card {
+    text-align: center;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .doc-title {
+    font-size: 1.4rem;
+  }
+
+  .btn-upload-file, .btn-browse-files {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cat-row-item {
+    padding: 0.5rem;
   }
 }
