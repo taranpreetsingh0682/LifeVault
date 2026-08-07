@@ -1,9 +1,7 @@
-import DocumentCard from "./components/DocumentCard";
-import './App.css'
+import DocumentsPage from "./components/DocumentsPage";
 
-function App(){
-  return (
-    <DocumentCard/>
-  )
+function App() {
+  return <DocumentsPage />;
 }
-export default App
+
+export default App;
