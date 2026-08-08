@@ -207,7 +207,7 @@ $method = $this->router->fetch_method();
 
 </div>
 <div class="container  fields-set">
-    <?php echo form_open_multipart('auth/login',['class'=>'row g-3']);  ?>
+    <?php echo form_open_multipart('auth/registerUser',['class'=>'row g-3']);  ?>
 
 
         <div class="row ">
@@ -224,7 +224,7 @@ $method = $this->router->fetch_method();
                    
 
                     <input type="text"
-                    
+                    name="name"
                            class="form-control"
                            placeholder="Enter your full name"
                            >
@@ -246,6 +246,7 @@ $method = $this->router->fetch_method();
                     
 
                     <input type="text"
+                    name="phone_number"
                            class="form-control"
                            placeholder="Enter your phone number">
                 </div>
@@ -262,7 +263,8 @@ $method = $this->router->fetch_method();
                         <i class="bi bi-geo-alt"></i>
                     
 
-                    <select class="form-select">
+                    <select name="country"
+                    class="form-select">
                         <option selected>Choose Country</option>
                         <option>India</option>
                         <option>USA</option>
@@ -287,6 +289,7 @@ $method = $this->router->fetch_method();
                     
 
                     <input type="email"
+                    name="email"
                            class="form-control"
                            placeholder="Enter your email address"
                            autocomplete="off">
@@ -307,6 +310,7 @@ $method = $this->router->fetch_method();
                     
 
                     <input type="password"
+                    name="password"
                            class="form-control"
                            placeholder="Password"
                            autocomplete="new-password">
