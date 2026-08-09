@@ -8,6 +8,7 @@ class Profile extends CI_Controller {
   }
 
   public function profile() {
+    $this->load->library('session');
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
     $this->load->view('profile/profile');

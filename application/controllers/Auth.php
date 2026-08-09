@@ -10,8 +10,10 @@ Class Auth extends CI_Controller{
 public function login(){
   $this->load->view('Auth/login');
    $this->load->model('User_model');
+   $this->load->library('session');
   
 }
+
 
 public function register(){
   $this->load->view('Auth/register');
@@ -25,9 +27,58 @@ public function home(){
 
 public function logout(){
   // Destroy session
+
+  $this->session->session_destroy();
+  redirect('Auth/login');
 }
 public function loginUser(){
 // Login logic
+
+// Load what this method needs
+ $this->load->model('User_model');
+ $this->load->library('session');
+
+$email=$this->input->post('email');
+$password=$this->input->post('password');
+
+// Find user by  email
+
+$user= $this->User_model->getUserByEmail($email);
+
+if($user){
+  // verify password
+  if (password_verify($password, $user->password))
+    {
+      // Create login session
+      $session_data=array(
+        'user_id'=>$user->id,
+        'name'=>$user->name,
+        'email'=>$user->email,
+        'loggend_in'=>TRUE      
+        );
+
+        $this->session->set_userdata($session_data);
+
+        // go to dashboard
+
+        redirect('dashboard/dashboard');
+    }
+    else{
+     $this->session->set_flashdata(
+      'error',
+      'Invalid password '
+     );
+     redirect('Auth/login');
+    }
+
+}
+else{
+  $this->session->set_flashdata(
+    'error',
+    'No account found with this email.'
+  );
+  redirect('Auth/login');
+}
 
 }
 public function registerUser(){

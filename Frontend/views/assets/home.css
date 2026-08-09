@@ -1,0 +1,999 @@
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+    margin: 1px;
+   
+    
+    padding:3px;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    background: rgba(255, 255, 255, 0.996);
+    font-family:'Segoe UI', sans-serif;
+
+}
+
+
+/* =========================
+   TOP HEADER
+========================= */
+
+
+
+/* ===================
+FOR NAVBAR */
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-bottom: 1px solid #E5E7EB;
+}
+/* =================
+navbar logo */
+.navbar-logo{
+    font-size: 23px;
+   margin-right: auto;
+    color: #0D1235;
+   display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.navbar-logo h4{
+font-size: 23px;
+margin: 0;
+font-family: emoji;
+color: #0D1235;
+font-weight: 700;
+
+}
+.bg-light{
+    background-color: #ffffff;
+}
+
+.navbar-menu{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+   
+
+}
+.navbar-menu a{
+    font-size: 17px;
+    font-weight: 500;
+    color: #0D1235;
+    text-decoration: none;
+}
+.navbar-menu a:hover{
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 8px;
+}
+.navbar-menu a.active {
+    background-color: #0D1235;
+    color: white;
+    border-radius: 22px;
+    padding: 6px 14px;
+     
+}
+
+
+.container-fluid h1{
+
+    font-size:40px;
+    font-weight:300;
+    
+}
+.header-title{
+    color: #19a0d6;
+}
+
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.main-box{
+
+    display:flex;
+    border-style: hidden;
+    border-color: #ff0018;
+
+    width:100%;
+
+    background:rgb(255, 255, 255);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 15px 40px rgba(255, 255, 255, 0.832);
+
+}
+
+
+
+/* =========================
+   LEFT PANEL
+========================= */
+
+/* ==========
+Section */
+
+.Home-first{
+    background-color: #F8F7F0;
+}
+
+.Middle{
+    padding-left: 127px;
+}
+.first-layout{
+
+    width:100%;
+
+   
+
+    color:rgb(7, 7, 7);
+
+    padding: 21px 8px;
+
+
+    
+
+
+
+}
+/* ======
+text-field */
+.text-field h2{
+    font-weight: 800;
+    font-size: 39px;
+}
+.text-field h1{
+    font-weight: 900;
+}
+.text-field h3{
+    font-weight: 900;
+    font-size: 42px;
+    color: #6464F6;
+}
+.text-field h4{
+
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.document-section{
+  margin: 25px;
+  padding: 0px 67px;
+
+}
+.document{
+  background-color:#0D1235;
+  padding: 17px 25px; 
+  margin: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  border-radius: 18px;
+  
+}
+.container-document i{
+  font-size: 20px;
+  justify-content: center;
+  
+  
+  
+  
+  
+}
+.container-document h5{
+  font-size: 23px;
+  padding: 1px;
+  gap: 10px;
+  display: contents;
+  color: white;
+}
+.container-document p{
+  padding: 0px 31px;
+  color: white;
+}
+.child-btn{
+  justify-content: end;
+  align-items: center;
+  display: flex;
+}
+.child-div{
+  align-items: center;
+}
+.child-div i{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.child-btn a{
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 11px;
+}
+.btn-light{
+    color: #000;
+    background-color: #efb80c;
+}
+
+.document-supported{
+    background-color: #F8F7F0;
+}
+
+.file{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.file span{
+    font-size: 12px;
+    font-weight: 800;
+    color: blue;
+}
+.s-mid{
+    display: flex;
+    justify-content: center;
+}
+
+.file-documents{
+   
+    
+    background-color:#F8F7F0;
+    padding: 21px 239px;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.child-file span{
+    font-size: 19px;
+    font-weight: 600;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.title-line{
+    width: 39px;
+    background-color: #000000;
+    height: 1px;
+    margin: auto;
+    border-radius: 21px;
+}
+
+/* =======================
+IMAGES AADHAR */
+
+
+.doc-card{
+    border: 2px solid #E2E8F0;
+    border-radius: 14px;
+
+    background-color: white;
+    margin: 5px;
+
+    
+}
+
+.middle{
+    display: flex;
+    justify-content: center;
+}
+
+.middle-set{
+    display: flex;
+    justify-content: center;
+}
+.icons{
+    display: flex;
+    justify-content: center;
+    background-color: #F1EDFF;
+    border-radius: 14px;
+    margin: auto;
+    padding: 4px 23px;
+}
+.icons i{
+    color: #6C63FF;
+}
+.doc-card span{
+    font-weight: 600;
+    margin: 0px 28px;
+}
+
+/* ========
+section */
+.working{
+    background-color: #0D1235;
+}
+/* ============
+.container-work */
+.works-segment{
+    background-color: #0D1235;
+    padding: 20px 70px;
+}
+.text-fields{
+    display: flex;
+    justify-content: center;
+}
+.text-fields span{
+    font-weight: 700;
+    font-size: 12px;
+    color: #C9A227;
+}
+.how-works{
+    display: flex;
+    justify-content: center;
+
+}
+.how-works span{
+    font-weight: 800;
+    font-size: 25px;
+    color: white;
+
+}
+.p-texts{
+    display: flex;
+    justify-content: center;
+
+}
+.p-texts p{
+    color: white;
+}
+
+
+/* =====
+STEP CARD */
+.step-card{
+   
+    margin: 18px;
+    background-color: #1b1f43;
+    border: 2px solid;
+    border-radius: 11px;
+
+}
+
+
+
+.step-number{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.accounts-mid{
+    display: flex;
+    
+}
+.accounts-mid span{
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    margin: 3px 17px;
+}
+.p-mid{
+    display: flex;
+    
+}
+
+.p-mid p{
+    font-size: 13px;
+    color: #d3d6c6;
+    margin: 0px 16px;
+}
+.step-number{
+   
+    color: #C9A227;
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: 700;
+    align-items: center;
+    margin: 11px 18px;
+    height: 52px;
+    width: 52px;
+    border: 1px solid;
+}
+
+/* ======
+doc-card */
+.person-card{
+    border: 1px solid;
+    width: 34px;
+    min-height: 23px;
+
+}
+.person-card i{
+    margin: 9px;
+}
+
+/* =============
+Users trust */
+.users-trust{
+    
+    border: 1px solid #00000017;
+    margin: auto;
+}
+
+
+.users-card{
+  
+    min-height: 123px;
+    align-items: center;
+    margin: 15px 3px;
+    width: 218px;
+}
+.users-text{
+     font-size: 32px;
+    font-weight: 600;
+    color: #0B2A80;
+    font-style: normal;
+    font-family: emoji;
+    display: flex;
+    justify-content: center;
+}
+
+
+.users-p{
+    display: flex;
+    justify-content: center;
+    
+}
+.users-p p{
+    font-size: 13px;
+
+}
+.users-card:not(:last-child) {
+    border-right: 2px solid #E5E7EB;
+    min-height: 70px;
+}
+
+
+/* ============================
+FEATURE-ITEM FOR LEFT-PANEL */
+
+ .feature-item{
+    padding: 1px;
+    color: #140de6;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border-radius: 12px;
+    transition: 0.4s ease;
+}
+ .feature-item h4{
+    margin: 0;
+} 
+.feature-item:hover{
+    background:#eef2ff;
+    transform: translateX(8px);
+}
+.feature-item i{
+transition: .3s;
+}
+.feature-item :hover i{
+    transform: scale(1.15);
+    color: #140de6;
+}
+.feature-item span{
+    font-size: 18px;
+} 
+
+.btn-register{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 5px 12px;
+    border-radius: 18px;
+
+    
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+
+    background-color: #efb80c;
+    transition: .3s ease;
+    margin: 4px 8px;
+}
+
+.btn-register:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(79,70,229,.35);
+    color: #fff;
+}
+
+.btn-register i{
+    font-size: 18px;
+}
+
+/* =====
+trust-rating */
+
+
+.trust-section{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+
+/* Users */
+
+.trust-users{
+    display:flex;
+    align-items:center;
+}
+
+.user-circle{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    border:3px solid white;
+    margin-left:-10px;
+}
+
+.user-circle:first-child{
+    margin-left:0;
+}
+
+.user1{
+    background:#4F46E5;
+}
+
+.user2{
+    background:#0EA5E9;
+}
+
+.user3{
+    background:#22C55E;
+}
+
+.user4{
+    background:#F59E0B;
+}
+
+/* Text */
+
+.trust-text{
+    color:#6B7280;
+    font-size:15px;
+}
+
+.trust-text strong{
+    color:#111827;
+    font-weight:700;
+}
+
+/* Rating */
+
+.trust-rating{
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+.trust-rating i{
+    color:#FBBF24;
+    font-size:14px;
+}
+
+.trust-rating span{
+    margin-left:8px;
+    color:#6B7280;
+    font-size:15px;
+}
+
+/* ==========
+WHY  LIFEVAULT */
+.after-container{
+    margin: 7px 107px;
+    padding: 0px;
+}
+
+
+.why-vault{
+    display: flex;
+    justify-content: center;
+}
+
+.why-vault span{
+    font-size: 12px;
+    color: blue;
+    font-family: emoji;
+    font-weight: 700;
+    
+}
+.text-vault{
+    display: flex;
+    justify-content: center;
+
+}
+.text-vault span{
+    font-size: 25px;
+    font-weight: 700;
+    margin: -15px;
+}
+.p-vault{
+    display: flex;
+    justify-content: center;
+}
+.vault-support{
+    background: white;
+}
+
+
+.vault-card{
+    border: 2px solid #51565c5c;
+    margin: 18px;
+    border-radius: 11px;
+    background-color: #F8F7F0;
+
+}
+.vault-span{
+    
+    
+    font-weight: 700;
+    padding: 2px 0px;
+    margin: 5px;
+}
+.vault-p{
+    font-size: 12px;
+}
+.vault-icon{
+    padding: 14px 7px;
+}
+
+
+.vault-icon i{
+    font-size: 23px;
+    background-color: #1B1E48;
+    color: #C9A227;
+    border-radius: 11px;
+    padding: 7px;
+}
+/* ====================
+LOGO FOR SHIELD LOCK */
+
+.logo-item{
+    
+    color: #140de6;
+   display: flex;
+    gap: 20px;
+    align-items: center;
+    
+}
+.logo-item i{
+    
+    background: white;
+    border-bottom: 1px solid;
+}
+.logo-item h4{
+    margin: -15px;
+    font-size: 19px;
+}
+.h4-text{
+    display: flex;
+}
+
+/* ===================
+PARAGRAPH  */
+.paragraph-item h6{
+    color: #6b6e5f;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.65;
+    max-width: 700px;
+
+   
+   
+}
+/* ==================
+email and password font size */
+
+.col-md-6{
+   width: 123%;
+}
+
+.fs-1{
+    font-size: 1.5rem !important;
+}
+.h2,h2{
+    font-size: 33px;
+}
+
+.document-section{
+  padding: 21px 182px;
+}
+
+
+/* ===================
+FOOTER */
+.footer-home{
+    
+    background-color: #0B1628;
+    padding: 12px 194px;
+}
+
+.project-name{
+    color: white;
+    
+}
+.project-name i{
+    font-size: 23px;
+    color:  #C9A227;
+}
+.project-p{
+color: #8A9BB8;
+
+}
+.project-p p{
+    font-size: 12px;
+}
+.project-name span{
+    font-size: 23px;
+    font-family: emoji;
+}
+
+.footer-complete{
+    display: flex;
+    justify-content: space-between;
+    padding: 29px 0px;
+}
+
+.footer-column span{
+    font-size: 17px;
+    color: white;
+
+}
+
+.footer-column a{
+    color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+.footer-column ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-column li{
+    padding: 0;
+    margin: 12px 0px;
+}
+
+.footer-legal span{
+    font-size: 17px;
+    color: white;
+}
+.footer-legal ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-legal li{
+    padding: 0;
+    margin: 12px 0px;
+}
+.footer-legal a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.footer-line{
+    color:  #8A9BB8;
+    padding: 1px 6px;
+}
+
+/* =====
+FOOTER COMPANY */
+
+.footer-company span{
+    
+    font-size: 17px;
+    color: white;
+}
+
+.footer-company ul{
+    list-style: none;
+    padding: 0;
+}
+.footer-company li{
+    padding: 0;
+    margin: 11px 0px;
+
+}
+.footer-company a{
+     color: #8A9BB8;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+
+
+/* ======
+SOCIAL  */
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #29305F;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 18px;
+
+    transition: 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color:  #C9A227;
+    transform: translateY(-3px);
+}
+
+.footer-reserved span{
+    font-size: 14px;
+    color: #8A9BB8;
+}
+/* =========================
+   FILE INPUT
+========================= */
+
+
+input[type=file]{
+
+
+    color:rgb(255, 255, 255);
+
+}
+
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+/* Your existing CSS */
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 991px) {
+
+    .hero-section {
+        flex-direction: column;
+    }
+
+    .hero-content,
+    .hero-image {
+        width: 100%;
+    }
+
+    .feature-card {
+        width: 45%;
+    }
+
+    .document-card {
+        width: 30%;
+    }
+
+    .steps-container {
+        flex-wrap: wrap;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .navbar-menu {
+        display: none;
+    }
+
+    .hero-section {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 38px;
+    }
+
+    .hero-image {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .features-container {
+        flex-direction: column;
+    }
+
+    .feature-card {
+        width: 100%;
+    }
+
+    .documents-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .document-card {
+        width: 100%;
+    }
+
+    .steps-container {
+        flex-direction: column;
+    }
+
+    .step {
+        width: 100%;
+    }
+
+    .cta-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}

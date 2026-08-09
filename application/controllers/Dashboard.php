@@ -9,6 +9,8 @@ class Dashboard extends CI_Controller {
   }
 
   public function dashboard() {
+  $this->load->library('session');
+
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
     $this->load->view('dashboard/dashboard');
