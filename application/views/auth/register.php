@@ -24,6 +24,43 @@ $method = $this->router->fetch_method();
   <!-- Custom CSS  -->
 <link rel="stylesheet" href="<?= base_url('assets/register.css?v=' . time()); ?>">
 
+<style>
+.lv-nav-toggle{display:none;background:none;border:none;font-size:1.6rem;color:#0D1235;cursor:pointer;padding:.25rem;line-height:1}
+@media(max-width:768px){
+.lv-nav-toggle{display:block}
+.navbar{flex-wrap:wrap;padding:.75rem 1rem!important}
+.navbar-menu{display:none;flex-direction:column;width:100%;gap:.35rem;padding:.75rem 0 .25rem;border-top:1px solid #E5E7EB;margin-top:.5rem}
+.navbar-menu.lv-nav-open{display:flex}
+.navbar-menu a{padding:.55rem .75rem;width:100%;text-align:center;border-radius:8px}
+.main-box{flex-direction:column!important;gap:0}
+.left-panel,.right-panel{width:100%!important;padding:1.5rem 1.25rem!important}
+.left-panel h1{font-size:1.75rem!important}
+.left-panel h2{font-size:1.4rem!important}
+.paragraph-item h6,.left-panel h6{font-size:.95rem!important;line-height:1.5!important}
+.logo-item{width:auto!important;max-width:100%;margin:1rem 0!important}
+.features-view .feature-item{flex-direction:column;text-align:center;align-items:center;gap:.5rem}
+.features-view .features-text p{font-size:.85rem!important}
+.parent-set{flex-direction:column!important;gap:0!important}
+.parent-set>.col-md-6{width:100%!important;max-width:100%!important;padding:0!important}
+.Secure-item{flex-wrap:wrap;justify-content:center;gap:1rem!important;position:static!important;margin-top:1.5rem!important;bottom:auto!important;right:auto!important;left:auto!important}
+.left-panel{position:relative!important;padding-bottom:2rem!important}
+.line{margin:1rem 0!important}
+.fields-set{padding:0!important}
+.btn-primary,.google-btn{width:100%!important;padding:11px 1rem!important;display:block}
+.divider{width:100%!important;margin:1rem 0!important}
+.footer-home{padding:1.5rem 1.25rem!important}
+.footer-complete{flex-direction:column!important;gap:1.25rem;text-align:center;align-items:center}
+.social-icons{justify-content:center}
+section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!important;margin-bottom:1rem!important}
+}
+@media(min-width:769px) and (max-width:991px){
+.main-box{flex-direction:column!important}
+.left-panel,.right-panel{width:100%!important}
+}
+.input-group>.password-toggle{cursor:pointer}
+.input-group>.password-toggle:hover{color:#0D1235}
+</style>
+
     <title>Register LifeVault</title>
   </head>
   <body>
@@ -44,18 +81,14 @@ $method = $this->router->fetch_method();
 
 <!-- Home landing page -->
 
-<div class="navbar-menu">
-  <a href="<?= site_url('Auth/Home'); 
-  ?>"
-  class="<?= ($method =='Home')? 'active': ''; ?>">
-  Home</a>
+<button type="button" class="lv-nav-toggle" id="lvNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+  <i class="bi bi-list"></i>
+</button>
 
-  <a href="<?= site_url('Auth/login'); 
-  ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
-
-  <a href="<?= site_url('Auth/register'); ?>"
-  class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
-  
+<div class="navbar-menu" id="lvNavMenu">
+  <a href="<?= site_url('Auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
+  <a href="<?= site_url('Auth/login'); ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
+  <a href="<?= site_url('Auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
 </div>
 
 </nav>
@@ -312,11 +345,11 @@ $method = $this->router->fetch_method();
                     <input type="password"
                     name="password"
                            class="form-control"
+                           id="registerPassword"
                            placeholder="Password"
                            autocomplete="new-password">
 
-                    
-                        <i class="bi bi-eye"></i>
+                    <i class="bi bi-eye password-toggle" data-target="registerPassword" title="Show password"></i>
                     
                 </div>
             </div>
@@ -333,11 +366,12 @@ $method = $this->router->fetch_method();
                     
 
                     <input type="password"
+                    name="confirm_password"
                            class="form-control"
+                           id="confirmPassword"
                            placeholder="Confirm Password">
 
-                
-                        <i class="bi bi-eye"></i>
+                    <i class="bi bi-eye password-toggle" data-target="confirmPassword" title="Show password"></i>
                     
                 </div>
             </div>
@@ -349,7 +383,7 @@ $method = $this->router->fetch_method();
   
 
     
-    <button  type="login" class="btn btn-primary">Create account</button>
+    <button type="submit" class="btn btn-primary w-100">Create account</button>
  
   
      
@@ -362,7 +396,7 @@ $method = $this->router->fetch_method();
   </div>
        
 
-  <button type="gmail" class="btn google-btn">
+  <button type="button" class="btn google-btn w-100">
     <i class="bi bi-google">
     
     </i>
@@ -434,20 +468,20 @@ $method = $this->router->fetch_method();
   
     <li>
     
-    <a href="<?= site_url('Dashboard/dashboard'); ?>">Dashboard</a>
+    <a href="<?= site_url('#'); ?>">Dashboard</a>
     </li>
 
 
     <li>
-    <a href="<?= site_url('Documents/documents'); ?>">Documents</a>
+    <a href="<?= site_url('#'); ?>">Documents</a>
     </li>
 
 <li>
-    <a href="<?= site_url('Storage/storage'); ?>">Storage</a>
+    <a href="<?= site_url('#'); ?>">Storage</a>
 </li>
 
 <li>
-    <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
+    <a href="<?= site_url('#'); ?>">Setting</a>
 </li>
 </ul>
     </div>
@@ -505,9 +539,38 @@ $method = $this->router->fetch_method();
 </div>
  </div>
 </footer>
-</div>
 
-
-   <script src="<?= base_url('assets/vault.js'); ?>"></script>
+<script src="<?= base_url('assets/vault.js'); ?>"></script>
+<script>
+function initPasswordToggles(){
+  document.querySelectorAll('.password-toggle').forEach(function(toggle){
+    toggle.addEventListener('click',function(){
+      var input=document.getElementById(this.getAttribute('data-target'));
+      if(!input)return;
+      if(input.type==='password'){
+        input.type='text';
+        this.classList.replace('bi-eye','bi-eye-slash');
+        this.setAttribute('title','Hide password');
+      }else{
+        input.type='password';
+        this.classList.replace('bi-eye-slash','bi-eye');
+        this.setAttribute('title','Show password');
+      }
+    });
+  });
+}
+(function(){
+  var t=document.getElementById('lvNavToggle');
+  var m=document.getElementById('lvNavMenu');
+  if(t&&m){
+    t.addEventListener('click',function(){
+      var open=m.classList.toggle('lv-nav-open');
+      t.setAttribute('aria-expanded',open?'true':'false');
+      t.innerHTML=open?'<i class="bi bi-x-lg"></i>':'<i class="bi bi-list"></i>';
+    });
+  }
+  initPasswordToggles();
+})();
+</script>
   </body>
 </html>

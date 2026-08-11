@@ -369,7 +369,7 @@ login to access your vault */
 
 .input-group-text{
 
-    background: white;
+    background: #efefef;
    
 
     color:rgb(7, 6, 6);
@@ -670,7 +670,17 @@ input[type=file]{
     color:rgb(255, 255, 255);
 
 }
+/* =====
+SendResetLink */
 
+.button{
+    font-size: 11px;
+}
+.move a{
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 200;
+}
 
 
 /* =========================

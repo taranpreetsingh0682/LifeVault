@@ -25,6 +25,50 @@ $method = $this->router->fetch_method();
   <!-- Custom CSS  -->
 <link rel="stylesheet" href="<?= base_url('assets/home.css?v=' . time()); ?>">
 
+<style>
+.lv-nav-toggle{display:none;background:none;border:none;font-size:1.6rem;color:#0D1235;cursor:pointer;padding:.25rem;line-height:1}
+@media(max-width:991px){
+.Middle{padding-left:0!important;padding:0 1rem}
+.text-field h2{font-size:clamp(1.6rem,5vw,2.2rem)!important}
+.text-field h1{font-size:clamp(1.8rem,6vw,2.5rem)!important}
+.text-field h3{font-size:clamp(1.6rem,5vw,2.2rem)!important}
+.text-field h4{font-size:clamp(1.5rem,4.5vw,2rem)!important}
+.paragraph-item h6{font-size:1rem!important;line-height:1.6!important;max-width:100%!important}
+.btn-register{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;width:100%;max-width:320px}
+.trust-section{flex-wrap:wrap;justify-content:center;text-align:center;gap:.75rem}
+.section-vault .middle,.document-supported .middle,.working .middle-set,.view-section .middle{flex-wrap:wrap;gap:1rem}
+.vault-card,.step-card,.users-card{flex:1 1 100%!important;max-width:100%!important;width:100%!important;margin:.75rem 0!important}
+.file-documents{padding:1.5rem 1rem!important}
+.works-segment{padding:1.5rem 1rem!important}
+.document-section{padding:1rem!important;margin:0!important}
+.document{flex-direction:column!important;text-align:center;gap:1rem;padding:1.5rem 1rem!important}
+.child-btn{justify-content:center!important;width:100%}
+.child-btn .btn{width:100%;max-width:280px}
+.users-trust{padding:0 1rem}
+}
+@media(max-width:768px){
+.lv-nav-toggle{display:block}
+.navbar{flex-wrap:wrap;padding:.75rem 1rem!important}
+.navbar-menu{display:none;flex-direction:column;width:100%;gap:.35rem;padding:.75rem 0 .25rem;border-top:1px solid #E5E7EB;margin-top:.5rem}
+.navbar-menu.lv-nav-open{display:flex}
+.navbar-menu a{padding:.55rem .75rem;width:100%;text-align:center;border-radius:8px}
+.Home-first.my-5{margin-top:1rem!important;margin-bottom:1rem!important}
+.first-layout{padding:1rem .5rem!important}
+.doc-card{margin-bottom:.75rem!important}
+.footer-home{padding:1.5rem 1.25rem!important}
+.footer-complete{flex-direction:column!important;gap:1.25rem;text-align:center;align-items:center}
+.social-icons{justify-content:center}
+.text-vault span{font-size:1.35rem!important;margin:0!important;text-align:center}
+.p-vault p{text-align:center;padding:0 1rem;font-size:.95rem}
+.why-vault span,.file span{font-size:.75rem!important}
+.child-file span{font-size:1.1rem!important}
+}
+@media(max-width:480px){
+.doc-card span{margin:0!important;font-size:.9rem}
+.icons{padding:4px 16px!important}
+}
+</style>
+
     <title>Home LifeVault</title>
   </head>
   <body>
@@ -45,18 +89,14 @@ $method = $this->router->fetch_method();
 
 <!-- Home landing page -->
 
-<div class="navbar-menu">
-  <a href="<?= site_url('Auth/Home'); 
-  ?>"
-  class="<?= ($method =='Home')? 'active': ''; ?>">
-  Home</a>
+<button type="button" class="lv-nav-toggle" id="lvNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+  <i class="bi bi-list"></i>
+</button>
 
-  <a href="<?= site_url('Auth/login'); 
-  ?>" class="<?= ($method=='Login')? 'active': ''; ?>">Login</a>
-
-  <a href="<?= site_url('Auth/register'); ?>"
-  class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
-  
+<div class="navbar-menu" id="lvNavMenu">
+  <a href="<?= site_url('Auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
+  <a href="<?= site_url('Auth/login'); ?>" class="<?= ($method=='Login')? 'active': ''; ?>">Login</a>
+  <a href="<?= site_url('Auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
 </div>
 
 </nav>
@@ -625,20 +665,20 @@ step-card">
   
     <li>
     
-    <a href="<?= site_url('Dashboard/dashboard'); ?>">Dashboard</a>
+    <a href="<?= site_url('#'); ?>">Dashboard</a>
     </li>
 
 
     <li>
-    <a href="<?= site_url('Documents/documents'); ?>">Documents</a>
+    <a href="<?= site_url('#'); ?>">Documents</a>
     </li>
 
 <li>
-    <a href="<?= site_url('Storage/storage'); ?>">Storage</a>
+    <a href="<?= site_url('#'); ?>">Storage</a>
 </li>
 
 <li>
-    <a href="<?= site_url('Settings/setting'); ?>">Setting</a>
+    <a href="<?= site_url('#'); ?>">Setting</a>
 </li>
 </ul>
     </div>
@@ -697,10 +737,19 @@ step-card">
  </div>
 </footer>
 
-
-
-
-
+<script>
+(function(){
+  var t=document.getElementById('lvNavToggle');
+  var m=document.getElementById('lvNavMenu');
+  if(t&&m){
+    t.addEventListener('click',function(){
+      var open=m.classList.toggle('lv-nav-open');
+      t.setAttribute('aria-expanded',open?'true':'false');
+      t.innerHTML=open?'<i class="bi bi-x-lg"></i>':'<i class="bi bi-list"></i>';
+    });
+  }
+})();
+</script>
 
   </body>
 </html>
