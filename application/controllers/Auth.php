@@ -1,234 +1,363 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-Class Auth extends CI_Controller{
- 
-// public function__construct()
-// {
-//   parent::  construct();
-//   $this->load->model('User_model');
-// }
- public function login()
+
+class Auth extends CI_Controller
 {
-    $this->load->library('session');
-    $this->config->load('google');
-    $this->load->model('User_model');
-    $this->load->view('Auth/login',$data);
+    /*
+    |--------------------------------------------------------------------------
+    | LOGIN PAGE
+    |--------------------------------------------------------------------------
+    */
+    public function login()
+    {
+        $this->load->library('session');
+        $this->config->load('google');
+        $this->load->model('User_model');
 
-}
+        $this->load->view('Auth/login');
+    }
 
-public function googleLogin()
-{
-    $this->load->library('session');
-    $this->config->load('google');
 
-    // Generate secure state
-    $state = bin2hex(random_bytes(32));
+    /*
+    |--------------------------------------------------------------------------
+    | GOOGLE LOGIN
+    |--------------------------------------------------------------------------
+    */
+    public function googleLogin()
+    {
+        $this->load->library('session');
+        $this->config->load('google');
 
-    // Store state in session
-    $this->session->set_userdata(
-        'google_oauth_state',
-        $state
-    );
+        $state = bin2hex(random_bytes(32));
 
-    // Create Google authorization URL
-    $google_url =
-        'https://accounts.google.com/o/oauth2/v2/auth?' .
-        http_build_query([
+        $this->session->set_userdata(
+            'google_oauth_state',
+            $state
+        );
+
+        $google_url =
+            'https://accounts.google.com/o/oauth2/v2/auth?' .
+            http_build_query([
+                'client_id' =>
+                    $this->config->item('google_client_id'),
+
+                'redirect_uri' =>
+                    $this->config->item('google_redirect_uri'),
+
+                'response_type' => 'code',
+
+                'scope' => 'openid email profile',
+
+                'access_type' => 'online',
+
+                'state' => $state
+            ]);
+
+        redirect($google_url);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GOOGLE CALLBACK
+    |--------------------------------------------------------------------------
+    */
+    public function googleCallback()
+    {
+        $this->load->library('session');
+        $this->load->model('User_model');
+        $this->config->load('google');
+
+
+        // 1. Google returned an error
+        if ($this->input->get('error')) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Google login was cancelled or denied.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // 2. Get authorization code
+        $code = $this->input->get('code');
+
+        if (empty($code)) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Google authorization code was not received.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // 3. Verify OAuth state
+        $state = $this->input->get('state');
+
+        $saved_state =
+            $this->session->userdata('google_oauth_state');
+
+        if (
+            empty($state) ||
+            empty($saved_state) ||
+            !hash_equals($saved_state, $state)
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Invalid Google login request.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // Remove state after validation
+        $this->session->unset_userdata(
+            'google_oauth_state'
+        );
+
+
+        // 4. Exchange code for access token
+        $token_url =
+            'https://oauth2.googleapis.com/token';
+
+        $post_data = [
+            'code' => $code,
+
             'client_id' =>
                 $this->config->item('google_client_id'),
+
+            'client_secret' =>
+                $this->config->item('google_client_secret'),
 
             'redirect_uri' =>
                 $this->config->item('google_redirect_uri'),
 
-            'response_type' => 'code',
-
-            'scope' => 'openid email profile',
-
-            'access_type' => 'online',
-
-            'state' => $state
-        ]);
-
-    redirect($google_url);
-}
+            'grant_type' => 'authorization_code'
+        ];
 
 
-public function googleCallback()
-{
-    $this->load->library('session');
-    $this->load->model('User_model');
-    $this->config->load('google');
+        $ch = curl_init($token_url);
 
-    // Check if Google returned an error
-    if ($this->input->get('error')) {
+        curl_setopt($ch, CURLOPT_POST, true);
 
-        $this->session->set_flashdata(
-            'error',
-            'Google login was cancelled or denied.'
+        curl_setopt(
+            $ch,
+            CURLOPT_POSTFIELDS,
+            http_build_query($post_data)
         );
 
-        redirect('Auth/login');
-        return;
-    }
-
-    // Get authorization code
-    $code = $this->input->get('code');
-
-    if (empty($code)) {
-
-        $this->session->set_flashdata(
-            'error',
-            'Google authorization code was not received.'
+        curl_setopt(
+            $ch,
+            CURLOPT_RETURNTRANSFER,
+            true
         );
 
-        redirect('Auth/login');
-        return;
-    }
-
-    // Check state
-    $state = $this->input->get('state');
-
-    $saved_state = $this->session->userdata('google_oauth_state');
-
-    if (empty($state) || empty($saved_state) || !hash_equals($saved_state, $state)) {
-
-        $this->session->set_flashdata(
-            'error',
-            'Invalid Google login request.'
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            [
+                'Content-Type: application/x-www-form-urlencoded'
+            ]
         );
 
-        redirect('Auth/login');
-        return;
-    }
 
-    // Remove state after validation
-    $this->session->unset_userdata('google_oauth_state');
+        $token_response = curl_exec($ch);
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Exchange authorization code for access token
-    |--------------------------------------------------------------------------
-    */
+        if ($token_response === false) {
 
-    $token_url = 'https://oauth2.googleapis.com/token';
+            curl_close($ch);
 
-    $post_data = [
-        'code' => $code,
-        'client_id' => $this->config->item('google_client_id'),
-        'client_secret' => $this->config->item('google_client_secret'),
-        'redirect_uri' => $this->config->item('google_redirect_uri'),
-        'grant_type' => 'authorization_code'
-    ];
+            $this->session->set_flashdata(
+                'error',
+                'Unable to connect to Google.'
+            );
 
-    $ch = curl_init($token_url);
+            redirect('Auth/login');
+            return;
+        }
 
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/x-www-form-urlencoded'
-    ]);
-
-    $token_response = curl_exec($ch);
-
-    if ($token_response === false) {
 
         curl_close($ch);
 
-        $this->session->set_flashdata(
-            'error',
-            'Unable to connect to Google.'
+
+        $token_data =
+            json_decode($token_response, true);
+
+
+        if (
+            empty($token_data['access_token'])
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Unable to get Google access token.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        $access_token =
+            $token_data['access_token'];
+
+
+        // 5. Get Google user information
+        $userinfo_url =
+            'https://openidconnect.googleapis.com/v1/userinfo';
+
+
+        $ch = curl_init($userinfo_url);
+
+        curl_setopt(
+            $ch,
+            CURLOPT_RETURNTRANSFER,
+            true
         );
 
-        redirect('Auth/login');
-        return;
-    }
-
-    curl_close($ch);
-
-    $token_data = json_decode($token_response, true);
-
-    if (empty($token_data['access_token'])) {
-
-        $this->session->set_flashdata(
-            'error',
-            'Unable to get Google access token.'
+        curl_setopt(
+            $ch,
+            CURLOPT_HTTPHEADER,
+            [
+                'Authorization: Bearer ' . $access_token
+            ]
         );
 
-        redirect('Auth/login');
-        return;
-    }
 
-    $access_token = $token_data['access_token'];
+        $userinfo_response =
+            curl_exec($ch);
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Get Google user information
-    |--------------------------------------------------------------------------
-    */
+        if ($userinfo_response === false) {
 
-    $userinfo_url = 'https://openidconnect.googleapis.com/v1/userinfo';
+            curl_close($ch);
 
-    $ch = curl_init($userinfo_url);
+            $this->session->set_flashdata(
+                'error',
+                'Unable to retrieve Google account information.'
+            );
 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            redirect('Auth/login');
+            return;
+        }
 
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer ' . $access_token
-    ]);
-
-    $userinfo_response = curl_exec($ch);
-
-    if ($userinfo_response === false) {
 
         curl_close($ch);
 
-        $this->session->set_flashdata(
-            'error',
-            'Unable to retrieve Google account information.'
-        );
 
-        redirect('Auth/login');
-        return;
-    }
-
-    curl_close($ch);
-
-    $google_user = json_decode($userinfo_response);
-
-    if (empty($google_user->email)) {
-
-        $this->session->set_flashdata(
-            'error',
-            'Google did not provide an email address.'
-        );
-
-        redirect('Auth/login');
-        return;
-    }
+        $google_user =
+            json_decode($userinfo_response);
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Find user in LifeVault database
-    |--------------------------------------------------------------------------
-    */
+        if (empty($google_user->email)) {
 
-    $user = $this->User_model->getUserByEmail(
-        $google_user->email
-    );
+            $this->session->set_flashdata(
+                'error',
+                'Google did not provide an email address.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Existing LifeVault user
-    |--------------------------------------------------------------------------
-    */
+        // 6. Find user
+        $user =
+            $this->User_model->getUserByEmail(
+                $google_user->email
+            );
 
-    if ($user) {
 
+        // 7. Existing user
+        if ($user) {
+
+            $session_data = [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'loggend_in' => TRUE
+            ];
+
+
+            $this->session->set_userdata(
+                $session_data
+            );
+
+
+            // Create remember token
+            $this->createRememberToken(
+                $user->id
+            );
+
+
+            redirect('dashboard/dashboard');
+            return;
+        }
+
+
+        // 8. New Google user
+        $data = [
+            'name' => $google_user->name,
+
+            'email' => $google_user->email,
+
+            'country' => '',
+
+            'phone_number' => '',
+
+            'password' => password_hash(
+                bin2hex(random_bytes(32)),
+                PASSWORD_DEFAULT
+            )
+        ];
+
+
+        $inserted =
+            $this->User_model->insertUser($data);
+
+
+        if (!$inserted) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Unable to create your LifeVault account.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // 9. Get newly created user
+        $user =
+            $this->User_model->getUserByEmail(
+                $google_user->email
+            );
+
+
+        if (!$user) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Unable to retrieve newly created account.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // 10. Create session
         $session_data = [
             'user_id' => $user->id,
             'name' => $user->name,
@@ -236,7 +365,96 @@ public function googleCallback()
             'loggend_in' => TRUE
         ];
 
-        $this->session->set_userdata($session_data);
+
+        $this->session->set_userdata(
+            $session_data
+        );
+
+
+        // Create remember token
+        $this->createRememberToken(
+            $user->id
+        );
+
+
+        // 11. Dashboard
+        redirect('dashboard/dashboard');
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | MANUAL LOGIN
+    |--------------------------------------------------------------------------
+    */
+    public function loginUser()
+    {
+        $this->load->model('User_model');
+        $this->load->library('session');
+
+
+        $email =
+            trim($this->input->post('email'));
+
+        $password =
+            $this->input->post('password');
+
+
+        // Find user
+        $user =
+            $this->User_model->getUserByEmail($email);
+
+
+        if (!$user) {
+
+            $this->session->set_flashdata(
+                'error',
+                'No account found with this email.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // Verify password
+        if (
+            !password_verify(
+                $password,
+                $user->password
+            )
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Invalid password.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // Create session
+        $session_data = [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'loggend_in' => TRUE
+        ];
+
+
+        $this->session->set_userdata(
+            $session_data
+        );
+
+
+        // Create remember token
+        $this->createRememberToken(
+            $user->id
+        );
+
 
         redirect('dashboard/dashboard');
         return;
@@ -245,224 +463,571 @@ public function googleCallback()
 
     /*
     |--------------------------------------------------------------------------
-    | Google account doesn't exist in LifeVault
+    | TEST EMAIL
     |--------------------------------------------------------------------------
     */
-
-    $this->session->set_flashdata(
-        'error',
-        'No LifeVault account exists with this Google email. Please register first.'
-    );
-
-    redirect('Auth/login');
-}
-
-
-public function forgetPassword(){
-  $this->load->view('Auth/forgetPassword');
-  $this->load->model('User_model');
-  $this->load->library('session');
-}
-
-public function register(){
-  $this->load->view('Auth/register');
- $this->load->model('User_model');
-}
-public function home(){
-  $this->load->view('Auth/Home');
- $this->load->model('User_model');
-
-}
-
-public function logout(){
-  // Destroy session
-
-  $this->session->session_destroy();
-  redirect('Auth/login');
-}
-public function loginUser(){
-// Login logic
-
-// Load what this method needs
- $this->load->model('User_model');
- $this->load->library('session');
-
-$email=$this->input->post('email');
-$password=$this->input->post('password');
-
-// Find user by  email
-
-$user= $this->User_model->getUserByEmail($email);
-
-if($user){
-  // verify password
-  if (password_verify($password, $user->password))
+    public function testEmail()
     {
-      // Create login session
-      $session_data=array(
-        'user_id'=>$user->id,
-        'name'=>$user->name,
-        'email'=>$user->email,
-        'loggend_in'=>TRUE      
+        $this->load->library('email');
+
+
+        $this->email->from(
+            'lifevaultsys@gmail.com',
+            'LifeVault'
         );
 
-        $this->session->set_userdata($session_data);
 
-        // go to dashboard
+        $this->email->to(
+            'lifevaultsys@gmail.com'
+        );
 
-        redirect('dashboard/dashboard');
+
+        $this->email->subject(
+            'Welcome to LifeVault'
+        );
+
+
+        $message = '
+            <h2>Welcome to LifeVault! 🎉</h2>
+
+            <p>
+                Your LifeVault email notification system
+                is working successfully.
+            </p>
+
+            <p>
+                You can now securely manage your
+                important documents.
+            </p>
+
+            <br>
+
+            <p>
+                Regards,<br>
+                <strong>LifeVault Team</strong>
+            </p>
+        ';
+
+
+        $this->email->message($message);
+
+
+        if ($this->email->send()) {
+
+            echo "Email sent successfully.";
+
+        } else {
+
+            echo $this->email->print_debugger();
+        }
     }
-    else{
-     $this->session->set_flashdata(
-      'error',
-      'Invalid password '
-     );
-     redirect('Auth/login');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | WELCOME EMAIL
+    |--------------------------------------------------------------------------
+    */
+    private function sendWelcomeEmail($email, $name)
+    {
+        $this->load->library('email');
+
+
+        $this->email->from(
+            'lifevaultsys@gmail.com',
+            'LifeVault'
+        );
+
+
+        $this->email->to($email);
+
+
+        $this->email->subject(
+            'Welcome to LifeVault 🎉'
+        );
+
+
+        $safe_name =
+            htmlspecialchars(
+                $name,
+                ENT_QUOTES,
+                'UTF-8'
+            );
+
+
+        $message = '
+            <div style="
+                font-family: Arial, sans-serif;
+                padding: 20px;
+            ">
+
+                <h2>
+                    Welcome to LifeVault,
+                    ' . $safe_name . '! 🎉
+                </h2>
+
+                <p>
+                    Your LifeVault account has been
+                    successfully created.
+                </p>
+
+                <p>
+                    You can now securely store,
+                    manage and access your
+                    important documents in one place.
+                </p>
+
+                <p>
+                    Thank you for choosing LifeVault.
+                </p>
+
+                <br>
+
+                <p>
+                    Regards,<br>
+                    <strong>LifeVault Team</strong>
+                </p>
+
+            </div>
+        ';
+
+
+        $this->email->message($message);
+
+
+        return $this->email->send();
     }
 
-}
-else{
-  $this->session->set_flashdata(
-    'error',
-    'No account found with this email.'
-  );
-  redirect('Auth/login');
-}
 
-}
+    /*
+    |--------------------------------------------------------------------------
+    | FORGOT PASSWORD PAGE
+    |--------------------------------------------------------------------------
+    */
+    public function forgetPassword()
+    {
+        $this->load->library('session');
+        $this->load->model('User_model');
+
+        $this->load->view(
+            'Auth/forgetPassword'
+        );
+    }
 
 
-public function sendResetLink()
-{
-    $this->load->model('User_model');
-    $this->load->library('session');
+    /*
+    |--------------------------------------------------------------------------
+    | REGISTER PAGE
+    |--------------------------------------------------------------------------
+    */
+    public function register()
+    {
+        $this->load->model('User_model');
 
-    $email = trim($this->input->post('email'));
+        $this->load->view(
+            'Auth/register'
+        );
+    }
 
-    if (empty($email)) {
-        $this->session->set_flashdata('error', 'Please enter your email address.');
-        $this->session->set_flashdata('open_forgot_modal', TRUE);
+
+    /*
+    |--------------------------------------------------------------------------
+    | HOME PAGE
+    |--------------------------------------------------------------------------
+    */
+    public function home()
+    {
+        $this->load->model('User_model');
+
+        $this->load->view(
+            'Auth/Home'
+        );
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
+    public function logout()
+    {
+        $this->load->library('session');
+        $this->load->model('User_model');
+
+
+        $user_id =
+            $this->session->userdata('user_id');
+
+
+        // Clear database remember token
+        if ($user_id) {
+
+            $this->User_model->clearRememberToken(
+                $user_id
+            );
+        }
+
+
+        // Delete browser cookie
+        delete_cookie(
+            'lifevault_remember'
+        );
+
+
+        // Destroy session
+        $this->session->sess_destroy();
+
+
         redirect('Auth/login');
-        return;
     }
 
-    $user = $this->User_model->getUserByEmail($email);
 
-    if (!$user) {
-        $this->session->set_flashdata('error', 'No account found with this email.');
-        $this->session->set_flashdata('open_forgot_modal', TRUE);
-        redirect('Auth/login');
-        return;
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | SEND RESET LINK
+    |--------------------------------------------------------------------------
+    */
+    public function sendResetLink()
+    {
+        $this->load->model('User_model');
+        $this->load->library('session');
 
-    $token = bin2hex(random_bytes(32));
-    $expires = date('Y-m-d H:i:s', time() + 3600);
 
-    $data = array(
-        'reset_token'   => $token,
-        'reset_expires' => $expires
-    );
+        $email =
+            trim(
+                $this->input->post('email')
+            );
 
-    $this->User_model->saveResetToken($user->id, $data);
 
-    $reset_link = site_url('Auth/resetPassword/' . $token);
+        if (empty($email)) {
 
-    // In production, send $reset_link by email. For now we flash it for testing.
-    $this->session->set_flashdata(
-        'success',
-        'Reset link generated successfully. Use the link below to set a new password.'
-    );
-    $this->session->set_flashdata('reset_link', $reset_link);
+            $this->session->set_flashdata(
+                'error',
+                'Please enter your email address.'
+            );
 
-    redirect('Auth/login');
-}
+            $this->session->set_flashdata(
+                'open_forgot_modal',
+                TRUE
+            );
 
-public function resetPassword($token = NULL)
-{
-    $this->load->model('User_model');
-    $this->load->library('session');
+            redirect('Auth/login');
+            return;
+        }
 
-    if (empty($token)) {
-        redirect('Auth/login');
-        return;
-    }
 
-    $user = $this->User_model->getUserByResetToken($token);
+        $user =
+            $this->User_model->getUserByEmail(
+                $email
+            );
 
-    if (!$user || empty($user->reset_expires) || strtotime($user->reset_expires) < time()) {
+
+        if (!$user) {
+
+            $this->session->set_flashdata(
+                'error',
+                'No account found with this email.'
+            );
+
+            $this->session->set_flashdata(
+                'open_forgot_modal',
+                TRUE
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        $token =
+            bin2hex(
+                random_bytes(32)
+            );
+
+
+        $expires =
+            date(
+                'Y-m-d H:i:s',
+                time() + 3600
+            );
+
+
+        $data = [
+            'reset_token' => $token,
+            'reset_expires' => $expires
+        ];
+
+
+        $this->User_model->saveResetToken(
+            $user->id,
+            $data
+        );
+
+
+        $reset_link =
+            site_url(
+                'Auth/resetPassword/' . $token
+            );
+
+
+        // Testing for now
         $this->session->set_flashdata(
-            'error',
-            'This reset link is invalid or has expired. Please request a new one.'
+            'success',
+            'Reset link generated successfully. Use the link below to set a new password.'
         );
-        redirect('Auth/login');
-        return;
-    }
 
-    $this->load->view('Auth/reset_password', array('token' => $token));
-}
 
-public function updatePassword()
-{
-    $this->load->model('User_model');
-    $this->load->library('session');
-
-    $token = $this->input->post('token');
-    $password = $this->input->post('password');
-    $confirm_password = $this->input->post('confirm_password');
-
-    if (empty($password) || strlen($password) < 6) {
-        $this->session->set_flashdata('error', 'Password must be at least 6 characters.');
-        redirect('Auth/resetPassword/' . $token);
-        return;
-    }
-
-    if ($password !== $confirm_password) {
-        $this->session->set_flashdata('error', 'Passwords do not match.');
-        redirect('Auth/resetPassword/' . $token);
-        return;
-    }
-
-    $user = $this->User_model->getUserByResetToken($token);
-
-    if (!$user || empty($user->reset_expires) || strtotime($user->reset_expires) < time()) {
         $this->session->set_flashdata(
-            'error',
-            'This reset link is invalid or has expired. Please request a new one.'
+            'reset_link',
+            $reset_link
         );
+
+
         redirect('Auth/login');
-        return;
     }
 
-    $this->User_model->updatePassword(
-        $user->id,
-        password_hash($password, PASSWORD_DEFAULT)
-    );
-    $this->User_model->clearResetToken($user->id);
 
-    $this->session->set_flashdata(
-        'success',
-        'Your password has been updated. You can now login with your new password.'
-    );
-    redirect('Auth/login');
-}
+    /*
+    |--------------------------------------------------------------------------
+    | RESET PASSWORD PAGE
+    |--------------------------------------------------------------------------
+    */
+    public function resetPassword($token = NULL)
+    {
+        $this->load->model('User_model');
+        $this->load->library('session');
 
-public function registerUser(){
-    $data = array(
-        'name'         => $this->input->post('name'),
-        'email'        => $this->input->post('email'),
-        'country'      => $this->input->post('country'),
-        'phone_number' => $this->input->post('phone_number'),
-        'password'     => password_hash(
-            $this->input->post('password'),
-            PASSWORD_DEFAULT
-        )
-    );
-    $this->load->model('User_model');
-    if ($this->User_model->insertUser($data)) {
+
+        if (empty($token)) {
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        $user =
+            $this->User_model->getUserByResetToken(
+                $token
+            );
+
+
+        if (
+            !$user ||
+            empty($user->reset_expires) ||
+            strtotime($user->reset_expires) < time()
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'This reset link is invalid or has expired. Please request a new one.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        $this->load->view(
+            'Auth/reset_password',
+            [
+                'token' => $token
+            ]
+        );
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE PASSWORD
+    |--------------------------------------------------------------------------
+    */
+    public function updatePassword()
+    {
+        $this->load->model('User_model');
+        $this->load->library('session');
+
+
+        $token =
+            $this->input->post('token');
+
+        $password =
+            $this->input->post('password');
+
+        $confirm_password =
+            $this->input->post('confirm_password');
+
+
+        if (
+            empty($password) ||
+            strlen($password) < 6
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Password must be at least 6 characters.'
+            );
+
+            redirect(
+                'Auth/resetPassword/' . $token
+            );
+
+            return;
+        }
+
+
+        if (
+            $password !== $confirm_password
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'Passwords do not match.'
+            );
+
+            redirect(
+                'Auth/resetPassword/' . $token
+            );
+
+            return;
+        }
+
+
+        $user =
+            $this->User_model->getUserByResetToken(
+                $token
+            );
+
+
+        if (
+            !$user ||
+            empty($user->reset_expires) ||
+            strtotime($user->reset_expires) < time()
+        ) {
+
+            $this->session->set_flashdata(
+                'error',
+                'This reset link is invalid or has expired. Please request a new one.'
+            );
+
+            redirect('Auth/login');
+            return;
+        }
+
+
+        // Update password
+        $this->User_model->updatePassword(
+            $user->id,
+            password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            )
+        );
+
+
+        // Clear reset token
+        $this->User_model->clearResetToken(
+            $user->id
+        );
+
+
+        $this->session->set_flashdata(
+            'success',
+            'Your password has been updated. You can now login with your new password.'
+        );
+
+
         redirect('Auth/login');
-    } else {
-        echo "Registration failed";
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REGISTER USER
+    |--------------------------------------------------------------------------
+    */
+    public function registerUser()
+    {
+        $data = [
+            'name' =>
+                $this->input->post('name'),
+
+            'email' =>
+                $this->input->post('email'),
+
+            'country' =>
+                $this->input->post('country'),
+
+            'phone_number' =>
+                $this->input->post('phone_number'),
+
+            'password' =>
+                password_hash(
+                    $this->input->post('password'),
+                    PASSWORD_DEFAULT
+                )
+        ];
+
+
+        $this->load->model('User_model');
+
+
+        if (
+            $this->User_model->insertUser($data)
+        ) {
+
+            redirect('Auth/login');
+            return;
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE REMEMBER TOKEN
+    |--------------------------------------------------------------------------
+    */
+    private function createRememberToken($user_id)
+    {
+        $this->load->model('User_model');
+
+
+        // Generate random token
+        $token =
+            bin2hex(
+                random_bytes(32)
+            );
+
+
+        // Hash token for database
+        $token_hash =
+            hash(
+                'sha256',
+                $token
+            );
+
+
+        // Token valid for 30 days
+        $expires =
+            date(
+                'Y-m-d H:i:s',
+                time() + (30 * 24 * 60 * 60)
+            );
+
+
+        // Save hash and expiry
+        $this->User_model->saveRememberToken(
+            $user_id,
+            $token_hash,
+            $expires
+        );
+
+
+        // Store raw token in browser cookie
+        set_cookie(
+            'lifevault_remember',
+            $token,
+            30 * 24 * 60 * 60
+        );
     }
 }
-}
-?>
