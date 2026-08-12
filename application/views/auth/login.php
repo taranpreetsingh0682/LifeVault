@@ -252,7 +252,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 
 </div>
 
-    <?php echo form_open_multipart('Auth/loginUser',['class'=>'row g-3']);  ?>
+    <?php echo form_open_multipart('Auth/loginUser',['class'=>'row g-3', 'autocomplete'=>'off']);  ?>
 
 
 
@@ -308,11 +308,10 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 
     <input type="password" 
     name="password"
-    autocomplete="current-password"
     class="form-control"
     id="loginPassword"
     placeholder="Enter your password"
-    autocomplete="off">
+    autocomplete="new-password">
 
     <i class="bi bi-eye password-toggle" data-target="loginPassword" title="Show password"></i>
     </div>

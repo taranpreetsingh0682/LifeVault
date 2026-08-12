@@ -5,11 +5,15 @@ class Dashboard extends CI_Controller {
 
   public function __construct() {
     parent::__construct();
-    // $this->load->model('User_model');
+    $this->load->library('session');
   }
 
   public function dashboard() {
-  $this->load->library('session');
+    // Auth guard: redirect to login if not logged in
+    if (!$this->session->userdata('loggend_in')) {
+      redirect('Auth/login');
+      return;
+    }
 
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');

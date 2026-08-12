@@ -3,11 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | LOGIN PAGE
-    |--------------------------------------------------------------------------
-    */
     public function login()
     {
         $this->load->library('session');
@@ -377,6 +372,13 @@ class Auth extends CI_Controller
         );
 
 
+        // Send welcome email to new Google user
+        $this->sendWelcomeEmail(
+            $user->email,
+            $user->name
+        );
+
+
         // 11. Dashboard
         redirect('dashboard/dashboard');
         return;
@@ -530,21 +532,27 @@ class Auth extends CI_Controller
     */
     private function sendWelcomeEmail($email, $name)
     {
+        // Step 1: Load the email config file (application/config/email.php)
+        $this->config->load('email', TRUE);
+
+        // Step 2: Build SMTP config array explicitly from the loaded config
+        $config = [
+            'protocol'    => $this->config->item('protocol',    'email'),
+            'smtp_host'   => $this->config->item('smtp_host',   'email'),
+            'smtp_port'   => $this->config->item('smtp_port',   'email'),
+            'smtp_user'   => $this->config->item('smtp_user',   'email'),
+            'smtp_pass'   => $this->config->item('smtp_pass',   'email'),
+            'smtp_crypto' => $this->config->item('smtp_crypto', 'email'),
+            'mailtype'    => $this->config->item('mailtype',    'email'),
+            'charset'     => $this->config->item('charset',     'email'),
+            'newline'     => "\r\n",
+            'crlf'        => "\r\n",
+        ];
+
+        // Step 3: Clear any previous email state and re-initialize with SMTP config
         $this->load->library('email');
-
-
-        $this->email->from(
-            'lifevaultsys@gmail.com',
-            'LifeVault'
-        );
-
-
-        $this->email->to($email);
-
-
-        $this->email->subject(
-            'Welcome to LifeVault 🎉'
-        );
+        $this->email->clear();
+        $this->email->initialize($config);
 
 
         $safe_name =
@@ -555,47 +563,159 @@ class Auth extends CI_Controller
             );
 
 
+        // Step 4: Compose the email
+        // From must be the Brevo authenticated SMTP user (verified sender)
+        $this->email->from(
+            $this->config->item('smtp_user', 'email'),
+            'LifeVault'
+        );
+
+        $this->email->to($email);
+
+        $this->email->subject(
+            'Welcome to LifeVault - Your vault is ready!'
+        );
+
+
         $message = '
-            <div style="
-                font-family: Arial, sans-serif;
-                padding: 20px;
-            ">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to LifeVault</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f0f4ff;font-family:Arial,sans-serif;">
 
-                <h2>
-                    Welcome to LifeVault,
-                    ' . $safe_name . '! 🎉
-                </h2>
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f4ff;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(13,18,53,0.10);">
 
-                <p>
-                    Your LifeVault account has been
-                    successfully created.
-                </p>
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#0D1235 0%,#1a2a7a 100%);padding:36px 40px;text-align:center;">
+              <table cellpadding="0" cellspacing="0" align="center">
+                <tr>
+                  <td style="background:rgba(255,255,255,0.12);border-radius:14px;padding:10px 18px;">
+                    <span style="color:#ffffff;font-size:22px;font-weight:700;letter-spacing:1px;">LifeVault</span>
+                  </td>
+                </tr>
+              </table>
+              <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:14px 0 0 0;letter-spacing:0.5px;">SECURE . PRIVATE . YOURS</p>
+            </td>
+          </tr>
 
-                <p>
-                    You can now securely store,
-                    manage and access your
-                    important documents in one place.
-                </p>
+          <!-- Hero Section -->
+          <tr>
+            <td style="padding:44px 44px 20px 44px;text-align:center;">
+              <div style="background:#f0f4ff;border-radius:50%;width:72px;height:72px;display:inline-block;line-height:72px;font-size:36px;margin-bottom:20px;">&#127881;</div>
+              <h1 style="color:#0D1235;font-size:26px;font-weight:800;margin:0 0 10px 0;">Welcome, ' . $safe_name . '!</h1>
+              <p style="color:#6b7280;font-size:15px;line-height:1.7;margin:0;">Your LifeVault account has been successfully created.<br>Your secure personal vault is ready.</p>
+            </td>
+          </tr>
 
-                <p>
-                    Thank you for choosing LifeVault.
-                </p>
+          <!-- Divider -->
+          <tr>
+            <td style="padding:0 44px;">
+              <hr style="border:none;border-top:1px solid #e9ecef;margin:20px 0;">
+            </td>
+          </tr>
 
-                <br>
+          <!-- Features -->
+          <tr>
+            <td style="padding:10px 44px 30px 44px;">
+              <p style="color:#0D1235;font-size:14px;font-weight:700;margin:0 0 16px 0;text-transform:uppercase;letter-spacing:0.8px;">What you can do with LifeVault</p>
 
-                <p>
-                    Regards,<br>
-                    <strong>LifeVault Team</strong>
-                </p>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="width:36px;">
+                          <div style="background:#e8f0fe;border-radius:8px;width:32px;height:32px;text-align:center;line-height:32px;font-size:16px;">&#128193;</div>
+                        </td>
+                        <td style="padding-left:14px;">
+                          <span style="color:#0D1235;font-weight:600;font-size:14px;">Store Documents Securely</span><br>
+                          <span style="color:#6b7280;font-size:13px;">Keep all your important files in one encrypted place.</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="width:36px;">
+                          <div style="background:#fef3c7;border-radius:8px;width:32px;height:32px;text-align:center;line-height:32px;font-size:16px;">&#11088;</div>
+                        </td>
+                        <td style="padding-left:14px;">
+                          <span style="color:#0D1235;font-weight:600;font-size:14px;">Mark Important Files</span><br>
+                          <span style="color:#6b7280;font-size:13px;">Star your critical documents for instant access.</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="width:36px;">
+                          <div style="background:#d1fae5;border-radius:8px;width:32px;height:32px;text-align:center;line-height:32px;font-size:16px;">&#128274;</div>
+                        </td>
+                        <td style="padding-left:14px;">
+                          <span style="color:#0D1235;font-weight:600;font-size:14px;">Access Anywhere, Anytime</span><br>
+                          <span style="color:#6b7280;font-size:13px;">Your vault is accessible from any device, securely.</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-            </div>
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding:10px 44px 36px 44px;text-align:center;">
+              <a href="http://localhost/LifeVault/Dashboard/dashboard" style="display:inline-block;background:linear-gradient(135deg,#0D1235,#1a2a7a);color:#ffffff;text-decoration:none;padding:14px 38px;border-radius:10px;font-size:15px;font-weight:700;letter-spacing:0.5px;">Go to My Vault &rarr;</a>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f8faff;padding:24px 44px;text-align:center;border-top:1px solid #e9ecef;">
+              <p style="color:#9ca3af;font-size:12px;margin:0 0 6px 0;">You received this email because you signed up for LifeVault.</p>
+              <p style="color:#9ca3af;font-size:12px;margin:0;">&copy; ' . date('Y') . ' LifeVault. All rights reserved.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
         ';
 
 
         $this->email->message($message);
 
 
-        return $this->email->send();
+        // Step 5: Send and log error if failed
+        if (!$this->email->send()) {
+            log_message(
+                'error',
+                'LifeVault welcome email FAILED to: ' . $email .
+                ' | Debugger: ' . $this->email->print_debugger()
+            );
+            return FALSE;
+        }
+
+        return TRUE;
     }
 
 
@@ -675,9 +795,30 @@ class Auth extends CI_Controller
         );
 
 
-        // Destroy session
+        // Unset all session data
+        $this->session->unset_userdata('user_id');
+        $this->session->unset_userdata('name');
+        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('loggend_in');
+
+        // Destroy the session completely
         $this->session->sess_destroy();
 
+        // Also destroy via native PHP to ensure nothing is left
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_unset();
+            session_destroy();
+        }
+
+        // Delete the session cookie from browser
+        if (isset($_COOKIE[config_item('sess_cookie_name')])) {
+            setcookie(
+                config_item('sess_cookie_name'),
+                '',
+                time() - 3600,
+                '/'
+            );
+        }
 
         redirect('Auth/login');
     }
@@ -972,9 +1113,24 @@ class Auth extends CI_Controller
         $this->load->model('User_model');
 
 
+        $name  = $this->input->post('name');
+        $email = $this->input->post('email');
+
+
         if (
             $this->User_model->insertUser($data)
         ) {
+
+            // Send welcome email to new manually registered user
+            $this->sendWelcomeEmail($email, $name);
+
+
+            $this->load->library('session');
+            $this->session->set_flashdata(
+                'success',
+                'Account created! Check your email for a welcome message. You can now login.'
+            );
+
 
             redirect('Auth/login');
             return;

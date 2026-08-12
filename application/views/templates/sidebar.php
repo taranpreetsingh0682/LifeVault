@@ -61,7 +61,7 @@
       <div class="storage-subtext">3.2 GB available</div>
     </div>
 
-    <a href="<?= site_url('Auth/login'); ?>" class="logout-link">
+    <a href="<?= site_url('Auth/logout'); ?>" class="logout-link">
       <i class="bi bi-box-arrow-right"></i>
       <span>Logout</span>
     </a>
