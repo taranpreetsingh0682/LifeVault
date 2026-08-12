@@ -37,8 +37,8 @@
             <i class="bi bi-file-earmark-text"></i>
           </div>
           <div class="stat-details">
-            <span class="stat-label">Total Documents</span>
-            <h2 class="stat-value">120</h2>
+            <span class="stat-label"> Total Documents</span>
+            <h2 class="stat-value"><?= $total_documents; ?></h2>
           </div>
         </div>
         <div class="stat-footer mt-2">
@@ -56,7 +56,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Storage Used</span>
-            <h2 class="stat-value">1.8 GB</h2>
+            <h2 class="stat-value"><?= $storage_used; ?></h2>
           </div>
         </div>
         <div class="stat-footer mt-2">
@@ -74,7 +74,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Important</span>
-            <h2 class="stat-value">16</h2>
+            <h2 class="stat-value"><?= $important_documents; ?></h2>
           </div>
         </div>
         <div class="stat-footer mt-2">
@@ -92,7 +92,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Shared Files</span>
-            <h2 class="stat-value">8</h2>
+            <h2 class="stat-value"><?= $shared_documents; ?></h2>
           </div>
         </div>
         <div class="stat-footer mt-2">
@@ -109,7 +109,7 @@
           <a href="#" class="stat-link text-sm">View Details</a>
         </div>
         <div class="storage-usage-meta mb-2">
-          <strong>1.8 GB</strong> <span class="text-muted">of 5 GB Used</span>
+          <strong><?= $storage_used; ?></strong> <span class="text-muted">of 5 GB Used</span>
         </div>
         <div class="progress storage-progress-bar mb-2">
           <div class="progress-bar gradient-bar" role="progressbar" style="width: 36%" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100"></div>
@@ -149,7 +149,7 @@
                 <td>
                   <div class="d-flex align-items-center gap-2">
                     <div class="doc-file-icon pdf">PDF</div>
-                    <span class="doc-name">PAN Card.pdf</span>
+                    <span class="doc-name">Pdf</span>
                   </div>
                 </td>
                 <td><span class="category-badge badge-identity">Identity</span></td>

@@ -50,4 +50,21 @@ class Document_model extends CI_Model
             ->get('documents')
             ->result();
     }
+
+
+    public function get_important_documents($user_id)
+{
+    return $this->db
+        ->where('user_id', $user_id)
+        ->where('is_important', 1)
+        ->count_all_results('documents');
+}
+
+public function get_shared_documents($user_id)
+{
+    return $this->db
+        ->where('user_id', $user_id)
+        ->where('is_shared', 1)
+        ->count_all_results('documents');
+}
 }
