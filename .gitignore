@@ -1,5 +1,6 @@
 application/logs/*
 !application/logs/index.html
+application/config/google.php
 
 application/cache/*
 !application/cache/index.html
