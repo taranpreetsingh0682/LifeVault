@@ -396,13 +396,10 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
   </div>
        
 
-  <button type="button" class="btn google-btn w-100">
-    <i class="bi bi-google">
-    
-    </i>
- 
+  <a href="<?= site_url('Auth/googleLogin'); ?>" class="btn google-btn w-100">
+    <i class="bi bi-google"></i>
     Continue with Gmail
-  </button>
+  </a>
 
 
 <div class="register-item">

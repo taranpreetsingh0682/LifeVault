@@ -1,3 +1,47 @@
+<?php
+// Fallbacks for undefined variables
+$total_weeks = isset($total_weeks) ? $total_weeks : '+12 this week';
+
+// Calculate storage stats dynamically
+$total_limit_bytes = 5 * 1024 * 1024 * 1024; // 5 GB limit in bytes
+$storage_used_bytes = 0;
+
+if (isset($storage_used)) {
+    $storage_used_val = trim($storage_used);
+    if (is_numeric($storage_used_val)) {
+        $storage_used_bytes = (float)$storage_used_val;
+    } else {
+        // Parse strings like "1.2 MB" or "456 KB"
+        if (preg_match('/^([\d\.]+)\s*(kb|mb|gb|tb|b)?$/i', $storage_used_val, $matches)) {
+            $num = (float)$matches[1];
+            $unit = isset($matches[2]) ? strtolower($matches[2]) : 'b';
+            switch ($unit) {
+                case 'kb': $storage_used_bytes = $num * 1024; break;
+                case 'mb': $storage_used_bytes = $num * 1024 * 1024; break;
+                case 'gb': $storage_used_bytes = $num * 1024 * 1024 * 1024; break;
+                case 'tb': $storage_used_bytes = $num * 1024 * 1024 * 1024 * 1024; break;
+                default:   $storage_used_bytes = $num; break;
+            }
+        }
+    }
+}
+
+// Convert bytes to human readable format
+if (!function_exists('format_bytes')) {
+    function format_bytes($bytes, $precision = 1) {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
+}
+
+$storage_used_formatted = format_bytes($storage_used_bytes);
+$storage_percent = $total_limit_bytes > 0 ? min(round(($storage_used_bytes / $total_limit_bytes) * 100, 1), 100) : 0;
+$storage_available_formatted = format_bytes(max($total_limit_bytes - $storage_used_bytes, 0));
+?>
 <main class="dashboard-content">
   <!-- Greeting Header Banner -->
   <div class="welcome-header d-flex align-items-center justify-content-between mb-4">
@@ -42,7 +86,7 @@
           </div>
         </div>
         <div class="stat-footer mt-2">
-          <span class="text-success-growth">+12 this week</span>
+          <span class="text-success-growth"><?= $total_weeks ?></span>
         </div>
       </div>
     </div>
@@ -56,7 +100,7 @@
           </div>
           <div class="stat-details">
             <span class="stat-label">Storage Used</span>
-            <h2 class="stat-value"><?= $storage_used; ?></h2>
+            <h2 class="stat-value"><?= $storage_used_formatted; ?></h2>
           </div>
         </div>
         <div class="stat-footer mt-2">
@@ -109,14 +153,14 @@
           <a href="#" class="stat-link text-sm">View Details</a>
         </div>
         <div class="storage-usage-meta mb-2">
-          <strong><?= $storage_used; ?></strong> <span class="text-muted">of 5 GB Used</span>
+          <strong><?= $storage_used_formatted; ?></strong> <span class="text-muted">of 5 GB Used</span>
         </div>
         <div class="progress storage-progress-bar mb-2">
-          <div class="progress-bar gradient-bar" role="progressbar" style="width: 36%" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="progress-bar gradient-bar" role="progressbar" style="width: <?= $storage_percent; ?>%" aria-valuenow="<?= $storage_percent; ?>" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div class="d-flex align-items-center justify-content-between storage-sub-meta">
-          <span>3.2 GB Available</span>
-          <span class="fw-bold">36%</span>
+          <span><?= $storage_available_formatted; ?> Available</span>
+          <span class="fw-bold"><?= $storage_percent; ?>%</span>
         </div>
       </div>
     </div>
@@ -150,7 +194,7 @@
               <?php foreach ($recent_documents as $document): ?>
               <tr>
 
-
+<!-- firstrow pdf -->
                 <td>
 
                   <div class="d-flex align-items-center gap-2">
@@ -172,60 +216,146 @@
                 <td class="text-muted text-sm">
                   <?= date('d M Y, h:i A',strtotime($document->uploaded_at)); ?>
                 </td>
-                <td class="text-muted text-sm"><?= $document->file_size; ?></td>
-                <td><i class="bi bi-star-fill text-warning"></i></td>
+                <td class="text-muted text-sm">
+                  <?= $document->file_size; ?>
+                
+                </td>
+
+                <td>
+                  <?php if($document->is_important==1); ?>
+                 <i  class="bi bi-star-fill text-warning"></i>
+                  
+                  </td>
                 <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
               </tr>
               <tr>
+<!-- secondrow doc -->
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <div class="doc-file-icon doc">DOC</div>
-                    <span class="doc-name">Resume.pdf</span>
+                    <div class="doc-file-icon doc">
+                           <?= strtoupper(pathinfo($document->file_name,PATHINFO_EXTENSION)); ?>
+                    </div>
+                    <span class="doc-name">
+                       <?= htmlspecialchars($document->title); ?> 
+                    </span>
                   </div>
                 </td>
-                <td><span class="category-badge badge-personal">Personal</span></td>
-                <td class="text-muted text-sm">05 July 2025</td>
-                <td class="text-muted text-sm">1.2 MB</td>
-                <td><i class="bi bi-star text-muted"></i></td>
+                <td><span class="category-badge badge-personal">
+                  <?= htmlspecialchars($document->category); ?>
+                </span></td>
+                <td class="text-muted text-sm">
+                  
+                <?= date('d M Y, h:i A',strtotime($document->uploaded_at)); ?>
+
+
+              </td>
+                <td class="text-muted text-sm"> 
+                  <?= $document->file_size; ?>
+              
+              </td>
+                <td>
+
+                <?php if($document->is_important==1); ?>
+                  <i class="bi bi-star text-muted"></i>
+                
+                </td>
+                <td>
+
+                  <i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i>
+                
+                </td>
+              </tr>
+              <tr>
+<!-- thirdrow pdf -->
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="doc-file-icon pdf">
+                       <?= strtoupper(pathinfo($document->file_name,PATHINFO_EXTENSION)); ?>
+                    </div>
+                    <span class="doc-name">
+                      <?= htmlspecialchars($document->title); ?> 
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span class="category-badge badge-identity">
+                 <?= htmlspecialchars($document->category); ?>
+                </span>
+              </td>
+                <td class="text-muted text-sm">
+                         <?= date('d M Y, h:i A',strtotime($document->uploaded_at)); ?>
+                </td>
+                <td class="text-muted text-sm">
+                         <?= $document->file_size; ?>
+                </td>
+                <td>
+                   <?php if($document->is_important==1); ?>
+                  <i class="bi bi-star-fill text-warning"></i>
+                </td>
                 <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
               </tr>
+
+<!-- 4th row XLS -->
               <tr>
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <div class="doc-file-icon pdf">PDF</div>
-                    <span class="doc-name">Aadhaar Card.pdf</span>
+                    <div class="doc-file-icon xls">
+                        <?= strtoupper(pathinfo($document->file_name,PATHINFO_EXTENSION)); ?>
+                    </div>
+                    <span class="doc-name">
+                       <?= htmlspecialchars($document->title); ?>
+                    </span>
                   </div>
                 </td>
-                <td><span class="category-badge badge-identity">Identity</span></td>
-                <td class="text-muted text-sm">Today, 10:30 AM</td>
-                <td class="text-muted text-sm">456 KB</td>
-                <td><i class="bi bi-star-fill text-warning"></i></td>
-                <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
+                <td>
+                <span class="category-badge badge-education">
+                   <?= htmlspecialchars($document->category); ?>
+                </span>
+              </td>
+                <td class="text-muted text-sm">
+                     <?= date('d M Y, h:i A',strtotime($document->uploaded_at)); ?>
+                </td>
+                <td class="text-muted text-sm">
+                    <?= $document->file_size; ?>
+
+                </td>
+                <td>
+                      <?php if($document->is_important==1); ?>
+                  <i class="bi bi-star text-muted"></i>
+                </td>
+                <td>
+                  <i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i>
+                </td>
               </tr>
+<!-- 5th row pdf -->
               <tr>
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <div class="doc-file-icon xls">XLS</div>
-                    <span class="doc-name">10th Marksheet.xls</span>
+                    <div class="doc-file-icon pdf">
+                        <?= strtoupper(pathinfo($document->file_name,PATHINFO_EXTENSION)); ?>
+                    </div>
+                    <span class="doc-name">
+                      <?= htmlspecialchars($document->title); ?>
+                    </span>
                   </div>
                 </td>
-                <td><span class="category-badge badge-education">Education</span></td>
-                <td class="text-muted text-sm">04 July 2025</td>
-                <td class="text-muted text-sm">512 KB</td>
-                <td><i class="bi bi-star text-muted"></i></td>
-                <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
-              </tr>
-              <tr>
                 <td>
-                  <div class="d-flex align-items-center gap-2">
-                    <div class="doc-file-icon pdf">PDF</div>
-                    <span class="doc-name">Passport.pdf</span>
-                  </div>
+                  <span class="category-badge badge-identity">
+                     <?= htmlspecialchars($document->category); ?>
+                  </span>
                 </td>
-                <td><span class="category-badge badge-identity">Identity</span></td>
-                <td class="text-muted text-sm">01 June 2025</td>
-                <td class="text-muted text-sm">600 KB</td>
-                <td><i class="bi bi-star-fill text-warning"></i></td>
+                <td class="text-muted text-sm">
+                  <?= date('d M Y, h:i A',strtotime($document->uploaded_at)); ?>
+                </td>
+
+                <td class="text-muted text-sm">
+                   <?= $document->file_size; ?>
+                </td>
+
+                <td>
+                    <?php if($document->is_important==1); ?>
+                  <i class="bi bi-star-fill text-warning"></i>
+                </td>
                 <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
               </tr>
               <?php endforeach; ?>
@@ -289,23 +419,44 @@
         </div>
 
         <div class="categories-list d-flex flex-column gap-2">
+          <?php if (!empty($categories)): ?>
+
+            <?php foreach ($categories as $category): ?>
+
           <div class="cat-item">
+           
             <div class="cat-icon-box bg-cat-blue">
               <i class="bi bi-file-earmark-person"></i>
             </div>
             <div class="cat-meta">
-              <h6 class="cat-name">Identity</h6>
-              <span class="cat-count">30 files</span>
+              <h6 class="cat-name">
+
+                <?= htmlspecialchars($category->category); ?>
+
+              </h6>
+              <span class="cat-count">
+
+                <?= $category->total; ?> files
+
+              </span>
             </div>
           </div>
+
+          <?php endforeach; ?>
+          <?php else: ?>
 
           <div class="cat-item">
             <div class="cat-icon-box bg-cat-orange">
               <i class="bi bi-mortarboard"></i>
             </div>
             <div class="cat-meta">
-              <h6 class="cat-name">Education</h6>
-              <span class="cat-count">28 files</span>
+              <h6 class="cat-name">
+                <?= htmlspecialchars($category->category); ?>
+            
+              </h6>
+              <span class="cat-count">
+                <?= $category->total; ?> files
+              </span>
             </div>
           </div>
 
@@ -314,8 +465,12 @@
               <i class="bi bi-award"></i>
             </div>
             <div class="cat-meta">
-              <h6 class="cat-name">Certificates</h6>
-              <span class="cat-count">22 files</span>
+              <h6 class="cat-name">
+              <?= htmlspecialchars($category->category); ?>
+              </h6>
+              <span class="cat-count">
+                <?= $category->total; ?> files
+              </span>
             </div>
           </div>
 
@@ -324,11 +479,16 @@
               <i class="bi bi-image"></i>
             </div>
             <div class="cat-meta">
-              <h6 class="cat-name">Images</h6>
-              <span class="cat-count">12 files</span>
+              <h6 class="cat-name">
+                No Categories yet
+              </h6>
+              <span class="cat-count">
+                 0 files
+              </span>
             </div>
           </div>
-        </div>
+          <?php endif; ?>
+            
       </div>
     </div>
   </div>
@@ -368,6 +528,8 @@
           <div class="donut-legend d-flex flex-column gap-2">
             <div class="legend-item d-flex align-items-center justify-content-between gap-4">
               <div class="d-flex align-items-center gap-2">
+
+
                 <span class="legend-dot bg-blue"></span>
                 <span class="legend-name">Identity</span>
               </div>
