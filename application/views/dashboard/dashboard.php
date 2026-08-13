@@ -145,16 +145,34 @@
               </tr>
             </thead>
             <tbody>
+
+            <?php if(!empty($recent_documents)):?>
+              <?php foreach ($recent_documents as $document): ?>
               <tr>
+
+
                 <td>
+
                   <div class="d-flex align-items-center gap-2">
-                    <div class="doc-file-icon pdf">PDF</div>
-                    <span class="doc-name">Pdf</span>
+
+                    <div class="doc-file-icon pdf">
+                      <?= strtoupper(pathinfo($document->file_name,PATHINFO_EXTENSION)); ?>
+                    </div>
+
+                    <span class="doc-name">= 
+                      <?= htmlspecialchars($document->title); ?> 
+                    </span>
+                   
+
                   </div>
                 </td>
-                <td><span class="category-badge badge-identity">Identity</span></td>
-                <td class="text-muted text-sm">Yesterday, 09:15 PM</td>
-                <td class="text-muted text-sm">240 KB</td>
+                <td><span class="category-badge badge-identity">
+                  <?= htmlspecialchars($document->category); ?>
+                </span></td>
+                <td class="text-muted text-sm">
+                  <?= date('d M Y, h:i A',strtotime($document->uploaded_at)); ?>
+                </td>
+                <td class="text-muted text-sm"><?= $document->file_size; ?></td>
                 <td><i class="bi bi-star-fill text-warning"></i></td>
                 <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
               </tr>
@@ -210,6 +228,14 @@
                 <td><i class="bi bi-star-fill text-warning"></i></td>
                 <td><i class="bi bi-three-dots-vertical text-muted cursor-pointer"></i></td>
               </tr>
+              <?php endforeach; ?>
+              <?php else: ?>
+              <tr>
+                <td colspan="5">
+                  No documents uploaded yet
+                </td>
+              </tr>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>

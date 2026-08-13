@@ -27,7 +27,7 @@ class Dashboard extends CI_Controller {
 
     // Recent documents
     $data['recent_documents']=
-    $this->Document_model->get_recent_documents($user_id);
+    $this->Document_model->get_recent_documents($user_id, 5);
 
     // Categories
     $data['categories']=
