@@ -155,9 +155,9 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 </button>
 
 <div class="navbar-menu" id="lvNavMenu">
-  <a href="<?= site_url('Auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
-  <a href="<?= site_url('Auth/login'); ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
-  <a href="<?= site_url('Auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
+  <a href="<?= site_url('auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
+  <a href="<?= site_url('auth/login'); ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
+  <a href="<?= site_url('auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
 </div>
 
 </nav>
@@ -252,7 +252,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 
 </div>
 
-    <?php echo form_open_multipart('Auth/loginUser',['class'=>'row g-3', 'autocomplete'=>'off']);  ?>
+    <?php echo form_open_multipart('auth/loginUser',['class'=>'row g-3', 'autocomplete'=>'off']);  ?>
 
 
 
@@ -319,7 +319,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
   </div>
   </div>
   <div class="forget-item">
-<a href="<?= site_url('Auth/forgetPassword'); ?>">
+<a href="<?= site_url('auth/forgetPassword'); ?>">
     Forgot Password?
 </a>
   </div>
@@ -333,7 +333,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
   </div>
 
   <div class="col-md-6">
-    <a href="<?= site_url('Auth/googleLogin'); ?>" type="button" class="btn google-btn w-100">Continue with Gmail</a>
+    <a href="<?= site_url('auth/googleLogin'); ?>" type="button" class="btn google-btn w-100">Continue with Gmail</a>
   </div>
 </div>
 

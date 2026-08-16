@@ -86,9 +86,9 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 </button>
 
 <div class="navbar-menu" id="lvNavMenu">
-  <a href="<?= site_url('Auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
-  <a href="<?= site_url('Auth/login'); ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
-  <a href="<?= site_url('Auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
+  <a href="<?= site_url('auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
+  <a href="<?= site_url('auth/login'); ?>" class="<?= ($method=='login')? 'active': ''; ?>">Login</a>
+  <a href="<?= site_url('auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
 </div>
 
 </nav>
@@ -396,7 +396,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
   </div>
        
 
-  <a href="<?= site_url('Auth/googleLogin'); ?>" class="btn google-btn w-100">
+  <a href="<?= site_url('auth/googleLogin'); ?>" class="btn google-btn w-100">
     <i class="bi bi-google"></i>
     Continue with Gmail
   </a>

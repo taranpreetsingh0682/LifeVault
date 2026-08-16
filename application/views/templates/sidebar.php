@@ -21,7 +21,7 @@
       <span class="link-text">Dashboard</span>
     </a>
 
-    <a href="<?= site_url('Documents/documents'); ?>" class="menu-link <?= ($controller == 'Documents') ? 'active' : ''; ?>">
+    <a href="<?= site_url('Documents'); ?>" class="menu-link <?= ($controller == 'Documents') ? 'active' : ''; ?>">
       <i class="bi bi-folder-fill"></i>
       <span class="link-text">Documents</span>
       <span class="menu-badge">129</span>
@@ -61,7 +61,7 @@
       <div class="storage-subtext">3.2 GB available</div>
     </div>
 
-    <a href="<?= site_url('Auth/logout'); ?>" class="logout-link">
+    <a href="<?= site_url('auth/logout'); ?>" class="logout-link">
       <i class="bi bi-box-arrow-right"></i>
       <span>Logout</span>
     </a>

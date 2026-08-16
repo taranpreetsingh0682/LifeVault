@@ -94,9 +94,9 @@ $method = $this->router->fetch_method();
 </button>
 
 <div class="navbar-menu" id="lvNavMenu">
-  <a href="<?= site_url('Auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
-  <a href="<?= site_url('Auth/login'); ?>" class="<?= ($method=='Login')? 'active': ''; ?>">Login</a>
-  <a href="<?= site_url('Auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
+  <a href="<?= site_url('auth/Home'); ?>" class="<?= ($method =='Home')? 'active': ''; ?>">Home</a>
+  <a href="<?= site_url('auth/login'); ?>" class="<?= ($method=='Login')? 'active': ''; ?>">Login</a>
+  <a href="<?= site_url('auth/register'); ?>" class="<?= ($method=='register')? 'active': ''; ?>">Register</a>
 </div>
 
 </nav>

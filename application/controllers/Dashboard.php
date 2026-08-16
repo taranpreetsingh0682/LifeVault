@@ -12,7 +12,7 @@ class Dashboard extends CI_Controller {
   public function dashboard() {
     // Auth guard: redirect to login if not logged in
     if (!$this->session->userdata('loggend_in')) {
-      redirect('Auth/login');
+      redirect('auth/login');
       return;
     }
 

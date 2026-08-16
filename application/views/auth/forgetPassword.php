@@ -53,7 +53,7 @@
                 <?php endif; ?>
 
 
-                <form action="<?= site_url('Auth/sendResetLink'); ?>"
+                <form action="<?= site_url('auth/sendResetLink'); ?>"
                       method="post">
 
                     <div class="mb-3">
@@ -86,7 +86,7 @@
 
                 <div class="text-center mt-3 move">
 
-                    <a href="<?= site_url('Auth/login'); ?>">
+                    <a href="<?= site_url('auth/login'); ?>">
                         Back to Login
                     </a>
 

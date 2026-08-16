@@ -67,4 +67,23 @@ public function get_shared_documents($user_id)
         ->where('is_shared', 1)
         ->count_all_results('documents');
 }
+
+// get documents of logged-in user
+public function get_documents($user_id,$category=null)
+{
+    $this->db->where('user_id',$user_id);
+
+    // if category is selected
+    if(!empty($category)&&$category !=='All'){
+        $this->db->where('category',$category);
+    }
+
+    // Newest documents first
+    $this->db->order_by('uploaded_at','DESC');
+    $query=$this->db->get('documents');
+    return $query->result();
+
+    }
+
 }
+?>

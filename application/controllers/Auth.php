@@ -9,7 +9,7 @@ class Auth extends CI_Controller
         $this->config->load('google');
         $this->load->model('User_model');
 
-        $this->load->view('Auth/login');
+        $this->load->view('auth/login');
     }
 
 
@@ -18,6 +18,28 @@ class Auth extends CI_Controller
     | GOOGLE LOGIN
     |--------------------------------------------------------------------------
     */
+
+
+    public function testSession()
+{
+    $this->load->library('session');
+
+    $this->session->set_userdata(
+        'test_session',
+        'HELLO_LIFEvault'
+    );
+
+    echo '<pre>';
+    echo "Configured save path: ";
+    var_dump(config_item('sess_save_path'));
+
+    echo "\nSession ID: ";
+    var_dump($this->session->session_id);
+
+    echo "\nSession value: ";
+    var_dump($this->session->userdata('test_session'));
+    echo '</pre>';
+}
     public function googleLogin()
     {
         $this->load->library('session');
@@ -59,6 +81,7 @@ class Auth extends CI_Controller
     */
     public function googleCallback()
     {
+        log_message('error', 'GOOGLE CALLBACK STARTED');
         $this->load->library('session');
         $this->load->model('User_model');
         $this->config->load('google');
@@ -72,7 +95,7 @@ class Auth extends CI_Controller
                 'Google login was cancelled or denied.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -87,7 +110,7 @@ class Auth extends CI_Controller
                 'Google authorization code was not received.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -109,7 +132,7 @@ class Auth extends CI_Controller
                 'Invalid Google login request.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -177,7 +200,7 @@ class Auth extends CI_Controller
                 'Unable to connect to Google.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -198,7 +221,7 @@ class Auth extends CI_Controller
                 'Unable to get Google access token.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -242,7 +265,7 @@ class Auth extends CI_Controller
                 'Unable to retrieve Google account information.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -261,7 +284,7 @@ class Auth extends CI_Controller
                 'Google did not provide an email address.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -328,7 +351,7 @@ class Auth extends CI_Controller
                 'Unable to create your LifeVault account.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -347,7 +370,7 @@ class Auth extends CI_Controller
                 'Unable to retrieve newly created account.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -402,7 +425,16 @@ class Auth extends CI_Controller
         $password =
             $this->input->post('password');
 
+if (empty($email) || empty($password)) {
 
+    $this->session->set_flashdata(
+        'error',
+        'Please enter both email and password.'
+    );
+
+    redirect('auth/login');
+    return;
+}
         // Find user
         $user =
             $this->User_model->getUserByEmail($email);
@@ -415,7 +447,7 @@ class Auth extends CI_Controller
                 'No account found with this email.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -433,7 +465,7 @@ class Auth extends CI_Controller
                 'Invalid password.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -730,7 +762,7 @@ class Auth extends CI_Controller
         $this->load->model('User_model');
 
         $this->load->view(
-            'Auth/forgetPassword'
+            'auth/forgetPassword'
         );
     }
 
@@ -745,7 +777,7 @@ class Auth extends CI_Controller
         $this->load->model('User_model');
 
         $this->load->view(
-            'Auth/register'
+            'auth/register'
         );
     }
 
@@ -760,7 +792,7 @@ class Auth extends CI_Controller
         $this->load->model('User_model');
 
         $this->load->view(
-            'Auth/Home'
+            'auth/Home'
         );
     }
 
@@ -820,7 +852,7 @@ class Auth extends CI_Controller
             );
         }
 
-        redirect('Auth/login');
+        redirect('auth/login');
     }
 
 
@@ -853,7 +885,7 @@ class Auth extends CI_Controller
                 TRUE
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -876,7 +908,7 @@ class Auth extends CI_Controller
                 TRUE
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -908,7 +940,7 @@ class Auth extends CI_Controller
 
         $reset_link =
             site_url(
-                'Auth/resetPassword/' . $token
+                'auth/resetPassword/' . $token
             );
 
 
@@ -925,7 +957,7 @@ class Auth extends CI_Controller
         );
 
 
-        redirect('Auth/login');
+        redirect('auth/login');
     }
 
 
@@ -942,7 +974,7 @@ class Auth extends CI_Controller
 
         if (empty($token)) {
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -964,13 +996,13 @@ class Auth extends CI_Controller
                 'This reset link is invalid or has expired. Please request a new one.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
 
         $this->load->view(
-            'Auth/reset_password',
+            'auth/reset_password',
             [
                 'token' => $token
             ]
@@ -1010,7 +1042,7 @@ class Auth extends CI_Controller
             );
 
             redirect(
-                'Auth/resetPassword/' . $token
+                'auth/resetPassword/' . $token
             );
 
             return;
@@ -1027,7 +1059,7 @@ class Auth extends CI_Controller
             );
 
             redirect(
-                'Auth/resetPassword/' . $token
+                'auth/resetPassword/' . $token
             );
 
             return;
@@ -1051,7 +1083,7 @@ class Auth extends CI_Controller
                 'This reset link is invalid or has expired. Please request a new one.'
             );
 
-            redirect('Auth/login');
+            redirect('auth/login');
             return;
         }
 
@@ -1078,7 +1110,7 @@ class Auth extends CI_Controller
         );
 
 
-        redirect('Auth/login');
+        redirect('auth/login');
     }
 
 
@@ -1087,55 +1119,90 @@ class Auth extends CI_Controller
     | REGISTER USER
     |--------------------------------------------------------------------------
     */
-    public function registerUser()
-    {
-        $data = [
-            'name' =>
-                $this->input->post('name'),
+public function registerUser()
+{
+    $this->load->model('User_model');
+    $this->load->library('session');
 
-            'email' =>
-                $this->input->post('email'),
+    $name = trim($this->input->post('name'));
+    $email = trim($this->input->post('email'));
+    $country = trim($this->input->post('country'));
+    $phone_number = trim($this->input->post('phone_number'));
+    $password = $this->input->post('password');
 
-            'country' =>
-                $this->input->post('country'),
+    if (empty($name) || empty($email) || empty($password)) {
 
-            'phone_number' =>
-                $this->input->post('phone_number'),
+        $this->session->set_flashdata(
+            'error',
+            'Please fill all required fields.'
+        );
 
-            'password' =>
-                password_hash(
-                    $this->input->post('password'),
-                    PASSWORD_DEFAULT
-                )
-        ];
-
-
-        $this->load->model('User_model');
-
-
-        $name  = $this->input->post('name');
-        $email = $this->input->post('email');
-
-
-        if (
-            $this->User_model->insertUser($data)
-        ) {
-
-            // Send welcome email to new manually registered user
-            $this->sendWelcomeEmail($email, $name);
-
-
-            $this->load->library('session');
-            $this->session->set_flashdata(
-                'success',
-                'Account created! Check your email for a welcome message. You can now login.'
-            );
-
-
-            redirect('Auth/login');
-            return;
-        }
+        redirect('auth/register');
+        return;
     }
+
+    // Check duplicate email
+    $existing_user = $this->User_model->getUserByEmail($email);
+
+    if ($existing_user) {
+
+        $this->session->set_flashdata(
+            'error',
+            'An account with this email already exists.'
+        );
+
+        redirect('auth/register');
+        return;
+    }
+
+    $data = [
+        'name' => $name,
+        'email' => $email,
+        'country' => $country,
+        'phone_number' => $phone_number,
+        'password' => password_hash(
+            $password,
+            PASSWORD_DEFAULT
+        )
+    ];
+
+    // Insert user
+    $inserted = $this->User_model->insertUser($data);
+
+    if (!$inserted) {
+
+        $db_error = $this->db->error();
+
+        log_message(
+            'error',
+            'REGISTER DATABASE ERROR: ' .
+            json_encode($db_error)
+        );
+
+        $this->session->set_flashdata(
+            'error',
+            'Unable to create account. Please try again.'
+        );
+
+        redirect('auth/register');
+        return;
+    }
+
+    // Account created successfully
+    $this->session->set_flashdata(
+        'success',
+        'Account created successfully! You can now login.'
+    );
+
+    /*
+     * TEMPORARILY disabled.
+     * First confirm registration works.
+     */
+    // $this->sendWelcomeEmail($email, $name);
+
+    redirect('auth/login');
+    return;
+}
 
 
     /*

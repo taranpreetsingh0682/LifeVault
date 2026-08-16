@@ -2,6 +2,7 @@ application/logs/*
 !application/logs/index.html
 application/config/google.php
 application/config/email.php
+testdb.php
 
 application/cache/*
 !application/cache/index.html

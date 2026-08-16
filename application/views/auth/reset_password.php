@@ -31,7 +31,7 @@
             <div class="alert alert-danger"><?= $this->session->flashdata('error'); ?></div>
         <?php endif; ?>
 
-        <?= form_open('Auth/updatePassword'); ?>
+        <?= form_open('auth/updatePassword'); ?>
             <input type="hidden" name="token" value="<?= html_escape($token); ?>">
 
             <div class="mb-3">
@@ -56,7 +56,7 @@
         <?= form_close(); ?>
 
         <p class="text-center mt-3 mb-0">
-            <a href="<?= site_url('Auth/login'); ?>">Back to Login</a>
+            <a href="<?= site_url('auth/login'); ?>">Back to Login</a>
         </p>
     </div>
 
