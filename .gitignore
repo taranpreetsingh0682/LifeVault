@@ -1,6 +1,6 @@
 application/logs/*
 !application/logs/index.html
-
+lifevault_backup.sql
 testdb.php
 .env
 compose.yml
