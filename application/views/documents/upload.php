@@ -12,7 +12,7 @@
   <!-- Primary Drag & Drop Zone Card -->
   <div class="upload-dropzone-card mb-4">
     <div class="dropzone-area" id="dropzoneArea">
-      <input type="file" id="fileDropInput" multiple hidden>
+      <input type="file" id="fileDropInput" data-upload-url="<?= site_url('upload/store'); ?>" hidden accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
       
       <div class="cloud-icon-circle">
         <i class="bi bi-cloud-arrow-up"></i>
@@ -39,7 +39,7 @@
       <div class="upload-card shadow-sm h-100">
         <div class="upload-card-header d-flex align-items-center justify-content-between">
           <h5 class="card-section-title mb-0">Upload Queue</h5>
-          <span class="queue-count-badge" id="queueCountBadge">4 files</span>
+          <span class="queue-count-badge" id="queueCountBadge">Ready</span>
         </div>
         
         <div class="upload-queue-list mt-3 d-flex flex-column gap-3" id="uploadQueueList">
@@ -176,7 +176,7 @@
             <th scope="col" class="text-end">ACTIONS</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="recentUploadsBody">
           <tr>
             <td>
               <div class="d-flex align-items-center gap-2">
@@ -274,3 +274,172 @@
   </div>
 
 </main>
+
+<?php
+function lv_upload_type_label($type) {
+  $ext = strtoupper(ltrim((string) $type, '.'));
+  if (in_array($ext, array('JPG', 'JPEG', 'PNG'), TRUE)) return 'JPG';
+  if (in_array($ext, array('DOC', 'DOCX'), TRUE)) return 'DOC';
+  if (in_array($ext, array('XLS', 'XLSX'), TRUE)) return 'XLS';
+  return $ext ?: 'FILE';
+}
+
+function lv_upload_size_label($bytes) {
+  $bytes = (float) $bytes;
+  return $bytes >= 1048576 ? round($bytes / 1048576, 2) . ' MB' : max(1, round($bytes / 1024)) . ' KB';
+}
+
+$lv_recent_uploads = array_map(function ($document) {
+  return array(
+    'id' => (int) $document->id,
+    'title' => $document->title,
+    'type' => lv_upload_type_label($document->file_type),
+    'category' => strtolower($document->category),
+    'categoryLabel' => ucfirst($document->category),
+    'uploaded' => date('d M Y, h:i A', strtotime($document->uploaded_at)),
+    'size' => lv_upload_size_label($document->file_size),
+    'important' => (bool) $document->is_important
+  );
+}, isset($recent_documents) ? $recent_documents : array());
+?>
+
+<script>
+(function () {
+  'use strict';
+
+  const docs = <?= json_encode($lv_recent_uploads); ?>;
+  const uploadUrl = '<?= site_url('upload/store'); ?>';
+  const viewUrl = '<?= site_url('documents/view/'); ?>';
+  const downloadUrl = '<?= site_url('documents/download/'); ?>';
+  const deleteUrl = '<?= site_url('documents/delete/'); ?>';
+  const starUrl = '<?= site_url('documents/toggleImportant/'); ?>';
+
+  const queueList = document.getElementById('uploadQueueList');
+  const queueBadge = document.getElementById('queueCountBadge');
+  const recentBody = document.getElementById('recentUploadsBody');
+  const fileInput = document.getElementById('fileDropInput');
+  const dropzone = document.getElementById('dropzoneArea');
+
+  const typeClass = { PDF: 'badge-type-pdf', DOC: 'badge-type-doc', XLS: 'badge-type-xls', JPG: 'badge-type-jpg' };
+  const catClass = {
+    identity: 'badge-identity',
+    personal: 'badge-personal',
+    education: 'badge-education',
+    certificates: 'badge-certificates',
+    images: 'badge-images',
+    records: 'badge-records'
+  };
+
+  function esc(value) {
+    return String(value || '').replace(/[&<>"']/g, function (char) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];
+    });
+  }
+
+  function guessCategory(fileName) {
+    const ext = (fileName.split('.').pop() || '').toLowerCase();
+    if (['jpg', 'jpeg', 'png'].includes(ext)) return 'images';
+    return 'records';
+  }
+
+  function fileType(fileName) {
+    const ext = (fileName.split('.').pop() || '').toUpperCase();
+    if (['JPG', 'JPEG', 'PNG'].includes(ext)) return 'JPG';
+    if (['DOC', 'DOCX'].includes(ext)) return 'DOC';
+    if (['XLS', 'XLSX'].includes(ext)) return 'XLS';
+    return 'PDF';
+  }
+
+  function renderRecentUploads() {
+    if (!recentBody) return;
+    if (!docs.length) {
+      recentBody.innerHTML = '<tr><td colspan="6" class="empty-state-cell text-center py-4"><i class="bi bi-folder2-open" style="font-size:2rem;color:#cbd5e1;display:block;margin-bottom:.5rem;"></i>No documents uploaded yet.</td></tr>';
+      return;
+    }
+
+    recentBody.innerHTML = docs.map(function (doc) {
+      return `<tr>
+        <td><div class="d-flex align-items-center gap-2"><span class="badge-file-type ${typeClass[doc.type] || 'badge-type-pdf'}">${esc(doc.type)}</span><span class="doc-table-name">${esc(doc.title)}</span></div></td>
+        <td><span class="table-cat-badge ${catClass[doc.category] || 'badge-records'}">${esc(doc.categoryLabel)}</span></td>
+        <td class="text-muted-sub">${esc(doc.uploaded)}</td>
+        <td><strong>${esc(doc.size)}</strong></td>
+        <td><a class="star-btn${doc.important ? ' starred' : ''}" href="${starUrl}${doc.id}" title="${doc.important ? 'Unstar document' : 'Star document'}"><i class="bi bi-star${doc.important ? '-fill text-warning' : ''}"></i></a></td>
+        <td class="text-end">
+          <div class="dropdown">
+            <button class="action-dots-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+              <li><a class="dropdown-content-item" target="_blank" href="${viewUrl}${doc.id}"><i class="bi bi-eye"></i> View File</a></li>
+              <li><a class="dropdown-content-item" href="${downloadUrl}${doc.id}"><i class="bi bi-download"></i> Download</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-content-item text-danger" onclick="return confirm('Delete this document permanently?');" href="${deleteUrl}${doc.id}"><i class="bi bi-trash"></i> Delete</a></li>
+            </ul>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderEmptyQueue() {
+    if (!queueList) return;
+    queueList.innerHTML = '<div class="empty-state-cell text-center py-4"><i class="bi bi-cloud-arrow-up" style="font-size:2rem;color:#cbd5e1;display:block;margin-bottom:.5rem;"></i>Choose a file to upload it into your vault.</div>';
+  }
+
+  function renderQueue(file) {
+    if (!queueList || !queueBadge) return;
+    const type = fileType(file.name);
+    queueBadge.textContent = '1 file';
+    queueList.innerHTML = `<div class="queue-item">
+      <div class="d-flex align-items-center justify-content-between mb-1">
+        <div class="file-name-wrap d-flex align-items-center gap-2">
+          <span class="badge-file-type ${typeClass[type] || 'badge-type-pdf'}">${type}</span>
+          <span class="file-title-text">${esc(file.name)}</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="progress-percent">Saving</span>
+          <span class="status-pill status-uploading">Uploading</span>
+        </div>
+      </div>
+      <div class="progress queue-progress-bar"><div class="progress-bar bg-blue-progress" role="progressbar" style="width:100%"></div></div>
+    </div>`;
+  }
+
+  function uploadFile(file) {
+    if (!file) return;
+    renderQueue(file);
+    const formData = new FormData();
+    formData.append('document', file);
+    formData.append('title', file.name.replace(/\.[^.]+$/, ''));
+    formData.append('category', guessCategory(file.name));
+    fetch(uploadUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Upload failed');
+        window.location.href = '<?= site_url('upload'); ?>';
+      })
+      .catch(function () {
+        if (!queueList) return;
+        queueList.querySelector('.progress-percent').textContent = 'Failed';
+        queueList.querySelector('.status-pill').textContent = 'Failed';
+        queueList.querySelector('.status-pill').className = 'status-pill status-queued';
+      });
+  }
+
+  renderRecentUploads();
+  renderEmptyQueue();
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function (event) {
+      event.stopImmediatePropagation();
+      uploadFile(fileInput.files && fileInput.files[0]);
+    }, true);
+  }
+
+  if (dropzone) {
+    dropzone.addEventListener('drop', function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      dropzone.classList.remove('dragover');
+      uploadFile(event.dataTransfer.files && event.dataTransfer.files[0]);
+    }, true);
+  }
+})();
+</script>

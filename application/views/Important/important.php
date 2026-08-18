@@ -27,7 +27,8 @@
           </div>
           <div>
             <span class="imp-stat-label">Starred Files</span>
-            <h3 class="imp-stat-val mb-0">16</h3>
+            <h3 class="imp-stat-val mb-0">16
+          </h3>
           </div>
         </div>
       </div>
@@ -290,3 +291,11 @@
   </div>
 
 </main>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const documents = <?= json_encode(array_map(function ($document) { return array('id'=>(int)$document->id, 'title'=>$document->title, 'category'=>ucfirst($document->category), 'size'=>round($document->file_size / 1048576, 2) . ' MB', 'uploaded'=>date('d M Y', strtotime($document->uploaded_at))); }, $documents)); ?>;
+  const body = document.getElementById('importantTableBody');
+  if (!body) return;
+  body.innerHTML = documents.length ? documents.map(function (doc) { return '<tr data-category="' + doc.category + '"><td><strong class="doc-table-name">' + doc.title.replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}) + '</strong></td><td><span class="table-cat-badge badge-identity">' + doc.category + '</span></td><td>' + doc.uploaded + '</td><td><strong>' + doc.size + '</strong></td><td><a class="star-btn starred" title="Remove star" href="<?= site_url('documents/toggleImportant/'); ?>' + doc.id + '"><i class="bi bi-star-fill text-warning"></i></a></td><td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="<?= site_url('documents/download/'); ?>' + doc.id + '">Download</a></td></tr>'; }).join('') : '<tr><td colspan="6" class="text-center text-muted py-4">No important documents yet.</td></tr>';
+});
+</script>

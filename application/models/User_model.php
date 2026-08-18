@@ -83,4 +83,14 @@ class User_model extends CI_Model
             ]);
     }
 
+    public function getUserById($user_id)
+    {
+        return $this->db->where('id', $user_id)->get('users')->row();
+    }
+
+    public function updateProfile($user_id, $data)
+    {
+        return $this->db->where('id', $user_id)->update('users', $data);
+    }
+
 }

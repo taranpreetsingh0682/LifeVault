@@ -500,255 +500,75 @@ if (empty($email) || empty($password)) {
     | TEST EMAIL
     |--------------------------------------------------------------------------
     */
-    public function testEmail()
-    {
-        $this->load->library('email');
+   public function testEmail()
+{
+    // Load email configuration
+    $this->config->load('email', TRUE);
 
+    // SMTP configuration
+    $config = [
+        'protocol'    => $this->config->item('protocol', 'email'),
+        'smtp_host'   => $this->config->item('smtp_host', 'email'),
+        'smtp_port'   => $this->config->item('smtp_port', 'email'),
+        'smtp_user'   => $this->config->item('smtp_user', 'email'),
+        'smtp_pass'   => $this->config->item('smtp_pass', 'email'),
+        'smtp_crypto' => $this->config->item('smtp_crypto', 'email'),
+        'smtp_timeout' => $this->config->item('smtp_timeout', 'email'),
+        'mailtype'    => $this->config->item('mailtype', 'email'),
+        'charset'     => $this->config->item('charset', 'email'),
+        'newline'     => "\r\n",
+        'crlf'        => "\r\n",
+    ];
 
-        $this->email->from(
-            'lifevaultsys@gmail.com',
-            'LifeVault'
-        );
+    // Initialize email library
+    $this->load->library('email');
+    $this->email->clear();
+    $this->email->initialize($config);
 
+    // Sender
+    $this->email->from(
+        $this->config->item('from_email', 'email'),
+        $this->config->item('from_name', 'email')
+    );
 
-        $this->email->to(
-            'lifevaultsys@gmail.com'
-        );
+    // Test recipient
+    $this->email->to('lifevaultsys@gmail.com');
 
+    $this->email->subject('LifeVault Email Test');
 
-        $this->email->subject(
-            'Welcome to LifeVault'
-        );
+    $message = '
+        <h2>Welcome to LifeVault! 🎉</h2>
 
+        <p>
+            Your LifeVault email notification system
+            is working successfully.
+        </p>
 
-        $message = '
-            <h2>Welcome to LifeVault! 🎉</h2>
+        <p>
+            SMTP configuration is working correctly.
+        </p>
 
-            <p>
-                Your LifeVault email notification system
-                is working successfully.
-            </p>
+        <br>
 
-            <p>
-                You can now securely manage your
-                important documents.
-            </p>
+        <p>
+            Regards,<br>
+            <strong>LifeVault Team</strong>
+        </p>
+    ';
 
-            <br>
+    $this->email->message($message);
 
-            <p>
-                Regards,<br>
-                <strong>LifeVault Team</strong>
-            </p>
-        ';
+    if ($this->email->send()) {
 
+        echo "Email sent successfully.";
 
-        $this->email->message($message);
+    } else {
 
-
-        if ($this->email->send()) {
-
-            echo "Email sent successfully.";
-
-        } else {
-
-            echo $this->email->print_debugger();
-        }
+        echo "<pre>";
+        echo $this->email->print_debugger();
+        echo "</pre>";
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | WELCOME EMAIL
-    |--------------------------------------------------------------------------
-    */
-    private function sendWelcomeEmail($email, $name)
-    {
-        // Step 1: Load the email config file (application/config/email.php)
-        $this->config->load('email', TRUE);
-
-        // Step 2: Build SMTP config array explicitly from the loaded config
-        $config = [
-            'protocol'    => $this->config->item('protocol',    'email'),
-            'smtp_host'   => $this->config->item('smtp_host',   'email'),
-            'smtp_port'   => $this->config->item('smtp_port',   'email'),
-            'smtp_user'   => $this->config->item('smtp_user',   'email'),
-            'smtp_pass'   => $this->config->item('smtp_pass',   'email'),
-            'smtp_crypto' => $this->config->item('smtp_crypto', 'email'),
-            'mailtype'    => $this->config->item('mailtype',    'email'),
-            'charset'     => $this->config->item('charset',     'email'),
-            'newline'     => "\r\n",
-            'crlf'        => "\r\n",
-        ];
-
-        // Step 3: Clear any previous email state and re-initialize with SMTP config
-        $this->load->library('email');
-        $this->email->clear();
-        $this->email->initialize($config);
-
-
-        $safe_name =
-            htmlspecialchars(
-                $name,
-                ENT_QUOTES,
-                'UTF-8'
-            );
-
-
-        // Step 4: Compose the email
-        // From must be the Brevo authenticated SMTP user (verified sender)
-        $this->email->from(
-            $this->config->item('smtp_user', 'email'),
-            'LifeVault'
-        );
-
-        $this->email->to($email);
-
-        $this->email->subject(
-            'Welcome to LifeVault - Your vault is ready!'
-        );
-
-
-        $message = '
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to LifeVault</title>
-</head>
-<body style="margin:0;padding:0;background-color:#f0f4ff;font-family:Arial,sans-serif;">
-
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f4ff;padding:40px 0;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(13,18,53,0.10);">
-
-          <!-- Header -->
-          <tr>
-            <td style="background:linear-gradient(135deg,#0D1235 0%,#1a2a7a 100%);padding:36px 40px;text-align:center;">
-              <table cellpadding="0" cellspacing="0" align="center">
-                <tr>
-                  <td style="background:rgba(255,255,255,0.12);border-radius:14px;padding:10px 18px;">
-                    <span style="color:#ffffff;font-size:22px;font-weight:700;letter-spacing:1px;">LifeVault</span>
-                  </td>
-                </tr>
-              </table>
-              <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:14px 0 0 0;letter-spacing:0.5px;">SECURE . PRIVATE . YOURS</p>
-            </td>
-          </tr>
-
-          <!-- Hero Section -->
-          <tr>
-            <td style="padding:44px 44px 20px 44px;text-align:center;">
-              <div style="background:#f0f4ff;border-radius:50%;width:72px;height:72px;display:inline-block;line-height:72px;font-size:36px;margin-bottom:20px;">&#127881;</div>
-              <h1 style="color:#0D1235;font-size:26px;font-weight:800;margin:0 0 10px 0;">Welcome, ' . $safe_name . '!</h1>
-              <p style="color:#6b7280;font-size:15px;line-height:1.7;margin:0;">Your LifeVault account has been successfully created.<br>Your secure personal vault is ready.</p>
-            </td>
-          </tr>
-
-          <!-- Divider -->
-          <tr>
-            <td style="padding:0 44px;">
-              <hr style="border:none;border-top:1px solid #e9ecef;margin:20px 0;">
-            </td>
-          </tr>
-
-          <!-- Features -->
-          <tr>
-            <td style="padding:10px 44px 30px 44px;">
-              <p style="color:#0D1235;font-size:14px;font-weight:700;margin:0 0 16px 0;text-transform:uppercase;letter-spacing:0.8px;">What you can do with LifeVault</p>
-
-              <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
-                    <table cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td style="width:36px;">
-                          <div style="background:#e8f0fe;border-radius:8px;width:32px;height:32px;text-align:center;line-height:32px;font-size:16px;">&#128193;</div>
-                        </td>
-                        <td style="padding-left:14px;">
-                          <span style="color:#0D1235;font-weight:600;font-size:14px;">Store Documents Securely</span><br>
-                          <span style="color:#6b7280;font-size:13px;">Keep all your important files in one encrypted place.</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 0;border-bottom:1px solid #f0f0f0;">
-                    <table cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td style="width:36px;">
-                          <div style="background:#fef3c7;border-radius:8px;width:32px;height:32px;text-align:center;line-height:32px;font-size:16px;">&#11088;</div>
-                        </td>
-                        <td style="padding-left:14px;">
-                          <span style="color:#0D1235;font-weight:600;font-size:14px;">Mark Important Files</span><br>
-                          <span style="color:#6b7280;font-size:13px;">Star your critical documents for instant access.</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:10px 0;">
-                    <table cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td style="width:36px;">
-                          <div style="background:#d1fae5;border-radius:8px;width:32px;height:32px;text-align:center;line-height:32px;font-size:16px;">&#128274;</div>
-                        </td>
-                        <td style="padding-left:14px;">
-                          <span style="color:#0D1235;font-weight:600;font-size:14px;">Access Anywhere, Anytime</span><br>
-                          <span style="color:#6b7280;font-size:13px;">Your vault is accessible from any device, securely.</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- CTA Button -->
-          <tr>
-            <td style="padding:10px 44px 36px 44px;text-align:center;">
-              <a href="http://localhost/LifeVault/Dashboard/dashboard" style="display:inline-block;background:linear-gradient(135deg,#0D1235,#1a2a7a);color:#ffffff;text-decoration:none;padding:14px 38px;border-radius:10px;font-size:15px;font-weight:700;letter-spacing:0.5px;">Go to My Vault &rarr;</a>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background:#f8faff;padding:24px 44px;text-align:center;border-top:1px solid #e9ecef;">
-              <p style="color:#9ca3af;font-size:12px;margin:0 0 6px 0;">You received this email because you signed up for LifeVault.</p>
-              <p style="color:#9ca3af;font-size:12px;margin:0;">&copy; ' . date('Y') . ' LifeVault. All rights reserved.</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
-        ';
-
-
-        $this->email->message($message);
-
-
-        // Step 5: Send and log error if failed
-        if (!$this->email->send()) {
-            log_message(
-                'error',
-                'LifeVault welcome email FAILED to: ' . $email .
-                ' | Debugger: ' . $this->email->print_debugger()
-            );
-            return FALSE;
-        }
-
-        return TRUE;
-    }
+}
 
 
     /*
@@ -861,104 +681,248 @@ if (empty($email) || empty($password)) {
     | SEND RESET LINK
     |--------------------------------------------------------------------------
     */
-    public function sendResetLink()
-    {
-        $this->load->model('User_model');
-        $this->load->library('session');
+   public function sendResetLink()
+{
+    $this->load->model('User_model');
+    $this->load->library('session');
 
+    $email = trim($this->input->post('email'));
 
-        $email =
-            trim(
-                $this->input->post('email')
-            );
-
-
-        if (empty($email)) {
-
-            $this->session->set_flashdata(
-                'error',
-                'Please enter your email address.'
-            );
-
-            $this->session->set_flashdata(
-                'open_forgot_modal',
-                TRUE
-            );
-
-            redirect('auth/login');
-            return;
-        }
-
-
-        $user =
-            $this->User_model->getUserByEmail(
-                $email
-            );
-
-
-        if (!$user) {
-
-            $this->session->set_flashdata(
-                'error',
-                'No account found with this email.'
-            );
-
-            $this->session->set_flashdata(
-                'open_forgot_modal',
-                TRUE
-            );
-
-            redirect('auth/login');
-            return;
-        }
-
-
-        $token =
-            bin2hex(
-                random_bytes(32)
-            );
-
-
-        $expires =
-            date(
-                'Y-m-d H:i:s',
-                time() + 3600
-            );
-
-
-        $data = [
-            'reset_token' => $token,
-            'reset_expires' => $expires
-        ];
-
-
-        $this->User_model->saveResetToken(
-            $user->id,
-            $data
-        );
-
-
-        $reset_link =
-            site_url(
-                'auth/resetPassword/' . $token
-            );
-
-
-        // Testing for now
-        $this->session->set_flashdata(
-            'success',
-            'Reset link generated successfully. Use the link below to set a new password.'
-        );
-
+    if (empty($email)) {
 
         $this->session->set_flashdata(
-            'reset_link',
-            $reset_link
+            'error',
+            'Please enter your email address.'
         );
 
+        $this->session->set_flashdata(
+            'open_forgot_modal',
+            TRUE
+        );
 
         redirect('auth/login');
+        return;
     }
+
+    $user = $this->User_model->getUserByEmail($email);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SECURITY
+    |--------------------------------------------------------------------------
+    | Don't reveal whether an email exists or not.
+    */
+    if (!$user) {
+
+        $this->session->set_flashdata(
+            'success',
+            'If an account exists with this email, a password reset link has been sent.'
+        );
+
+        redirect('auth/login');
+        return;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | GENERATE RESET TOKEN
+    |--------------------------------------------------------------------------
+    */
+
+    $token = bin2hex(
+        random_bytes(32)
+    );
+
+    $expires = date(
+        'Y-m-d H:i:s',
+        time() + 3600
+    );
+
+    $data = [
+        'reset_token'   => $token,
+        'reset_expires' => $expires
+    ];
+
+    $this->User_model->saveResetToken(
+        $user->id,
+        $data
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESET LINK
+    |--------------------------------------------------------------------------
+    */
+
+    $reset_link = site_url(
+        'auth/resetPassword/' . $token
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOAD EMAIL CONFIG
+    |--------------------------------------------------------------------------
+    */
+
+    $this->config->load('email', TRUE);
+
+    $config = [
+        'protocol'    => $this->config->item('protocol', 'email'),
+        'smtp_host'   => $this->config->item('smtp_host', 'email'),
+        'smtp_port'   => $this->config->item('smtp_port', 'email'),
+        'smtp_user'   => $this->config->item('smtp_user', 'email'),
+        'smtp_pass'   => $this->config->item('smtp_pass', 'email'),
+        'smtp_crypto' => $this->config->item('smtp_crypto', 'email'),
+        'smtp_timeout' => $this->config->item('smtp_timeout', 'email'),
+        'mailtype'    => 'html',
+        'charset'     => 'utf-8',
+        'newline'     => "\r\n",
+        'crlf'        => "\r\n"
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | INITIALIZE EMAIL
+    |--------------------------------------------------------------------------
+    */
+
+    $this->load->library('email');
+
+    $this->email->clear();
+    $this->email->initialize($config);
+
+    /*
+    |--------------------------------------------------------------------------
+    | EMAIL
+    |--------------------------------------------------------------------------
+    */
+
+    $safe_name = htmlspecialchars(
+        $user->name,
+        ENT_QUOTES,
+        'UTF-8'
+    );
+
+    $this->email->from(
+        $this->config->item('from_email', 'email'),
+        $this->config->item('from_name', 'email')
+    );
+
+    $this->email->to($user->email);
+
+    $this->email->subject(
+        'LifeVault - Password Reset'
+    );
+
+    $message = '
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Password Reset</title>
+    </head>
+
+    <body style="margin:0;padding:0;background:#f0f4ff;font-family:Arial,sans-serif;">
+
+        <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+
+            <div style="background:#0D1235;padding:30px;text-align:center;">
+                <h1 style="color:#ffffff;margin:0;">
+                    LifeVault
+                </h1>
+
+                <p style="color:#dbe4ff;">
+                    SECURE . PRIVATE . YOURS
+                </p>
+            </div>
+
+            <div style="padding:40px;text-align:center;">
+
+                <h2 style="color:#0D1235;">
+                    Password Reset
+                </h2>
+
+                <p style="color:#555;font-size:16px;line-height:1.6;">
+                    Hello ' . $safe_name . ',
+                </p>
+
+                <p style="color:#555;font-size:16px;line-height:1.6;">
+                    We received a request to reset your LifeVault password.
+                </p>
+
+                <p style="color:#555;font-size:16px;line-height:1.6;">
+                    Click the button below to create a new password.
+                </p>
+
+                <div style="margin:30px 0;">
+
+                    <a href="' . $reset_link . '"
+                       style="display:inline-block;
+                              background:#0D1235;
+                              color:#ffffff;
+                              padding:14px 28px;
+                              border-radius:8px;
+                              text-decoration:none;
+                              font-weight:bold;">
+                        Reset Password
+                    </a>
+
+                </div>
+
+                <p style="color:#777;font-size:14px;line-height:1.5;">
+                    This password reset link will expire in 1 hour.
+                </p>
+
+                <p style="color:#999;font-size:13px;line-height:1.5;">
+                    If you did not request a password reset, you can safely ignore this email.
+                </p>
+
+            </div>
+
+        </div>
+
+    </body>
+    </html>
+    ';
+    $this->email->set_mailtype('html');
+    $this->email->message($message);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEND EMAIL
+    |--------------------------------------------------------------------------
+    */
+
+    if (!$this->email->send()) {
+
+        log_message(
+            'error',
+            'PASSWORD RESET EMAIL FAILED: ' .
+            $this->email->print_debugger(['headers'])
+        );
+
+        $this->session->set_flashdata(
+            'error',
+            'Unable to send password reset email. Please try again later.'
+        );
+
+        redirect('auth/login');
+        return;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SUCCESS
+    |--------------------------------------------------------------------------
+    */
+
+    $this->session->set_flashdata(
+        'success',
+        'If an account exists with this email, a password reset link has been sent to your email.'
+    );
+
+    redirect('auth/login');
+}
 
 
     /*
@@ -1198,12 +1162,147 @@ public function registerUser()
      * TEMPORARILY disabled.
      * First confirm registration works.
      */
-    // $this->sendWelcomeEmail($email, $name);
+     $this->sendWelcomeEmail($email, $name);
 
     redirect('auth/login');
     return;
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| WELCOME EMAIL
+|--------------------------------------------------------------------------
+*/
+private function sendWelcomeEmail($email, $name)
+{
+    // Load email configuration
+    $this->config->load('email', TRUE);
+
+    // SMTP configuration
+    $config = [
+        'protocol'    => $this->config->item('protocol', 'email'),
+        'smtp_host'   => $this->config->item('smtp_host', 'email'),
+        'smtp_port'   => $this->config->item('smtp_port', 'email'),
+        'smtp_user'   => $this->config->item('smtp_user', 'email'),
+        'smtp_pass'   => $this->config->item('smtp_pass', 'email'),
+        'smtp_crypto' => $this->config->item('smtp_crypto', 'email'),
+        'smtp_timeout' => $this->config->item('smtp_timeout', 'email'),
+        'mailtype'    => $this->config->item('mailtype', 'email'),
+        'charset'     => $this->config->item('charset', 'email'),
+        'newline'     => "\r\n",
+        'crlf'        => "\r\n",
+    ];
+
+    // Initialize email library
+    $this->load->library('email');
+    $this->email->clear();
+    $this->email->initialize($config);
+
+    // Safe name for HTML
+    $safe_name = htmlspecialchars(
+        $name,
+        ENT_QUOTES,
+        'UTF-8'
+    );
+
+    // Sender
+    $this->email->from(
+        $this->config->item('from_email', 'email'),
+        $this->config->item('from_name', 'email')
+    );
+
+    // Recipient
+    $this->email->to($email);
+
+    // Subject
+    $this->email->subject(
+        'Welcome to LifeVault - Your vault is ready!'
+    );
+
+    // Email body
+    $message = '
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome to LifeVault</title>
+    </head>
+
+    <body style="margin:0;padding:0;background:#f0f4ff;font-family:Arial,sans-serif;">
+
+        <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+
+            <div style="background:#0D1235;padding:35px;text-align:center;">
+                <h1 style="color:#ffffff;margin:0;">
+                    LifeVault
+                </h1>
+
+                <p style="color:#dbe4ff;">
+                    SECURE . PRIVATE . YOURS
+                </p>
+            </div>
+
+            <div style="padding:40px;text-align:center;">
+
+                <div style="font-size:45px;">
+                    🎉
+                </div>
+
+                <h2 style="color:#0D1235;">
+                    Welcome, ' . $safe_name . '!
+                </h2>
+
+                <p style="color:#555;font-size:16px;line-height:1.6;">
+                    Your LifeVault account has been successfully created.
+                </p>
+
+                <p style="color:#555;font-size:16px;line-height:1.6;">
+                    You can now securely store, manage and access
+                    your important documents anytime, anywhere.
+                </p>
+
+                <div style="margin:30px 0;padding:20px;background:#f0f4ff;border-radius:10px;">
+                    <strong style="color:#0D1235;">
+                        Your digital vault is ready 🔐
+                    </strong>
+                </div>
+
+                <p style="color:#777;">
+                    Thank you for choosing LifeVault.
+                </p>
+
+                <p style="color:#555;">
+                    Regards,<br>
+                    <strong>LifeVault Team</strong>
+                </p>
+
+            </div>
+
+            <div style="background:#f7f8fc;padding:20px;text-align:center;">
+                <p style="margin:0;color:#888;font-size:13px;">
+                    © 2026 LifeVault. All rights reserved.
+                </p>
+            </div>
+
+        </div>
+
+    </body>
+    </html>
+    ';
+
+    $this->email->message($message);
+
+    // Send email
+    if (!$this->email->send()) {
+
+        log_message(
+            'error',
+            'WELCOME EMAIL FAILED: ' .
+            $this->email->print_debugger()
+        );
+    }
+}
 
     /*
     |--------------------------------------------------------------------------

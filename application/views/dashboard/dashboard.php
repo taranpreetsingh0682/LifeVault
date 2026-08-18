@@ -42,7 +42,7 @@ $storage_used_formatted = format_bytes($storage_used_bytes);
 $storage_percent = $total_limit_bytes > 0 ? min(round(($storage_used_bytes / $total_limit_bytes) * 100, 1), 100) : 0;
 $storage_available_formatted = format_bytes(max($total_limit_bytes - $storage_used_bytes, 0));
 ?>
-<main class="dashboard-content">
+<main class="dashboard-content" id="dynamicDashboard">
   <!-- Greeting Header Banner -->
   <div class="welcome-header d-flex align-items-center justify-content-between mb-4">
     <div class="greeting-text">
@@ -616,3 +616,18 @@ $storage_available_formatted = format_bytes(max($total_limit_bytes - $storage_us
     </div>
   </div>
 </main>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const target = document.getElementById('dynamicDashboard');
+  const data = <?= json_encode(array(
+    'name' => $this->session->userdata('name'), 'total' => (int) $total_documents, 'storage' => $storage_used_formatted,
+    'storagePercent' => $storage_percent, 'available' => $storage_available_formatted, 'important' => (int) $important_documents,
+    'categories' => array_map(function ($c) { return array('name' => ucfirst($c->category), 'total' => (int) $c->total); }, $categories),
+    'documents' => array_map(function ($d) { return array('id'=>(int)$d->id, 'title'=>$d->title, 'category'=>ucfirst($d->category), 'type'=>strtoupper(ltrim($d->file_type,'.')), 'size'=>round($d->file_size / 1048576, 2) . ' MB', 'date'=>date('d M Y, h:i A', strtotime($d->uploaded_at)), 'important'=>(bool)$d->is_important); }, $recent_documents)
+  )); ?>;
+  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const docs = data.documents.length ? data.documents.map(d => `<tr><td><span class="doc-file-icon pdf">${esc(d.type)}</span> <span class="doc-name">${esc(d.title)}</span></td><td><span class="category-badge badge-identity">${esc(d.category)}</span></td><td class="text-muted text-sm">${d.date}</td><td class="text-muted text-sm">${d.size}</td><td><a class="star-btn${d.important?' starred':''}" href="<?= site_url('documents/toggleImportant/'); ?>${d.id}"><i class="bi bi-star${d.important?'-fill text-warning':''}"></i></a></td><td><a class="text-muted" href="<?= site_url('documents/download/'); ?>${d.id}"><i class="bi bi-download"></i></a></td></tr>`).join('') : '<tr><td colspan="6" class="text-center text-muted py-4">No documents uploaded yet. <a href="<?= site_url('upload'); ?>">Upload your first file</a>.</td></tr>';
+  const categories = data.categories.length ? data.categories.map(c => `<a class="cat-item text-decoration-none" href="<?= site_url('documents'); ?>?category=${encodeURIComponent(c.name.toLowerCase())}"><div class="cat-icon-box bg-cat-blue"><i class="bi bi-folder"></i></div><div class="cat-meta"><h6 class="cat-name">${esc(c.name)}</h6><span class="cat-count">${c.total} files</span></div></a>`).join('') : '<p class="text-muted mb-0">Categories appear after your first upload.</p>';
+  target.innerHTML = `<div class="welcome-header d-flex align-items-center justify-content-between mb-4"><div><h1 class="greeting-title">Welcome back, ${esc(data.name)}!</h1><p class="greeting-subtitle mb-0">Your vault summary is up to date.</p></div><a href="<?= site_url('upload'); ?>" class="btn btn-upload-dark"><i class="bi bi-upload"></i> Upload file</a></div><div class="row g-3 mb-4"><div class="col-md-3"><div class="stat-card"><span class="stat-label">Total Documents</span><h2 class="stat-value">${data.total}</h2></div></div><div class="col-md-3"><div class="stat-card"><span class="stat-label">Storage Used</span><h2 class="stat-value">${data.storage}</h2><small>of 5 GB</small></div></div><div class="col-md-3"><div class="stat-card"><span class="stat-label">Important</span><h2 class="stat-value">${data.important}</h2><a href="<?= site_url('important'); ?>">View starred files</a></div></div><div class="col-md-3"><div class="stat-card"><span class="stat-label">Storage usage</span><h2 class="stat-value">${data.storagePercent}%</h2><div class="progress"><div class="progress-bar" style="width:${data.storagePercent}%"></div></div><small>${data.available} available</small></div></div></div><div class="row g-3"><div class="col-lg-8"><div class="dashboard-panel card-panel"><div class="panel-header d-flex justify-content-between"><h5 class="panel-title">Recent Documents</h5><a href="<?= site_url('documents'); ?>">View all</a></div><div class="table-responsive"><table class="table align-middle doc-table mb-0"><thead><tr><th>DOCUMENT</th><th>CATEGORY</th><th>UPLOADED</th><th>SIZE</th><th>STARRED</th><th></th></tr></thead><tbody>${docs}</tbody></table></div></div></div><div class="col-lg-4"><div class="dashboard-panel card-panel"><h5 class="panel-title mb-3">Categories</h5><div class="categories-list d-flex flex-column gap-2">${categories}</div></div></div></div>`;
+});
+</script>

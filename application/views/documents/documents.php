@@ -1,5 +1,20 @@
 <!-- LifeVault – Documents Page View -->
 <!-- Main Documents View Area -->
+<?php
+$category_counts = isset($category_counts) ? $category_counts : array();
+$category_count_map = array('identity' => 0, 'personal' => 0, 'education' => 0, 'certificates' => 0, 'images' => 0, 'records' => 0);
+foreach ($category_counts as $category_count) {
+  $category_key = strtolower($category_count->category);
+  if (array_key_exists($category_key, $category_count_map)) {
+    $category_count_map[$category_key] = (int) $category_count->total;
+  }
+}
+$storage_used = isset($storage_used) ? (float) $storage_used : 0;
+$storage_limit = 5 * 1024 * 1024 * 1024;
+$storage_percent = $storage_limit > 0 ? min(100, round(($storage_used / $storage_limit) * 100, 1)) : 0;
+$storage_used_label = $storage_used >= 1048576 ? round($storage_used / 1073741824, 2) . ' GB' : round($storage_used / 1048576, 2) . ' MB';
+$storage_available_label = round(max(0, $storage_limit - $storage_used) / 1073741824, 2) . ' GB Available';
+?>
 <main class="documents-container">
 
   <!-- ── Page Header ────────────────────────────────────────────── -->
@@ -33,7 +48,7 @@
             </div>
             <div class="cat-row-meta">
               <span class="cat-row-name">Identity</span>
-              <span class="cat-row-count">30 files</span>
+              <span class="cat-row-count"><?= $category_count_map['identity']; ?> files</span>
             </div>
           </div>
 
@@ -43,7 +58,7 @@
             </div>
             <div class="cat-row-meta">
               <span class="cat-row-name">Personal</span>
-              <span class="cat-row-count">18 files</span>
+              <span class="cat-row-count"><?= $category_count_map['personal']; ?> files</span>
             </div>
           </div>
 
@@ -53,7 +68,7 @@
             </div>
             <div class="cat-row-meta">
               <span class="cat-row-name">Education</span>
-              <span class="cat-row-count">26 files</span>
+              <span class="cat-row-count"><?= $category_count_map['education']; ?> files</span>
             </div>
           </div>
 
@@ -63,7 +78,7 @@
             </div>
             <div class="cat-row-meta">
               <span class="cat-row-name">Certificates</span>
-              <span class="cat-row-count">22 files</span>
+              <span class="cat-row-count"><?= $category_count_map['certificates']; ?> files</span>
             </div>
           </div>
 
@@ -73,7 +88,7 @@
             </div>
             <div class="cat-row-meta">
               <span class="cat-row-name">Images</span>
-              <span class="cat-row-count">12 files</span>
+              <span class="cat-row-count"><?= $category_count_map['images']; ?> files</span>
             </div>
           </div>
 
@@ -83,7 +98,7 @@
             </div>
             <div class="cat-row-meta">
               <span class="cat-row-name">Records</span>
-              <span class="cat-row-count">10 files</span>
+              <span class="cat-row-count"><?= $category_count_map['records']; ?> files</span>
             </div>
           </div>
 
@@ -96,13 +111,13 @@
           <span class="side-storage-title">Storage</span>
           <a href="#" class="upgrade-link">Upgrade</a>
         </div>
-        <p class="side-storage-meta"><strong>1.8 GB</strong> of 5 GB Used</p>
+        <p class="side-storage-meta"><strong><?= $storage_used_label; ?></strong> of 5 GB Used</p>
         <div class="side-storage-bar-wrap">
-          <div class="side-storage-bar-fill" style="width: 36%;"></div>
+          <div class="side-storage-bar-fill" style="width: <?= $storage_percent; ?>%;"></div>
         </div>
         <div class="side-storage-footer">
-          <span>3.2 GB Available</span>
-          <strong>36%</strong>
+          <span><?= $storage_available_label; ?></span>
+          <strong><?= $storage_percent; ?>%</strong>
         </div>
       </div>
 
@@ -195,8 +210,6 @@
 <div class="action-dropdown" id="actionDropdown">
   <a href="#" class="action-item"><i class="bi bi-eye"></i> View</a>
   <a href="#" class="action-item"><i class="bi bi-download"></i> Download</a>
-  <a href="#" class="action-item"><i class="bi bi-pencil"></i> Rename</a>
-  <a href="#" class="action-item"><i class="bi bi-share"></i> Share</a>
   <div class="action-divider"></div>
   <a href="#" class="action-item danger"><i class="bi bi-trash"></i> Delete</a>
 </div>
@@ -218,14 +231,18 @@
           <p class="mt-2 mb-0 fw-semibold" style="color:#0f172a;">Drag & drop your file here</p>
           <p class="text-muted small">or click to browse</p>
         </div>
-        <form id="uploadForm" class="mt-3">
+        <form id="uploadForm" class="mt-3" method="post" action="<?= site_url('upload/store'); ?>" enctype="multipart/form-data">
           <div class="mb-3">
             <label class="upload-label">Document Title</label>
-            <input type="text" class="upload-input" placeholder="e.g. Passport_Copy.pdf" required id="uploadTitle">
+            <input type="text" name="title" class="upload-input" placeholder="e.g. Passport Copy" required id="uploadTitle">
+          </div>
+          <div class="mb-3">
+            <label class="upload-label">File</label>
+            <input type="file" name="document" required class="upload-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
           </div>
           <div class="mb-4">
             <label class="upload-label">Category</label>
-            <select class="upload-input" required id="uploadCategory">
+            <select name="category" class="upload-input" required id="uploadCategory">
               <option value="">Select Category</option>
               <option value="identity">Identity</option>
               <option value="personal">Personal</option>
@@ -256,7 +273,8 @@
   'use strict';
 
   /* ── Data ──────────────────────────────────────────────────────── */
-  const ALL_DOCS = [
+  const ALL_DOCS = <?= json_encode(array_map(function ($document) { return array('id'=>(int)$document->id, 'name'=>$document->title, 'type'=>strtoupper(ltrim($document->file_type,'.')), 'cat'=>strtolower($document->category), 'updated'=>date('d M Y, h:i A', strtotime($document->uploaded_at)), 'size'=>round($document->file_size / 1048576, 2) . ' MB', 'sizeBytes'=>(int)$document->file_size, 'starred'=>(bool)$document->is_important); }, $documents)); ?>;
+  /*
     { id:1,  name:'PAN Card.pdf',               type:'PDF', cat:'identity',     updated:'Yesterday, 09:15 PM', size:'240 KB',  sizeBytes:245760,  starred:true  },
     { id:2,  name:'Resume.pdf',                 type:'PDF', cat:'personal',     updated:'05 July 2025',        size:'1.2 MB',  sizeBytes:1258291, starred:false },
     { id:3,  name:'Aadhaar Card.pdf',           type:'PDF', cat:'identity',     updated:'Today, 10:30 AM',     size:'456 KB',  sizeBytes:466944,  starred:true  },
@@ -269,7 +287,7 @@
     { id:10, name:'Rent Agreement.docx',        type:'DOC', cat:'records',      updated:'28 Apr 2025',         size:'540 KB',  sizeBytes:552960,  starred:false },
     { id:11, name:'Bank Statement.pdf',         type:'PDF', cat:'personal',     updated:'20 Apr 2025',         size:'1.1 MB',  sizeBytes:1153434, starred:false },
     { id:12, name:'Insurance Policy.pdf',       type:'PDF', cat:'records',      updated:'15 Apr 2025',         size:'760 KB',  sizeBytes:778240,  starred:false },
-  ];
+  ]; */
 
   /* ── State ─────────────────────────────────────────────────────── */
   let docs        = ALL_DOCS.map(d => ({ ...d }));
@@ -333,9 +351,9 @@
           <td class="td-muted">${doc.updated}</td>
           <td class="td-muted">${doc.size}</td>
           <td class="text-center">
-            <button class="star-btn${doc.starred?' starred':''}" data-id="${doc.id}" title="${doc.starred?'Unstar':'Star'}">
+            <a class="star-btn${doc.starred?' starred':''}" href="<?= site_url('documents/toggleImportant/'); ?>${doc.id}" data-id="${doc.id}" title="${doc.starred?'Unstar':'Star'}">
               <i class="bi bi-star${doc.starred?'-fill':''}"></i>
-            </button>
+            </a>
           </td>
           <td class="text-center">
             <button class="action-dots-btn" data-id="${doc.id}" title="More options">
@@ -368,9 +386,9 @@
       card.innerHTML = `
         <div class="grid-card-top">
           <span class="file-type-badge ${typeCls[doc.type]}">${doc.type}</span>
-          <button class="star-btn${doc.starred?' starred':''}" data-id="${doc.id}" title="${doc.starred?'Unstar':'Star'}">
+          <a class="star-btn${doc.starred?' starred':''}" href="<?= site_url('documents/toggleImportant/'); ?>${doc.id}" data-id="${doc.id}" title="${doc.starred?'Unstar':'Star'}">
             <i class="bi bi-star${doc.starred?'-fill':''}"></i>
-          </button>
+          </a>
         </div>
         <div class="grid-file-icon">${fileEmoji}</div>
         <p class="grid-file-name">${escHtml(doc.name)}</p>
@@ -378,7 +396,12 @@
           <span class="table-cat-badge ${catBadge[doc.cat]}">${catLabel[doc.cat]}</span>
           <span class="grid-size">${doc.size}</span>
         </div>
-        <p class="grid-date">${doc.updated}</p>`;
+        <p class="grid-date">${doc.updated}</p>
+        <div class="grid-card-footer">
+          <a class="btn btn-sm btn-outline-secondary" target="_blank" href="<?= site_url('documents/view/'); ?>${doc.id}" title="View"><i class="bi bi-eye"></i></a>
+          <a class="btn btn-sm btn-outline-secondary" href="<?= site_url('documents/download/'); ?>${doc.id}" title="Download"><i class="bi bi-download"></i></a>
+          <a class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this document permanently?');" href="<?= site_url('documents/delete/'); ?>${doc.id}" title="Delete"><i class="bi bi-trash"></i></a>
+        </div>`;
       grid.appendChild(card);
     });
 
@@ -469,7 +492,7 @@
 
     // Star buttons
     const starBtn = e.target.closest('.star-btn');
-    if (starBtn) { handleStar(parseInt(starBtn.dataset.id)); return; }
+    if (starBtn) { window.location.href = '<?= site_url('documents/toggleImportant/'); ?>' + starBtn.dataset.id; return; }
 
     // Dots / action button
     const dotsBtn = e.target.closest('.action-dots-btn');
@@ -487,6 +510,13 @@
   /* ── Action Dropdown ───────────────────────────────────────────── */
   function showActionDropdown(btn) {
     const dd  = document.getElementById('actionDropdown');
+    const id = btn.dataset.id;
+    const actions = dd.querySelectorAll('a');
+    actions[0].href = '<?= site_url('documents/view/'); ?>' + id;
+    actions[0].target = '_blank';
+    actions[1].href = '<?= site_url('documents/download/'); ?>' + id;
+    actions[2].href = '<?= site_url('documents/delete/'); ?>' + id;
+    actions[2].onclick = function () { return confirm('Delete this document permanently?'); };
     const rect= btn.getBoundingClientRect();
     const scrollY = window.scrollY || document.documentElement.scrollTop;
     dd.style.top  = (rect.bottom + scrollY + 4) + 'px';
@@ -516,7 +546,7 @@
   });
 
   /* ── Upload Form ───────────────────────────────────────────────── */
-  document.getElementById('uploadForm').addEventListener('submit', function(e) {
+  /* document.getElementById('uploadForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const title = document.getElementById('uploadTitle').value.trim();
     const cat   = document.getElementById('uploadCategory').value;
@@ -539,7 +569,7 @@
       p.classList.toggle('active', p.dataset.filter==='all'));
     document.querySelectorAll('.cat-row-item').forEach(c=>c.classList.remove('active'));
     render(1);
-  });
+  }); */
 
   /* ── Escape HTML helper ────────────────────────────────────────── */
   function escHtml(str) {

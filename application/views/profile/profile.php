@@ -111,25 +111,21 @@
           <h5 class="fw-bold mb-3 text-dark">Personal Information</h5>
           <p class="text-muted text-sm mb-4">Update your personal details and contact information.</p>
           
-          <form onsubmit="return false;">
+          <form method="post" action="<?= site_url('profile/update'); ?>">
             <div class="row g-3">
               <div class="col-12 col-md-6">
                 <label class="form-label fw-semibold text-sm">First Name</label>
-                <input type="text" class="form-control profile-input" value="Taranpreet">
-              </div>
-              <div class="col-12 col-md-6">
-                <label class="form-label fw-semibold text-sm">Last Name</label>
-                <input type="text" class="form-control profile-input" value="Singh">
+                <input name="name" type="text" class="form-control profile-input" value="<?= html_escape($user->name); ?>">
               </div>
 
               <div class="col-12 col-md-6">
                 <label class="form-label fw-semibold text-sm">Email Address</label>
-                <input type="email" class="form-control profile-input" value="taranpreet@example.com">
+                <input name="email" type="email" class="form-control profile-input" value="<?= html_escape($user->email); ?>">
               </div>
 
               <div class="col-12 col-md-6">
                 <label class="form-label fw-semibold text-sm">Phone Number</label>
-                <input type="tel" class="form-control profile-input" value="+91 98765 43210">
+                <input name="phone_number" type="tel" class="form-control profile-input" value="<?= html_escape($user->phone_number); ?>">
               </div>
 
               <div class="col-12 col-md-6">
@@ -139,7 +135,7 @@
 
               <div class="col-12 col-md-6">
                 <label class="form-label fw-semibold text-sm">Location / Country</label>
-                <input type="text" class="form-control profile-input" value="Punjab, India">
+                <input name="country" type="text" class="form-control profile-input" value="<?= html_escape($user->country); ?>">
               </div>
 
               <div class="col-12">
@@ -247,19 +243,19 @@
           <h5 class="fw-bold mb-3 text-dark">Password & Account Security</h5>
           <p class="text-muted text-sm mb-4">Ensure your account is using a strong password and multi-factor protection.</p>
           
-          <form onsubmit="return false;" class="mb-4">
+          <form method="post" action="<?= site_url('profile/changePassword'); ?>" class="mb-4">
             <div class="row g-3">
               <div class="col-12">
                 <label class="form-label fw-semibold text-sm">Current Password</label>
-                <input type="password" class="form-control profile-input" placeholder="••••••••••••">
+                <input name="current_password" type="password" required class="form-control profile-input" placeholder="••••••••••••">
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label fw-semibold text-sm">New Password</label>
-                <input type="password" class="form-control profile-input" placeholder="New password">
+                <input name="new_password" type="password" required minlength="6" class="form-control profile-input" placeholder="New password">
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label fw-semibold text-sm">Confirm New Password</label>
-                <input type="password" class="form-control profile-input" placeholder="Confirm password">
+                <input name="confirm_password" type="password" required minlength="6" class="form-control profile-input" placeholder="Confirm password">
               </div>
             </div>
 

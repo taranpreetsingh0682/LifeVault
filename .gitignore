@@ -3,6 +3,8 @@ application/logs/*
 application/config/google.php
 application/config/email.php
 testdb.php
+.env
+compose.yml
 
 application/cache/*
 !application/cache/index.html

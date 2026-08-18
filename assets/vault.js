@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (e) => {
     const starBtn = e.target.closest('.star-btn');
     if (starBtn) {
+      if (starBtn.getAttribute('href')) return;
       e.preventDefault();
       const icon = starBtn.querySelector('i');
       if (starBtn.classList.contains('starred')) {
@@ -275,6 +276,21 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       uploadQueueList.prepend(queueItem);
+
+      const uploadUrl = fileDropInput && fileDropInput.dataset.uploadUrl;
+      if (uploadUrl) {
+        const formData = new FormData();
+        formData.append('document', file);
+        formData.append('title', file.name.replace(/\.[^.]+$/, ''));
+        formData.append('category', 'records');
+        fetch(uploadUrl, { method: 'POST', body: formData, credentials: 'same-origin' })
+          .then(response => { if (!response.ok) throw new Error('Upload failed'); })
+          .catch(() => {
+            const statusPill = queueItem.querySelector('.status-pill');
+            statusPill.textContent = 'Failed';
+            statusPill.className = 'status-pill status-queued';
+          });
+      }
 
       // Simulate upload progress animation
       let progress = 0;

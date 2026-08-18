@@ -11,6 +11,11 @@
     </div>
   </div>
 
+  <?php if ($this->session->flashdata('success')): ?><div class="alert alert-success"><?= html_escape($this->session->flashdata('success')); ?></div><?php endif; ?>
+  <form class="setting-card shadow-sm p-3 mb-4" method="post" action="<?= site_url('settings/save'); ?>">
+    <div class="row g-3 align-items-end"><div class="col-md-4"><label class="form-label">Default view</label><select name="document_view" class="form-select"><option value="list" <?= $settings['document_view']==='list'?'selected':''; ?>>List</option><option value="grid" <?= $settings['document_view']==='grid'?'selected':''; ?>>Grid</option></select></div><div class="col-md-4"><label class="form-label">Auto-lock</label><select name="auto_lock" class="form-select"><?php foreach (array('5'=>'5 minutes','15'=>'15 minutes','30'=>'30 minutes','never'=>'Never') as $value=>$label): ?><option value="<?= $value; ?>" <?= $settings['auto_lock']===$value?'selected':''; ?>><?= $label; ?></option><?php endforeach; ?></select></div><div class="col-md-2 form-check ms-3"><input name="auto_category" value="1" class="form-check-input" type="checkbox" id="autoCategory" <?= $settings['auto_category']?'checked':''; ?>><label for="autoCategory" class="form-check-label">Auto-categorize</label></div><div class="col-md-1"><button class="btn btn-dark" type="submit">Save</button></div></div>
+  </form>
+
   <div class="row g-4">
     
     <!-- Left Column: General & Security Settings -->

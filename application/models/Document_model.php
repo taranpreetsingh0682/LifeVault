@@ -85,5 +85,37 @@ public function get_documents($user_id,$category=null)
 
     }
 
+    public function get_document($id, $user_id)
+    {
+        return $this->db->where('id', $id)->where('user_id', $user_id)->get('documents')->row();
+    }
+
+    public function insert_document($data)
+    {
+        return $this->db->insert('documents', $data);
+    }
+
+    public function set_important($id, $user_id, $important)
+    {
+        return $this->db->where('id', $id)->where('user_id', $user_id)
+            ->update('documents', array('is_important' => $important ? 1 : 0));
+    }
+
+    public function delete_document($id, $user_id)
+    {
+        return $this->db->where('id', $id)->where('user_id', $user_id)->delete('documents');
+    }
+
+    public function get_important_list($user_id, $category = null)
+    {
+        $this->db->where('user_id', $user_id)->where('is_important', 1);
+        if ($category) $this->db->where('category', $category);
+        return $this->db->order_by('uploaded_at', 'DESC')->get('documents')->result();
+    }
+
+    public function get_category_total($user_id, $category)
+    {
+        return $this->db->where('user_id', $user_id)->where('category', $category)->count_all_results('documents');
+    }
 }
 ?>
