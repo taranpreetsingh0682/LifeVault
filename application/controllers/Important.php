@@ -25,11 +25,19 @@ class Important extends CI_Controller
 
         // Statistics used by the Important Documents page.
         $data['starred_files'] = $this->Document_model->get_important_documents($user_id);
-        $data['identity_docs'] = $this->Document_model->get_important_category_total($user_id, 'identity');
         $data['last_starred'] = $this->Document_model->get_last_important_document($user_id);
 
+        // These counts are specifically for STARRED files, not all files.
+        $important_categories = array('identity', 'education', 'personal', 'financial');
+        $data['important_category_counts'] = array();
+
+        foreach ($important_categories as $important_category) {
+            $data['important_category_counts'][$important_category] =
+                $this->Document_model->get_important_category_total($user_id, $important_category);
+        }
+
         // The current documents table has no encryption_status column.
-        // Therefore we only show 100% when every stored document is present.
+        // Therefore we show 100% when the user has stored documents.
         $total_documents = $this->Document_model->get_total_documents($user_id);
         $data['encrypted_percent'] = $total_documents > 0 ? 100 : 0;
 
