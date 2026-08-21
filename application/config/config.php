@@ -23,7 +23,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://lifevault-wrxd.onrender.com/';
+if (isset($_SERVER['HTTP_HOST'])) {
+    if (strpos($_SERVER['HTTP_HOST'], '8080') !== false) {
+        $config['base_url'] = 'http://localhost:8080/';
+    } else {
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
+        $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . '/LifeVault/';
+    }
+} else {
+    $config['base_url'] = 'http://localhost/LifeVault/';
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -387,7 +396,7 @@ $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = '/tmp';
+$config['sess_save_path'] = (DIRECTORY_SEPARATOR === '\\') ? sys_get_temp_dir() : '/tmp';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;

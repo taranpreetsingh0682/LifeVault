@@ -156,5 +156,35 @@ class Document_model extends CI_Model
             ->where('uploaded_at >=', date('Y-m-d H:i:s', strtotime('-24 hours')))
             ->count_all_results('documents');
     }
+
+    // Count of all important documents for a user
+    public function get_important_count($user_id)
+    {
+        return $this->db
+            ->where('user_id', $user_id)
+            ->where('is_important', 1)
+            ->count_all_results('documents');
+    }
+
+    // Count of important Identity-category documents for a user
+    public function get_identity_important_count($user_id)
+    {
+        return $this->db
+            ->where('user_id', $user_id)
+            ->where('is_important', 1)
+            ->where('category', 'Identity')
+            ->count_all_results('documents');
+    }
+
+    // Most recent uploaded_at of an important document
+    public function get_last_starred_date($user_id)
+    {
+        $this->db->select('MAX(uploaded_at) AS last_starred');
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_important', 1);
+        $query = $this->db->get('documents');
+        $row   = $query->row();
+        return ($row && $row->last_starred) ? $row->last_starred : NULL;
+    }
 }
 ?>

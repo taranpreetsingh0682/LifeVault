@@ -103,7 +103,9 @@ font-weight: 700;
 /* =========================
    MAIN CARD
 ========================= */
-
+.page-1{
+    display: flex;
+}
 .main-box{
 
     display:flex;
@@ -257,7 +259,7 @@ PARAGRAPH  */
 email and password font size */
 
 .col-md-6{
-   width: 100%;
+   
    padding: 0px 42px;
 }
 
@@ -388,6 +390,7 @@ login to access your vault */
 }
 
 
+
 /* input focus */
 
 .form-control:focus,
@@ -510,7 +513,7 @@ Don't have an account */
 /* ===================
 FOOTER */
 .footer-home{
-    padding: 12px 194px;
+    padding: 12px 88px;
     background-color: #0B1628;
 }
 

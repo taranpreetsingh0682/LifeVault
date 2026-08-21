@@ -166,9 +166,12 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
    
 
    <!-- <section class="container my-4 bg-dark text-light py-4 "> -->
-    <section class="container my-5">
+    <section class=" my-5">
+    
       <div class="main-box">
-       <div class="left-panel">
+        <div class="container page-1">
+          <div class="row">
+       <div class="left-panel col-md-6">
         
     <div class="logo-item">
        <i class="bi bi-circle-fill">
@@ -232,7 +235,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
  
        </div> 
 
-     <div class="right-panel">
+     <div class="right-panel col-md-6">
 
 
 <div class="row">
@@ -277,7 +280,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
         </div>
     <?php endif; ?>
   <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <label for="validationcustom1" class="form-label">Email
       <span class="text-primary">*</span>
     </label>
@@ -298,7 +301,7 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 
 
   </div>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <label for="validationcustom2" class="form-label">Password
       <span class="text-primary">*</span>
     </label>
@@ -324,15 +327,15 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 </a>
   </div>
 <div class="row login-actions-row g-2">
-    <div class="col-md-6">
+    <div class="col-md-12">
     <button type="submit" class="btn btn-primary w-100">Login</button>
   </div>
 
-  <div class="col-md-6 divider">
+  <div class="col-md-12 divider">
     <span>OR</span>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <a href="<?= site_url('auth/googleLogin'); ?>" type="button" class="btn google-btn w-100">Continue with Gmail</a>
   </div>
 </div>
@@ -344,7 +347,10 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 
    <?php echo form_close();?>
 </div>
+     
 </div>
+        </div>
+      </div>
 </section>
 
 <!-- ----footer -->
