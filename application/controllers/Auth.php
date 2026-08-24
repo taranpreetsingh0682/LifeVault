@@ -1,6 +1,14 @@
-<?php
+﻿<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_Config $config
+ * @property CI_Session $session
+ * @property CI_Input $input
+ * @property CI_User_model $User_model
+ * @property CI_email $email
+ * @property CI_db $db
+ */
 class Auth extends CI_Controller
 {
     public function login()
@@ -23,6 +31,7 @@ class Auth extends CI_Controller
     public function testSession()
 {
     $this->load->library('session');
+    $this->config->load('google');
 
     $this->session->set_userdata(
         'test_session',
@@ -290,8 +299,9 @@ class Auth extends CI_Controller
 
 
         // 6. Find user
-        $user =
-            $this->User_model->getUserByEmail(
+        $this->load->model('User_model');
+       $user= 
+        $this->User_model->getUserByEmail(
                 $google_user->email
             );
 
@@ -303,7 +313,7 @@ class Auth extends CI_Controller
                 'user_id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'loggend_in' => TRUE
+                'logged_in' => TRUE
             ];
 
 
@@ -380,7 +390,7 @@ class Auth extends CI_Controller
             'user_id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'loggend_in' => TRUE
+            'logged_in' => TRUE
         ];
 
 
@@ -475,7 +485,7 @@ if (empty($email) || empty($password)) {
             'user_id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'loggend_in' => TRUE
+            'logged_in' => TRUE
         ];
 
 
@@ -651,7 +661,7 @@ if (empty($email) || empty($password)) {
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('name');
         $this->session->unset_userdata('email');
-        $this->session->unset_userdata('loggend_in');
+        $this->session->unset_userdata('logged_in');
 
         // Destroy the session completely
         $this->session->sess_destroy();

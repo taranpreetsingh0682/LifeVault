@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+/**
+ * @property CI_Config $config
+ * @property CI_Session $session
+ * @property CI_input $input
+ * @property CI_Document_model $Document_model
+ * @property CI_upload $upload
+ * 
+ */
 class Upload extends CI_Controller {
   
   public function __construct() {
@@ -10,7 +17,7 @@ class Upload extends CI_Controller {
   }
 
   public function upload() {
-    if (!$this->session->userdata('loggend_in')) { redirect('auth/login'); return; }
+    if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
     $data['recent_documents'] = $this->Document_model->get_recent_documents($this->session->userdata('user_id'), 10);
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
@@ -23,7 +30,7 @@ class Upload extends CI_Controller {
   }
 
   public function store() {
-    if (!$this->session->userdata('loggend_in')) { redirect('auth/login'); return; }
+    if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
     $title = trim($this->input->post('title'));
     $category = strtolower(trim($this->input->post('category')));
     $allowed_categories = array('identity', 'personal', 'education', 'certificates', 'images', 'records');

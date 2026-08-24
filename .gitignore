@@ -4,7 +4,7 @@ application/logs/*
 application/config/google.php
 
 application/config/email.php
-
+uploads/*
 lifevault_backup.sql
 testdb.php
 .env

@@ -1,7 +1,12 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+/**
+ * @property CI_Config $config
+ * @property CI_Session $session
+ * @property CI_Document $Document_model
+ * @property CI_input $input
+ */
 class Important extends CI_Controller
 {
     public function __construct()
@@ -14,7 +19,7 @@ class Important extends CI_Controller
 
     public function important()
     {
-        if (!$this->session->userdata('loggend_in')) {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth/login');
             return;
         }

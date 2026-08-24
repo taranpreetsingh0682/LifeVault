@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+/**
+ * @property CI_Config $config
+ * @property CI_Session $session
+ * @property CI_input $input
+ * @property CI_Document_model $Document_model
+ * @property CI_output $output
+ */
 class Documents extends CI_Controller
 {
     public function __construct()
@@ -12,7 +18,7 @@ class Documents extends CI_Controller
 
     public function index()
     {
-        if (!$this->session->userdata('loggend_in')) {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth/login');
             return;
         }
@@ -35,7 +41,7 @@ class Documents extends CI_Controller
 
     public function toggleImportant($id)
     {
-        if (!$this->session->userdata('loggend_in')) {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth/login');
             return;
         }
@@ -61,7 +67,7 @@ class Documents extends CI_Controller
 
     public function download($id)
     {
-        if (!$this->session->userdata('loggend_in')) {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth/login');
             return;
         }
@@ -85,7 +91,7 @@ class Documents extends CI_Controller
 
     public function view($id)
     {
-        if (!$this->session->userdata('loggend_in')) {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth/login');
             return;
         }
@@ -116,7 +122,7 @@ class Documents extends CI_Controller
 
     public function delete($id)
     {
-        if (!$this->session->userdata('loggend_in')) {
+        if (!$this->session->userdata('logged_in')) {
             redirect('auth/login');
             return;
         }

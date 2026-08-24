@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+/**
+ * @property CI_Config $config
+ * @property CI_Session $session
+ * @property CI_input $input
+ * @property CI_User_model $User_model
+ */
 class Profile extends CI_Controller {
 
   public function __construct() {
@@ -10,7 +15,7 @@ class Profile extends CI_Controller {
   }
 
   public function profile() {
-    if (!$this->session->userdata('loggend_in')) { redirect('auth/login'); return; }
+    if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
     $data['user'] = $this->User_model->getUserById($this->session->userdata('user_id'));
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
@@ -23,7 +28,7 @@ class Profile extends CI_Controller {
   }
 
   public function update() {
-    if (!$this->session->userdata('loggend_in')) { redirect('auth/login'); return; }
+    if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
     $name = trim($this->input->post('name'));
     $email = trim($this->input->post('email'));
     if (!$name || !filter_var($email, FILTER_VALIDATE_EMAIL)) { $this->session->set_flashdata('error', 'Enter a name and valid email address.'); redirect('profile'); return; }
@@ -34,7 +39,7 @@ class Profile extends CI_Controller {
   }
 
   public function changePassword() {
-    if (!$this->session->userdata('loggend_in')) { redirect('auth/login'); return; }
+    if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
     $user = $this->User_model->getUserById($this->session->userdata('user_id')); $current = $this->input->post('current_password'); $new = $this->input->post('new_password');
     if (!password_verify($current, $user->password) || strlen($new) < 6 || $new !== $this->input->post('confirm_password')) { $this->session->set_flashdata('error', 'Check your current password; new passwords must match and be at least 6 characters.'); redirect('profile'); return; }
     $this->User_model->updatePassword($user->id, password_hash($new, PASSWORD_DEFAULT)); $this->session->set_flashdata('success', 'Password changed successfully.'); redirect('profile');

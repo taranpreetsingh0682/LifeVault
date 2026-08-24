@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+/**
+ * @property CI_Config $config
+ * @property CI_Session $session
+ * @property CI_Document_model $Document_model
+ */
 class Dashboard extends CI_Controller {
 
   public function __construct() {
@@ -11,12 +15,12 @@ class Dashboard extends CI_Controller {
 
   public function dashboard() {
     // Auth guard: redirect to login if not logged in
-    if (!$this->session->userdata('loggend_in')) {
+    if (!$this->session->userdata('logged_in')) {
       redirect('auth/login');
       return;
     }
 
-    // get looged-in users id
+    // get logged-in users id
     $user_id=$this->session->userdata('user_id');
 
     // Dashboard statistics
