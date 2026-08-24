@@ -49,38 +49,35 @@ class Auth extends CI_Controller
     var_dump($this->session->userdata('test_session'));
     echo '</pre>';
 }
-    public function googleLogin()
-    {
-        $this->load->library('session');
-        $this->config->load('google');
+public function googleLogin()
+{
+    $this->load->library('session');
+    $this->config->load('google');
 
-        $state = bin2hex(random_bytes(32));
+    $client_id = $this->config->item('google_client_id');
+    $redirect_uri = $this->config->item('google_redirect_uri');
 
-        $this->session->set_userdata(
-            'google_oauth_state',
-            $state
-        );
+    // Generate CSRF protection state
+    $state = bin2hex(random_bytes(32));
 
-        $google_url =
-            'https://accounts.google.com/o/oauth2/v2/auth?' .
-            http_build_query([
-                'client_id' =>
-                    $this->config->item('google_client_id'),
+    // Save state in session for googleCallback()
+    $this->session->set_userdata('google_oauth_state', $state);
 
-                'redirect_uri' =>
-                    $this->config->item('google_redirect_uri'),
+    // Google OAuth authorization URL
+    $google_url = 'https://accounts.google.com/o/oauth2/v2/auth?' .
+        http_build_query([
+            'client_id' => $client_id,
+            'redirect_uri' => $redirect_uri,
+            'response_type' => 'code',
+            'scope' => 'openid email profile',
+            'state' => $state,
+            'access_type' => 'offline',
+            'prompt' => 'select_account'
+        ]);
 
-                'response_type' => 'code',
-
-                'scope' => 'openid email profile',
-
-                'access_type' => 'online',
-
-                'state' => $state
-            ]);
-
-        redirect($google_url);
-    }
+    // Redirect browser to Google
+    redirect($google_url);
+}
 
 
     /*
