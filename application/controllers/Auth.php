@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -185,6 +185,9 @@ public function googleLogin()
             true
         );
 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,
@@ -199,11 +202,14 @@ public function googleLogin()
 
         if ($token_response === false) {
 
+            $curl_err = curl_error($ch);
             curl_close($ch);
+
+            log_message('error', 'GOOGLE TOKEN CURL ERROR: ' . $curl_err);
 
             $this->session->set_flashdata(
                 'error',
-                'Unable to connect to Google.'
+                'Unable to connect to Google: ' . $curl_err
             );
 
             redirect('auth/login');
@@ -222,9 +228,12 @@ public function googleLogin()
             empty($token_data['access_token'])
         ) {
 
+            $err_desc = isset($token_data['error_description']) ? $token_data['error_description'] : (isset($token_data['error']) ? $token_data['error'] : 'Unknown error');
+            log_message('error', 'GOOGLE TOKEN ERROR: ' . json_encode($token_data));
+
             $this->session->set_flashdata(
                 'error',
-                'Unable to get Google access token.'
+                'Google auth error: ' . $err_desc
             );
 
             redirect('auth/login');
@@ -249,6 +258,9 @@ public function googleLogin()
             true
         );
 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,
@@ -264,11 +276,14 @@ public function googleLogin()
 
         if ($userinfo_response === false) {
 
+            $curl_err = curl_error($ch);
             curl_close($ch);
+
+            log_message('error', 'GOOGLE USERINFO CURL ERROR: ' . $curl_err);
 
             $this->session->set_flashdata(
                 'error',
-                'Unable to retrieve Google account information.'
+                'Unable to retrieve Google account information: ' . $curl_err
             );
 
             redirect('auth/login');

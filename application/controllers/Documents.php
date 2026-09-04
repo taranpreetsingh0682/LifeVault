@@ -146,4 +146,3 @@ class Documents extends CI_Controller
         redirect('documents');
     }
 }
-?>

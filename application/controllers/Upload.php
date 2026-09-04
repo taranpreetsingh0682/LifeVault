@@ -57,4 +57,3 @@ class Upload extends CI_Controller {
     $this->session->set_flashdata('success', 'Document uploaded successfully.'); redirect('documents');
   }
 }
-?>

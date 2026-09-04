@@ -17,6 +17,7 @@ class Profile extends CI_Controller {
   public function profile() {
     if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
     $data['user'] = $this->User_model->getUserById($this->session->userdata('user_id'));
+    if (!$data['user']) { redirect('auth/login'); return; }
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
     $this->load->view('profile/profile', $data);
@@ -45,4 +46,3 @@ class Profile extends CI_Controller {
     $this->User_model->updatePassword($user->id, password_hash($new, PASSWORD_DEFAULT)); $this->session->set_flashdata('success', 'Password changed successfully.'); redirect('profile');
   }
 }
-?>

@@ -55,4 +55,3 @@ $data['shared_documents'] =
     $this->load->view('templates/footer');
   }
 }
-?>

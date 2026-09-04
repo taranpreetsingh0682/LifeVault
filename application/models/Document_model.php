@@ -187,4 +187,3 @@ class Document_model extends CI_Model
         return ($row && $row->last_starred) ? $row->last_starred : NULL;
     }
 }
-?>

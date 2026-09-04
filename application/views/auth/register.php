@@ -242,6 +242,17 @@ section.container.my-5{padding-left:.75rem;padding-right:.75rem;margin-top:1rem!
 <div class="container  fields-set">
     <?php echo form_open_multipart('auth/registerUser',['class'=>'row g-3']);  ?>
 
+      <?php if ($this->session->flashdata('error')): ?>
+        <div class="alert alert-danger col-12 mb-3">
+            <?= $this->session->flashdata('error'); ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success col-12 mb-3">
+            <?= $this->session->flashdata('success'); ?>
+        </div>
+      <?php endif; ?>
 
         <div class="row ">
 

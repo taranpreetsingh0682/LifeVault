@@ -32,4 +32,3 @@ class Settings extends CI_Controller {
     $this->session->set_userdata('vault_settings', $settings); $this->session->set_flashdata('success', 'Settings saved for this session.'); redirect('settings');
   }
 }
-?>

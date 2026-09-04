@@ -96,4 +96,3 @@ class Important extends CI_Controller
         $this->important();
     }
 }
-?>

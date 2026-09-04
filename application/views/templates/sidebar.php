@@ -7,9 +7,8 @@ $controller = $this->router->fetch_class();
 $user_id = $this->session->userdata('user_id');
 
 
-// Load the document model once.
-$this->load->model('Document_model');
-
+$CI =& get_instance();
+$CI->load->model('Document_model');
 
 // ---------------------------------------------------------
 // Dynamic sidebar statistics
@@ -18,13 +17,13 @@ $this->load->model('Document_model');
 if ($user_id) {
 
     $sidebar_total_documents =
-        $this->Document_model->get_total_documents($user_id);
+        $CI->Document_model->get_total_documents($user_id);
 
     $sidebar_important_documents =
-        $this->Document_model->get_important_count($user_id);
+        $CI->Document_model->get_important_count($user_id);
 
     $sidebar_storage_used =
-        (float) $this->Document_model->get_storage_used($user_id);
+        (float) $CI->Document_model->get_storage_used($user_id);
 
 } else {
 
@@ -123,11 +122,11 @@ $notifications = array();
 if ($user_id) {
 
     $notification_count =
-        $this->Document_model
+        $CI->Document_model
             ->get_recent_notification_count($user_id);
 
     $notifications =
-        $this->Document_model
+        $CI->Document_model
             ->get_recent_notifications($user_id, 5);
 }
 
