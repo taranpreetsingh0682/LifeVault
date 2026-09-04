@@ -16,8 +16,29 @@ class Profile extends CI_Controller {
 
   public function profile() {
     if (!$this->session->userdata('logged_in')) { redirect('auth/login'); return; }
-    $data['user'] = $this->User_model->getUserById($this->session->userdata('user_id'));
+    $user_id = $this->session->userdata('user_id');
+    $data['user'] = $this->User_model->getUserById($user_id);
     if (!$data['user']) { redirect('auth/login'); return; }
+
+    // Compute user initials
+    $name_parts = preg_split('/\s+/', trim((string)$data['user']->name));
+    $initials = !empty($name_parts[0]) ? strtoupper(substr($name_parts[0], 0, 1)) : 'L';
+    if (count($name_parts) > 1) {
+      $last = end($name_parts);
+      $initials .= strtoupper(substr($last, 0, 1));
+    }
+    $data['user_initials'] = $initials ?: 'LV';
+
+    // Storage statistics
+    $storage_used = (float) $this->Document_model->get_storage_used($user_id);
+    $storage_limit = 5 * 1024 * 1024 * 1024; // 5 GB
+    $data['storage_used'] = $storage_used;
+    $data['storage_limit'] = $storage_limit;
+    $data['storage_percent'] = $storage_limit > 0 ? min(100, round(($storage_used / $storage_limit) * 100, 1)) : 0;
+    $data['storage_used_gb'] = round($storage_used / 1073741824, 2);
+    $data['storage_available_gb'] = round(max(0, $storage_limit - $storage_used) / 1073741824, 2);
+    $data['storage_used_mb'] = round($storage_used / 1048576, 1);
+
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
     $this->load->view('profile/profile', $data);

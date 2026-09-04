@@ -24,38 +24,23 @@
 
 
         <div class="profile-avatar-xl position-relative">
-
-
-
-          <div class="avatar-big-circle">TS</div>
-
-
+          <div class="avatar-big-circle"><?= html_escape(isset($user_initials) ? $user_initials : 'LV'); ?></div>
           <button class="avatar-edit-btn" title="Change Avatar">
-
-
             <i class="bi bi-camera-fill"></i>
-
-
-
           </button>
         </div>
         <div class="profile-meta-hero">
           <div class="d-flex align-items-center gap-2 flex-wrap">
-
             <h2 class="profile-user-name mb-0">
-            <?= $this->session->userdata('name'); ?>
+            <?= html_escape($user->name ?: $this->session->userdata('name')); ?>
             </h2>
-
-
             <span class="badge bg-warning text-dark px-2.5 py-1 fw-bold rounded-pill">
               <i class="bi bi-star-fill me-1"></i> 
               Premium Plan
-
             </span>
-            
           </div>
           <p class="profile-user-email text-muted mb-1">
-            <?= $this->session->userdata('email'); ?></p>
+            <?= html_escape($user->email ?: $this->session->userdata('email')); ?></p>
           <span class="text-xs text-muted"> Verified Account</span>
         </div>
       </div>
@@ -175,8 +160,8 @@
                       <i class="bi bi-check-circle-fill me-1"></i> Connected
                     </span>
                   </div>
-                  <p class="text-sm text-dark mb-0 font-monospace mt-0.5">taranpreet.singh@gmail.com</p>
-                  <span class="text-xs text-muted">Linked on Jan 15, 2024 &bull; SSO & Google Drive Auto Sync Active</span>
+                  <p class="text-sm text-dark mb-0 font-monospace mt-0.5"><?= html_escape($user->email); ?></p>
+                  <span class="text-xs text-muted">Linked on <?= !empty($user->created_at) ? date('M d, Y', strtotime($user->created_at)) : date('M d, Y'); ?> &bull; SSO & Google Drive Auto Sync Active</span>
                 </div>
               </div>
               <div class="d-flex align-items-center gap-2 align-self-end align-self-md-center">
@@ -285,22 +270,21 @@
           <div class="storage-box p-4 border rounded-3 mb-4 bg-light">
             <div class="d-flex align-items-center justify-content-between mb-2">
               <span class="fw-bold">Vault Storage Occupied</span>
-              <span class="fw-bold text-primary">1.8 GB of 5 GB (36%)</span>
+              <span class="fw-bold text-primary"><?= isset($storage_used_gb) && $storage_used_gb > 0 ? $storage_used_gb . ' GB' : (isset($storage_used_mb) ? $storage_used_mb . ' MB' : '0 MB'); ?> of 5 GB (<?= isset($storage_percent) ? $storage_percent : 0; ?>%)</span>
             </div>
             <div class="progress mb-3" style="height: 10px;">
-              <div class="progress-bar bg-primary" style="width: 36%"></div>
+              <div class="progress-bar bg-primary" style="width: <?= isset($storage_percent) ? $storage_percent : 0; ?>%"></div>
             </div>
             <div class="row text-center g-2 text-xs text-muted">
-              <div class="col-4">Identity: 800 MB</div>
-              <div class="col-4">Education: 600 MB</div>
-              <div class="col-4">Free: 3.2 GB</div>
+              <div class="col-6">Used: <?= isset($storage_used_gb) && $storage_used_gb > 0 ? $storage_used_gb . ' GB' : (isset($storage_used_mb) ? $storage_used_mb . ' MB' : '0 MB'); ?></div>
+              <div class="col-6">Available: <?= isset($storage_available_gb) ? $storage_available_gb : 5; ?> GB</div>
             </div>
           </div>
 
           <div class="d-flex align-items-center justify-content-between border p-3 rounded-3">
             <div>
               <h6 class="fw-bold mb-1">Current Tier: Premium Gold</h6>
-              <p class="text-muted text-xs mb-0">Renews on Jan 15, 2027 &bull; Unlimited Bandwidth</p>
+              <p class="text-muted text-xs mb-0">Renews on <?= !empty($user->created_at) ? date('M d, Y', strtotime($user->created_at . ' +1 year')) : date('M d, Y', strtotime('+1 year')); ?> &bull; Unlimited Bandwidth</p>
             </div>
             <button class="btn btn-warning fw-semibold btn-sm rounded-pill px-3">Upgrade Plan</button>
           </div>
