@@ -83,6 +83,9 @@ class Document_model extends CI_Model
 
     public function insert_document($data)
     {
+        if (empty($data['uploaded_at'])) {
+            $data['uploaded_at'] = date('Y-m-d H:i:s');
+        }
         return $this->db->insert('documents', $data);
     }
 

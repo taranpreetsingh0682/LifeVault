@@ -52,7 +52,8 @@ class Upload extends CI_Controller {
     $this->Document_model->insert_document(array(
       'user_id' => $this->session->userdata('user_id'), 'title' => $title, 'category' => $category,
       'file_name' => $file['client_name'], 'file_path' => 'uploads/' . $this->session->userdata('user_id') . '/' . $file['file_name'],
-      'file_size' => $file['file_size'] * 1024, 'file_type' => $file['file_ext'], 'is_important' => 0, 'is_shared' => 0
+      'file_size' => $file['file_size'] * 1024, 'file_type' => $file['file_ext'], 'is_important' => 0, 'is_shared' => 0,
+      'uploaded_at' => date('Y-m-d H:i:s')
     ));
     $this->session->set_flashdata('success', 'Document uploaded successfully.'); redirect('documents');
   }
