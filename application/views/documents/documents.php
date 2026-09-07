@@ -273,7 +273,7 @@ $storage_available_label = round(max(0, $storage_limit - $storage_used) / 107374
   'use strict';
 
   /* ── Data ──────────────────────────────────────────────────────── */
-  const ALL_DOCS = <?= json_encode(array_map(function ($document) { return array('id'=>(int)$document->id, 'name'=>$document->title, 'type'=>strtoupper(ltrim($document->file_type,'.')), 'cat'=>strtolower($document->category), 'updated'=>date('d M Y, h:i A', strtotime($document->uploaded_at)), 'size'=>round($document->file_size / 1048576, 2) . ' MB', 'sizeBytes'=>(int)$document->file_size, 'starred'=>(bool)$document->is_important); }, $documents)); ?>;
+  const ALL_DOCS = <?= json_encode(array_map(function ($document) { return array('id'=>(int)$document->id, 'name'=>$document->title, 'type'=>strtoupper(ltrim($document->file_type,'.')), 'cat'=>strtolower($document->category), 'updated'=>date('d M Y, h:i A', strtotime($document->uploaded_at)), 'size'=>round($document->file_size / 1048576, 2) . ' MB', 'sizeBytes'=>(int)$document->file_size, 'starred'=>(bool)$document->is_important); }, isset($documents) ? $documents : [])); ?>;
   /*
     { id:1,  name:'PAN Card.pdf',               type:'PDF', cat:'identity',     updated:'Yesterday, 09:15 PM', size:'240 KB',  sizeBytes:245760,  starred:true  },
     { id:2,  name:'Resume.pdf',                 type:'PDF', cat:'personal',     updated:'05 July 2025',        size:'1.2 MB',  sizeBytes:1258291, starred:false },
@@ -298,7 +298,7 @@ $storage_available_label = round(max(0, $storage_limit - $storage_used) / 107374
   const PER_PAGE  = 12;
 
   /* ── Helpers ───────────────────────────────────────────────────── */
-  const typeCls  = { PDF:'type-pdf', DOC:'type-doc', XLS:'type-xls', JPG:'type-jpg' };
+  const typeCls  = { PDF:'type-pdf', DOC:'type-doc', XLS:'type-xls', JPG:'type-jpg',PNG:'type-png' };
   const catLabel = { identity:'Identity', personal:'Personal', education:'Education',
                      certificates:'Certificates', images:'Images', records:'Records' };
   const catBadge = { identity:'badge-identity', personal:'badge-personal', education:'badge-education',

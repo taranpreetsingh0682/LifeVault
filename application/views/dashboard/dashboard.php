@@ -1,6 +1,11 @@
 <?php
 // Fallbacks for undefined variables
+$total_documents = isset($total_documents) ? (int) $total_documents : 0;
 $total_weeks = isset($total_weeks) ? $total_weeks : '+12 this week';
+$important_documents = isset($important_documents) ? (int) $important_documents : 0;
+$shared_documents = isset($shared_documents) ? (int) $shared_documents : 0;
+$categories = isset($categories) && is_array($categories) ? $categories : array();
+$recent_documents = isset($recent_documents) && is_array($recent_documents) ? $recent_documents : array();
 
 // Calculate storage stats dynamically
 $total_limit_bytes = 5 * 1024 * 1024 * 1024; // 5 GB limit in bytes
@@ -444,35 +449,6 @@ $storage_available_formatted = format_bytes(max($total_limit_bytes - $storage_us
 
           <?php endforeach; ?>
           <?php else: ?>
-
-          <div class="cat-item">
-            <div class="cat-icon-box bg-cat-orange">
-              <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="cat-meta">
-              <h6 class="cat-name">
-                <?= htmlspecialchars($category->category); ?>
-            
-              </h6>
-              <span class="cat-count">
-                <?= $category->total; ?> files
-              </span>
-            </div>
-          </div>
-
-          <div class="cat-item">
-            <div class="cat-icon-box bg-cat-teal">
-              <i class="bi bi-award"></i>
-            </div>
-            <div class="cat-meta">
-              <h6 class="cat-name">
-              <?= htmlspecialchars($category->category); ?>
-              </h6>
-              <span class="cat-count">
-                <?= $category->total; ?> files
-              </span>
-            </div>
-          </div>
 
           <div class="cat-item">
             <div class="cat-icon-box bg-cat-pink">
