@@ -81,13 +81,19 @@ if (DIRECTORY_SEPARATOR === '\\') {
     $db_port = 3307;
 }
 
+$db_host = getenv('DB_HOST') ?: 'db';
+$db_port = getenv('DB_PORT') ?: 3306;
+$db_user = getenv('DB_USERNAME') ?: 'root';
+$db_pass = getenv('DB_PASSWORD') ?: 'root';
+$db_name = getenv('DB_DATABASE') ?: 'lifevault';
+
 $db['default'] = array(
     'dsn'      => '',
     'hostname' => $db_host,
     'port'     => $db_port,
-    'username' => 'root',
-    'password' => 'root',
-    'database' => 'lifevault',
+    'username' => $db_user,
+    'password' => $db_pass,
+    'database' => $db_name,
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
