@@ -136,8 +136,8 @@ LifeVault/
 | Uploads Module | ✅ Completed |
 | Profile Module | ✅ Completed |
 | Settings Module | ✅ Completed |
-| Backend Development | 🚧 In Progress |
-| Database Integration | 🚧 In Progress |
+| Backend Development |✅ Completed |
+| Database Integration | ✅ Completed |
 | Deployment | ⏳ Pending |
 
 ---
