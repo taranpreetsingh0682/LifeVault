@@ -33,7 +33,7 @@ if (isset($_SERVER['HTTP_HOST'])) {
         $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . '/LifeVault/';
     }
 } else {
-    $config['base_url'] = 'http://localhost/LifeVault/';
+    $config['base_url'] = 'https://lifevault-1.onrender.com/';
 }
 
 /*
