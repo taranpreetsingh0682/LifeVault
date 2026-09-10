@@ -26,16 +26,14 @@ date_default_timezone_set('Asia/Kolkata');
 |
 */
 if (isset($_SERVER['HTTP_HOST'])) {
-    if (strpos($_SERVER['HTTP_HOST'], '8080') !== false) {
+    if (strpos($_SERVER['HTTP_HOST'], 'localhost:8080') !== false) {
         $config['base_url'] = 'http://localhost:8080/';
     } else {
-        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https://" : "http://";
-        $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . '/LifeVault/';
+        $config['base_url'] = 'https://lifevault-1.onrender.com/';
     }
 } else {
     $config['base_url'] = 'https://lifevault-1.onrender.com/';
 }
-
 /*
 |--------------------------------------------------------------------------
 | Index File
