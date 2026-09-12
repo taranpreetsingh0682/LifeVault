@@ -73,18 +73,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db_host = 'db';
-$db_port = 3306;
+$is_windows = (DIRECTORY_SEPARATOR === '\\');
 
-if (DIRECTORY_SEPARATOR === '\\') {
-    $db_host = '127.0.0.1';
-    $db_port = 3307;
-}
-
-$db_host = getenv('DB_HOST') ?: 'db';
-$db_port = getenv('DB_PORT') ?: 3306;
+$db_host = getenv('DB_HOST') ?: ($is_windows ? '127.0.0.1' : 'db');
+$db_port = (int) (getenv('DB_PORT') ?: ($is_windows ? 3307 : 3306));
 $db_user = getenv('DB_USERNAME') ?: 'root';
-$db_pass = getenv('DB_PASSWORD') ?: 'root';
+$db_pass = getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : 'root';
 $db_name = getenv('DB_DATABASE') ?: 'lifevault';
 
 $db['default'] = array(
@@ -100,8 +94,8 @@ $db['default'] = array(
     'db_debug' => (ENVIRONMENT !== 'production'),
     'cache_on' => FALSE,
     'cachedir' => '',
-    'char_set' => 'utf8',
-    'dbcollat' => 'utf8_general_ci',
+    'char_set' => 'utf8mb4',
+    'dbcollat' => 'utf8mb4_general_ci',
     'swap_pre' => '',
     'encrypt'  => FALSE,
     'compress' => FALSE,

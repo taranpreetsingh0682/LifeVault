@@ -25,14 +25,17 @@ date_default_timezone_set('Asia/Kolkata');
 | a PHP script and you can easily do that on your own.
 |
 */
-if (isset($_SERVER['HTTP_HOST'])) {
-    if (strpos($_SERVER['HTTP_HOST'], 'localhost:8080') !== false) {
-        $config['base_url'] = 'http://localhost:8080/';
-    } else {
-        $config['base_url'] = 'https://lifevault-1.onrender.com/';
-    }
+$env_base_url = getenv('BASE_URL') ?: getenv('APP_URL');
+if (!empty($env_base_url)) {
+    $config['base_url'] = rtrim($env_base_url, '/') . '/';
+} elseif (isset($_SERVER['HTTP_HOST'])) {
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ||
+                (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+                ? 'https://' : 'http://';
+    $script_dir = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+    $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . $script_dir;
 } else {
-    $config['base_url'] = 'https://lifevault-1.onrender.com/';
+    $config['base_url'] = 'http://localhost/LifeVault/';
 }
 /*
 |--------------------------------------------------------------------------
@@ -396,7 +399,9 @@ $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = (DIRECTORY_SEPARATOR === '\\') ? sys_get_temp_dir() : '/tmp';
+$config['sess_save_path'] = (is_dir(APPPATH . 'cache/sessions') && is_writable(APPPATH . 'cache/sessions'))
+    ? APPPATH . 'cache/sessions'
+    : ((DIRECTORY_SEPARATOR === '\\') ? sys_get_temp_dir() : '/tmp');
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
