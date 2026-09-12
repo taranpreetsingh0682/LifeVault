@@ -75,11 +75,39 @@ $query_builder = TRUE;
 
 $is_windows = (DIRECTORY_SEPARATOR === '\\');
 
-$db_host = getenv('DB_HOST') ?: ($is_windows ? '127.0.0.1' : 'db');
-$db_port = (int) (getenv('DB_PORT') ?: ($is_windows ? 3307 : 3306));
-$db_user = getenv('DB_USERNAME') ?: 'root';
-$db_pass = getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : 'root';
-$db_name = getenv('DB_DATABASE') ?: 'lifevault';
+// 1. Support full Database URL (e.g. Aiven Service URI or Render DATABASE_URL / MYSQL_URL)
+$db_url = getenv('DATABASE_URL') ?: (getenv('MYSQL_URL') ?: (getenv('DB_URL') ?: (getenv('AIVEN_DATABASE_URL') ?: (getenv('AIVEN_SERVICE_URI') ?: ''))));
+
+if (!empty($db_url)) {
+    $parsed_url = parse_url($db_url);
+    $db_host = !empty($parsed_url['host']) ? $parsed_url['host'] : '127.0.0.1';
+    $db_port = !empty($parsed_url['port']) ? (int) $parsed_url['port'] : 3306;
+    $db_user = !empty($parsed_url['user']) ? urldecode($parsed_url['user']) : 'root';
+    $db_pass = isset($parsed_url['pass']) ? urldecode($parsed_url['pass']) : '';
+    $db_name = !empty($parsed_url['path']) ? trim($parsed_url['path'], '/') : 'lifevault';
+    $is_remote_db = (!in_array($db_host, array('127.0.0.1', 'localhost', 'db')));
+} else {
+    // 2. Individual Environment Variables or Local Fallbacks
+    $db_host = getenv('DB_HOST') ?: (getenv('AIVEN_HOST') ?: (getenv('MYSQLHOST') ?: ($is_windows ? '127.0.0.1' : 'db')));
+    $db_port = (int) (getenv('DB_PORT') ?: (getenv('AIVEN_PORT') ?: (getenv('MYSQLPORT') ?: ($is_windows ? 3307 : 3306))));
+    $db_user = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: (getenv('AIVEN_USER') ?: (getenv('MYSQLUSER') ?: 'root')));
+    $db_pass = getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : (getenv('AIVEN_PASSWORD') !== false ? getenv('AIVEN_PASSWORD') : (getenv('MYSQLPASSWORD') !== false ? getenv('MYSQLPASSWORD') : 'root'));
+    $db_name = getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: (getenv('AIVEN_DATABASE') ?: (getenv('MYSQLDATABASE') ?: 'lifevault')));
+    $is_remote_db = (!in_array($db_host, array('127.0.0.1', 'localhost', 'db')));
+}
+
+// 3. SSL Configuration (Required for Aiven MySQL and cloud databases)
+$ssl_env = getenv('DB_SSL');
+$use_ssl = ($ssl_env === 'true' || $ssl_env === '1' || $ssl_env === 'REQUIRED' || ($ssl_env === false && $is_remote_db));
+
+if ($use_ssl) {
+    $encrypt_config = array(
+        'ssl_verify' => (getenv('DB_SSL_VERIFY') === 'true' || getenv('DB_SSL_VERIFY') === '1'),
+        'ssl_ca'     => getenv('DB_SSL_CA') ?: ((defined('APPPATH') && file_exists(APPPATH . 'config/ca.pem')) ? APPPATH . 'config/ca.pem' : NULL),
+    );
+} else {
+    $encrypt_config = FALSE;
+}
 
 $db['default'] = array(
     'dsn'      => '',
@@ -97,7 +125,7 @@ $db['default'] = array(
     'char_set' => 'utf8mb4',
     'dbcollat' => 'utf8mb4_general_ci',
     'swap_pre' => '',
-    'encrypt'  => FALSE,
+    'encrypt'  => $encrypt_config,
     'compress' => FALSE,
     'stricton' => FALSE,
     'failover' => array(),

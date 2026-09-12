@@ -13,7 +13,9 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
-RUN chown -R www-data:www-data /var/www/html
+RUN mkdir -p /var/www/html/application/cache/sessions /var/www/html/application/logs /var/www/html/uploads \
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/application/cache /var/www/html/application/logs /var/www/html/uploads
 
 EXPOSE 80
 

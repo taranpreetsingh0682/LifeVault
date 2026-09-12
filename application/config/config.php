@@ -25,7 +25,7 @@ date_default_timezone_set('Asia/Kolkata');
 | a PHP script and you can easily do that on your own.
 |
 */
-$env_base_url = getenv('BASE_URL') ?: getenv('APP_URL');
+$env_base_url = getenv('RENDER_EXTERNAL_URL') ?: (getenv('BASE_URL') ?: getenv('APP_URL'));
 if (!empty($env_base_url)) {
     $config['base_url'] = rtrim($env_base_url, '/') . '/';
 } elseif (isset($_SERVER['HTTP_HOST'])) {
@@ -35,7 +35,7 @@ if (!empty($env_base_url)) {
     $script_dir = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
     $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . $script_dir;
 } else {
-    $config['base_url'] = 'http://localhost/LifeVault/';
+    $config['base_url'] = 'https://lifevault-1.onrender.com/';
 }
 /*
 |--------------------------------------------------------------------------
