@@ -192,8 +192,9 @@ class Auth extends CI_Controller
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 'Content-Type: application/x-www-form-urlencoded'
             ]);
@@ -232,8 +233,9 @@ class Auth extends CI_Controller
             $userinfo_url = 'https://openidconnect.googleapis.com/v1/userinfo';
             $ch = curl_init($userinfo_url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 'Authorization: Bearer ' . $access_token
             ]);
@@ -281,7 +283,11 @@ class Auth extends CI_Controller
                 ];
 
                 $this->session->set_userdata($session_data);
-                $this->createRememberToken($user->id);
+                try {
+                    $this->createRememberToken($user->id);
+                } catch (Throwable $e) {
+                    log_message('error', 'Remember token creation error: ' . $e->getMessage());
+                }
 
                 redirect('dashboard/dashboard');
                 return;
@@ -304,10 +310,11 @@ class Auth extends CI_Controller
 
             if (!$inserted) {
                 $db_error = $this->db->error();
+                $err_msg = !empty($db_error['message']) ? $db_error['message'] : 'Database insert failed.';
                 log_message('error', 'GOOGLE USER DB INSERT ERROR: ' . json_encode($db_error));
                 $this->session->set_flashdata(
                     'error',
-                    'Unable to create your LifeVault account. Please try again.'
+                    'Unable to create your LifeVault account: ' . $err_msg
                 );
                 redirect('auth/login');
                 return;
@@ -334,19 +341,28 @@ class Auth extends CI_Controller
             ];
 
             $this->session->set_userdata($session_data);
-            $this->createRememberToken($user->id);
+            try {
+                $this->createRememberToken($user->id);
+            } catch (Throwable $e) {
+                log_message('error', 'Remember token creation error: ' . $e->getMessage());
+            }
 
             // Send welcome email to new Google user
-            $this->sendWelcomeEmail($user->email, $user->name);
+            try {
+                $this->sendWelcomeEmail($user->email, $user->name);
+            } catch (Throwable $e) {
+                log_message('error', 'Welcome email error: ' . $e->getMessage());
+            }
 
             // 11. Dashboard
             redirect('dashboard/dashboard');
             return;
         } catch (Throwable $e) {
-            log_message('error', 'GOOGLE CALLBACK EXCEPTION: ' . $e->getMessage());
+            $err_msg = $e->getMessage();
+            log_message('error', 'GOOGLE CALLBACK EXCEPTION: ' . $err_msg);
             $this->session->set_flashdata(
                 'error',
-                'An error occurred during Google authentication. Please try again.'
+                'Google authentication error: ' . $err_msg
             );
             redirect('auth/login');
             return;
