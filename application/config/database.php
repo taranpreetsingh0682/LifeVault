@@ -76,13 +76,15 @@ $query_builder = TRUE;
 $is_windows = (DIRECTORY_SEPARATOR === '\\');
 
 // 1. Support full Database URL (e.g. Aiven Service URI, Render DATABASE_URL, MYSQL_URL)
-$db_url = getenv('DATABASE_URL')
+$db_url = getenv('DATABASE_URI')
+    ?: (getenv('DATABASE_URL')
     ?: (getenv('MYSQL_URL')
     ?: (getenv('DB_URL')
+    ?: (getenv('DB_URI')
     ?: (getenv('AIVEN_DATABASE_URL')
     ?: (getenv('AIVEN_SERVICE_URI')
     ?: (getenv('CLEARDB_DATABASE_URL')
-    ?: (getenv('JAWSDB_URL') ?: ''))))));
+    ?: (getenv('JAWSDB_URL') ?: ''))))))));
 
 $url_ssl_required = FALSE;
 if (!empty($db_url)) {
