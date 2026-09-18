@@ -75,9 +75,16 @@ $query_builder = TRUE;
 
 $is_windows = (DIRECTORY_SEPARATOR === '\\');
 
-// 1. Support full Database URL (e.g. Aiven Service URI or Render DATABASE_URL / MYSQL_URL)
-$db_url = getenv('DATABASE_URL') ?: (getenv('MYSQL_URL') ?: (getenv('DB_URL') ?: (getenv('AIVEN_DATABASE_URL') ?: (getenv('AIVEN_SERVICE_URI') ?: ''))));
+// 1. Support full Database URL (e.g. Aiven Service URI, Render DATABASE_URL, MYSQL_URL)
+$db_url = getenv('DATABASE_URL')
+    ?: (getenv('MYSQL_URL')
+    ?: (getenv('DB_URL')
+    ?: (getenv('AIVEN_DATABASE_URL')
+    ?: (getenv('AIVEN_SERVICE_URI')
+    ?: (getenv('CLEARDB_DATABASE_URL')
+    ?: (getenv('JAWSDB_URL') ?: ''))))));
 
+$url_ssl_required = FALSE;
 if (!empty($db_url)) {
     $parsed_url = parse_url($db_url);
     $db_host = !empty($parsed_url['host']) ? $parsed_url['host'] : '127.0.0.1';
@@ -85,49 +92,100 @@ if (!empty($db_url)) {
     $db_user = !empty($parsed_url['user']) ? urldecode($parsed_url['user']) : 'root';
     $db_pass = isset($parsed_url['pass']) ? urldecode($parsed_url['pass']) : '';
     $db_name = !empty($parsed_url['path']) ? trim($parsed_url['path'], '/') : 'lifevault';
-    $is_remote_db = (!in_array($db_host, array('127.0.0.1', 'localhost', 'db')));
+
+    if (!empty($parsed_url['query'])) {
+        parse_str($parsed_url['query'], $query_params);
+        if (
+            (isset($query_params['ssl-mode']) && strtoupper($query_params['ssl-mode']) !== 'DISABLED') ||
+            (isset($query_params['sslmode']) && strtolower($query_params['sslmode']) !== 'disable') ||
+            (isset($query_params['ssl']) && ($query_params['ssl'] === 'true' || $query_params['ssl'] === '1'))
+        ) {
+            $url_ssl_required = TRUE;
+        }
+    }
 } else {
     // 2. Individual Environment Variables or Local Fallbacks
-    $db_host = getenv('DB_HOST') ?: (getenv('AIVEN_HOST') ?: (getenv('MYSQLHOST') ?: ($is_windows ? '127.0.0.1' : 'db')));
-    $db_port = (int) (getenv('DB_PORT') ?: (getenv('AIVEN_PORT') ?: (getenv('MYSQLPORT') ?: ($is_windows ? 3307 : 3306))));
-    $db_user = getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: (getenv('AIVEN_USER') ?: (getenv('MYSQLUSER') ?: 'root')));
-    $db_pass = getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : (getenv('AIVEN_PASSWORD') !== false ? getenv('AIVEN_PASSWORD') : (getenv('MYSQLPASSWORD') !== false ? getenv('MYSQLPASSWORD') : 'root'));
-    $db_name = getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: (getenv('AIVEN_DATABASE') ?: (getenv('MYSQLDATABASE') ?: 'lifevault')));
-    $is_remote_db = (!in_array($db_host, array('127.0.0.1', 'localhost', 'db')));
+    $db_host = getenv('DB_HOST')
+        ?: (getenv('AIVEN_HOST')
+        ?: (getenv('MYSQLHOST')
+        ?: (getenv('MYSQL_HOST')
+        ?: (getenv('DATABASE_HOST')
+        ?: ($is_windows ? '127.0.0.1' : 'db')))));
+
+    $db_port = (int) (getenv('DB_PORT')
+        ?: (getenv('AIVEN_PORT')
+        ?: (getenv('MYSQLPORT')
+        ?: (getenv('MYSQL_PORT')
+        ?: (getenv('DATABASE_PORT')
+        ?: ($is_windows ? 3307 : 3306))))));
+
+    $db_user = getenv('DB_USERNAME')
+        ?: (getenv('DB_USER')
+        ?: (getenv('AIVEN_USER')
+        ?: (getenv('MYSQLUSER')
+        ?: (getenv('MYSQL_USER')
+        ?: (getenv('DATABASE_USER') ?: 'root')))));
+
+    $db_pass = getenv('DB_PASSWORD') !== false
+        ? getenv('DB_PASSWORD')
+        : (getenv('DB_PASS') !== false
+        ? getenv('DB_PASS')
+        : (getenv('AIVEN_PASSWORD') !== false
+        ? getenv('AIVEN_PASSWORD')
+        : (getenv('MYSQLPASSWORD') !== false
+        ? getenv('MYSQLPASSWORD')
+        : (getenv('MYSQL_PASSWORD') !== false
+        ? getenv('MYSQL_PASSWORD')
+        : (getenv('DATABASE_PASSWORD') !== false
+        ? getenv('DATABASE_PASSWORD') : 'root')))));
+
+    $db_name = getenv('DB_DATABASE')
+        ?: (getenv('DB_NAME')
+        ?: (getenv('AIVEN_DATABASE')
+        ?: (getenv('MYSQLDATABASE')
+        ?: (getenv('MYSQL_DATABASE')
+        ?: (getenv('DATABASE_NAME') ?: 'lifevault')))));
 }
 
+$is_remote_db = (!in_array(strtolower($db_host), array('127.0.0.1', 'localhost', 'db', '')));
+
 // 3. SSL Configuration (Required for Aiven MySQL and cloud databases)
-$ssl_env = getenv('DB_SSL');
-$use_ssl = ($ssl_env === 'true' || $ssl_env === '1' || $ssl_env === 'REQUIRED' || ($ssl_env === false && $is_remote_db));
+$ssl_env = getenv('DB_SSL') ?: getenv('MYSQL_SSL');
+$use_ssl = ($ssl_env === 'true' || $ssl_env === '1' || $ssl_env === 'REQUIRED' || $url_ssl_required || ($ssl_env === false && $is_remote_db));
 
 if ($use_ssl) {
+    $ca_file = getenv('DB_SSL_CA')
+        ?: (getenv('AIVEN_CA_CERT')
+        ?: (getenv('AIVEN_CA')
+        ?: ((defined('APPPATH') && file_exists(APPPATH . 'config/ca.pem')) ? APPPATH . 'config/ca.pem' : NULL)));
+
     $encrypt_config = array(
         'ssl_verify' => (getenv('DB_SSL_VERIFY') === 'true' || getenv('DB_SSL_VERIFY') === '1'),
-        'ssl_ca'     => getenv('DB_SSL_CA') ?: ((defined('APPPATH') && file_exists(APPPATH . 'config/ca.pem')) ? APPPATH . 'config/ca.pem' : NULL),
+        'ssl_ca'     => $ca_file,
     );
 } else {
     $encrypt_config = FALSE;
 }
 
 $db['default'] = array(
-    'dsn'      => '',
-    'hostname' => $db_host,
-    'port'     => $db_port,
-    'username' => $db_user,
-    'password' => $db_pass,
-    'database' => $db_name,
-    'dbdriver' => 'mysqli',
-    'dbprefix' => '',
-    'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'production'),
-    'cache_on' => FALSE,
-    'cachedir' => '',
-    'char_set' => 'utf8mb4',
-    'dbcollat' => 'utf8mb4_general_ci',
-    'swap_pre' => '',
-    'encrypt'  => $encrypt_config,
-    'compress' => FALSE,
-    'stricton' => FALSE,
-    'failover' => array(),
-    'save_queries' => TRUE
+    'dsn'          => '',
+    'hostname'     => $db_host,
+    'port'         => $db_port,
+    'username'     => $db_user,
+    'password'     => $db_pass,
+    'database'     => $db_name,
+    'dbdriver'     => 'mysqli',
+    'dbprefix'     => '',
+    'pconnect'     => FALSE,
+    'db_debug'     => (ENVIRONMENT !== 'production'),
+    'cache_on'     => FALSE,
+    'cachedir'     => '',
+    'char_set'     => 'utf8mb4',
+    'dbcollat'     => 'utf8mb4_general_ci',
+    'swap_pre'     => '',
+    'encrypt'      => $encrypt_config,
+    'compress'     => FALSE,
+    'stricton'     => FALSE,
+    'failover'     => array(),
+    'save_queries' => (ENVIRONMENT !== 'production')
 );

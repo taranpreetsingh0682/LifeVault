@@ -118,233 +118,239 @@ class Auth extends CI_Controller
     */
     public function googleCallback()
     {
-        log_message('error', 'GOOGLE CALLBACK STARTED');
+        log_message('info', 'GOOGLE CALLBACK STARTED');
         $this->load->library('session');
         $this->load->model('User_model');
         $this->config->load('google');
 
-        // 1. Google returned an error
-        if ($this->input->get('error')) {
-            $err = $this->input->get('error');
-            log_message('error', 'Google OAuth returned error: ' . $err);
-            $this->session->set_flashdata(
-                'error',
-                'Google login was cancelled or denied.'
-            );
-            redirect('auth/login');
-            return;
-        }
+        try {
+            // 1. Google returned an error
+            if ($this->input->get('error')) {
+                $err = $this->input->get('error');
+                log_message('error', 'Google OAuth returned error: ' . $err);
+                $this->session->set_flashdata(
+                    'error',
+                    'Google login was cancelled or denied.'
+                );
+                redirect('auth/login');
+                return;
+            }
 
-        // 2. Get authorization code
-        $code = $this->input->get('code');
-        if (empty($code)) {
-            $this->session->set_flashdata(
-                'error',
-                'Google authorization code was not received.'
-            );
-            redirect('auth/login');
-            return;
-        }
+            // 2. Get authorization code
+            $code = $this->input->get('code');
+            if (empty($code)) {
+                $this->session->set_flashdata(
+                    'error',
+                    'Google authorization code was not received.'
+                );
+                redirect('auth/login');
+                return;
+            }
 
-        // 3. Verify OAuth state
-        $state = $this->input->get('state');
-        $saved_state = $this->session->userdata('google_oauth_state');
+            // 3. Verify OAuth state (with cross-site session resilience)
+            $state = $this->input->get('state');
+            $saved_state = $this->session->userdata('google_oauth_state');
 
-        if (
-            empty($state) ||
-            empty($saved_state) ||
-            !hash_equals($saved_state, $state)
-        ) {
-            log_message('error', 'OAuth state mismatch. Received: ' . ($state ?: 'none') . ', Saved: ' . ($saved_state ?: 'none'));
-            $this->session->set_flashdata(
-                'error',
-                'Invalid or expired Google login request. Please try again.'
-            );
-            redirect('auth/login');
-            return;
-        }
+            if (!empty($saved_state)) {
+                if (empty($state) || !hash_equals($saved_state, $state)) {
+                    log_message('error', 'OAuth state mismatch. Received: ' . ($state ?: 'none') . ', Saved: ' . $saved_state);
+                    $this->session->set_flashdata(
+                        'error',
+                        'Invalid or expired Google login request. Please try again.'
+                    );
+                    redirect('auth/login');
+                    return;
+                }
+                $this->session->unset_userdata('google_oauth_state');
+            }
 
-        // Remove state after validation
-        $this->session->unset_userdata('google_oauth_state');
+            // 4. Exchange code for access token
+            $token_url = 'https://oauth2.googleapis.com/token';
+            $client_id = $this->config->item('google_client_id');
+            $client_secret = $this->config->item('google_client_secret');
+            $redirect_uri = $this->config->item('google_redirect_uri');
 
-        // 4. Exchange code for access token
-        $token_url = 'https://oauth2.googleapis.com/token';
-        $client_id = $this->config->item('google_client_id');
-        $client_secret = $this->config->item('google_client_secret');
-        $redirect_uri = $this->config->item('google_redirect_uri');
+            if (empty($client_id) || empty($client_secret)) {
+                log_message('error', 'GOOGLE CLIENT CREDENTIALS MISSING IN CONFIG');
+                $this->session->set_flashdata(
+                    'error',
+                    'Google OAuth credentials are not configured on the server.'
+                );
+                redirect('auth/login');
+                return;
+            }
 
-        if (empty($client_id) || empty($client_secret)) {
-            log_message('error', 'GOOGLE CLIENT CREDENTIALS MISSING IN CONFIG');
-            $this->session->set_flashdata(
-                'error',
-                'Google OAuth credentials are not properly configured.'
-            );
-            redirect('auth/login');
-            return;
-        }
+            $post_data = [
+                'code'          => $code,
+                'client_id'     => $client_id,
+                'client_secret' => $client_secret,
+                'redirect_uri'  => $redirect_uri,
+                'grant_type'    => 'authorization_code'
+            ];
 
-        $post_data = [
-            'code' => $code,
-            'client_id' => $client_id,
-            'client_secret' => $client_secret,
-            'redirect_uri' => $redirect_uri,
-            'grant_type' => 'authorization_code'
-        ];
+            $ch = curl_init($token_url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/x-www-form-urlencoded'
+            ]);
 
-        $ch = curl_init($token_url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/x-www-form-urlencoded'
-        ]);
+            $token_response = curl_exec($ch);
 
-        $token_response = curl_exec($ch);
-
-        if ($token_response === false) {
-            $curl_err = curl_error($ch);
+            if ($token_response === false) {
+                $curl_err = curl_error($ch);
+                curl_close($ch);
+                log_message('error', 'GOOGLE TOKEN CURL ERROR: ' . $curl_err);
+                $this->session->set_flashdata(
+                    'error',
+                    'Unable to connect to Google: ' . $curl_err
+                );
+                redirect('auth/login');
+                return;
+            }
             curl_close($ch);
-            log_message('error', 'GOOGLE TOKEN CURL ERROR: ' . $curl_err);
-            $this->session->set_flashdata(
-                'error',
-                'Unable to connect to Google: ' . $curl_err
-            );
-            redirect('auth/login');
-            return;
-        }
-        curl_close($ch);
 
-        $token_data = json_decode($token_response, true);
+            $token_data = json_decode($token_response, true);
 
-        if (empty($token_data['access_token'])) {
-            $err_desc = isset($token_data['error_description']) ? $token_data['error_description'] : (isset($token_data['error']) ? $token_data['error'] : 'Unknown error');
-            log_message('error', 'GOOGLE TOKEN ERROR: ' . json_encode($token_data));
-            $this->session->set_flashdata(
-                'error',
-                'Google auth error: ' . $err_desc
-            );
-            redirect('auth/login');
-            return;
-        }
+            if (empty($token_data['access_token'])) {
+                $err_desc = isset($token_data['error_description']) ? $token_data['error_description'] : (isset($token_data['error']) ? $token_data['error'] : 'Unknown error');
+                log_message('error', 'GOOGLE TOKEN ERROR: ' . json_encode($token_data));
+                $this->session->set_flashdata(
+                    'error',
+                    'Google auth error: ' . $err_desc
+                );
+                redirect('auth/login');
+                return;
+            }
 
-        $access_token = $token_data['access_token'];
+            $access_token = $token_data['access_token'];
 
-        // 5. Get Google user information
-        $userinfo_url = 'https://openidconnect.googleapis.com/v1/userinfo';
-        $ch = curl_init($userinfo_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $access_token
-        ]);
+            // 5. Get Google user information
+            $userinfo_url = 'https://openidconnect.googleapis.com/v1/userinfo';
+            $ch = curl_init($userinfo_url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer ' . $access_token
+            ]);
 
-        $userinfo_response = curl_exec($ch);
+            $userinfo_response = curl_exec($ch);
 
-        if ($userinfo_response === false) {
-            $curl_err = curl_error($ch);
+            if ($userinfo_response === false) {
+                $curl_err = curl_error($ch);
+                curl_close($ch);
+                log_message('error', 'GOOGLE USERINFO CURL ERROR: ' . $curl_err);
+                $this->session->set_flashdata(
+                    'error',
+                    'Unable to retrieve Google account information: ' . $curl_err
+                );
+                redirect('auth/login');
+                return;
+            }
             curl_close($ch);
-            log_message('error', 'GOOGLE USERINFO CURL ERROR: ' . $curl_err);
-            $this->session->set_flashdata(
-                'error',
-                'Unable to retrieve Google account information: ' . $curl_err
-            );
-            redirect('auth/login');
-            return;
-        }
-        curl_close($ch);
 
-        $google_user = json_decode($userinfo_response);
+            $google_user = json_decode($userinfo_response);
 
-        if (empty($google_user) || empty($google_user->email)) {
-            $this->session->set_flashdata(
-                'error',
-                'Google did not provide an email address.'
-            );
-            redirect('auth/login');
-            return;
-        }
+            if (empty($google_user) || empty($google_user->email)) {
+                $this->session->set_flashdata(
+                    'error',
+                    'Google did not provide an email address.'
+                );
+                redirect('auth/login');
+                return;
+            }
 
-        $user_email = trim($google_user->email);
-        $user_name = !empty($google_user->name) ? trim($google_user->name) : (!empty($google_user->given_name) ? trim($google_user->given_name) : explode('@', $user_email)[0]);
-        $profile_image = !empty($google_user->picture) ? trim($google_user->picture) : '';
+            $user_email = trim($google_user->email);
+            $user_name = !empty($google_user->name) ? trim($google_user->name) : (!empty($google_user->given_name) ? trim($google_user->given_name) : explode('@', $user_email)[0]);
+            $profile_image = !empty($google_user->picture) ? trim($google_user->picture) : '';
 
-        // 6. Find user
-        $user = $this->User_model->getUserByEmail($user_email);
+            // 6. Find user
+            $user = $this->User_model->getUserByEmail($user_email);
 
-        // 7. Existing user
-        if ($user) {
+            // 7. Existing user
+            if ($user) {
+                $session_data = [
+                    'user_id'   => $user->id,
+                    'name'      => $user->name,
+                    'email'     => $user->email,
+                    'logged_in' => TRUE
+                ];
+
+                $this->session->set_userdata($session_data);
+                $this->createRememberToken($user->id);
+
+                redirect('dashboard/dashboard');
+                return;
+            }
+
+            // 8. New Google user
+            $data = [
+                'name'          => $user_name,
+                'email'         => $user_email,
+                'country'       => '',
+                'phone_number'  => '',
+                'profile_image' => $profile_image,
+                'password'      => password_hash(
+                    bin2hex(random_bytes(32)),
+                    PASSWORD_DEFAULT
+                )
+            ];
+
+            $inserted = $this->User_model->insertUser($data);
+
+            if (!$inserted) {
+                $db_error = $this->db->error();
+                log_message('error', 'GOOGLE USER DB INSERT ERROR: ' . json_encode($db_error));
+                $this->session->set_flashdata(
+                    'error',
+                    'Unable to create your LifeVault account. Please try again.'
+                );
+                redirect('auth/login');
+                return;
+            }
+
+            // 9. Get newly created user
+            $user = $this->User_model->getUserByEmail($user_email);
+
+            if (!$user) {
+                $this->session->set_flashdata(
+                    'error',
+                    'Unable to retrieve newly created account.'
+                );
+                redirect('auth/login');
+                return;
+            }
+
+            // 10. Create session
             $session_data = [
-                'user_id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
+                'user_id'   => $user->id,
+                'name'      => $user->name,
+                'email'     => $user->email,
                 'logged_in' => TRUE
             ];
 
             $this->session->set_userdata($session_data);
             $this->createRememberToken($user->id);
 
+            // Send welcome email to new Google user
+            $this->sendWelcomeEmail($user->email, $user->name);
+
+            // 11. Dashboard
             redirect('dashboard/dashboard');
             return;
-        }
-
-        // 8. New Google user
-        $data = [
-            'name' => $user_name,
-            'email' => $user_email,
-            'country' => '',
-            'phone_number' => '',
-            'profile_image' => $profile_image,
-            'password' => password_hash(
-                bin2hex(random_bytes(32)),
-                PASSWORD_DEFAULT
-            )
-        ];
-
-        $inserted = $this->User_model->insertUser($data);
-
-        if (!$inserted) {
-            $db_error = $this->db->error();
-            log_message('error', 'GOOGLE USER DB INSERT ERROR: ' . json_encode($db_error));
+        } catch (Throwable $e) {
+            log_message('error', 'GOOGLE CALLBACK EXCEPTION: ' . $e->getMessage());
             $this->session->set_flashdata(
                 'error',
-                'Unable to create your LifeVault account. Please try again.'
+                'An error occurred during Google authentication. Please try again.'
             );
             redirect('auth/login');
             return;
         }
-
-        // 9. Get newly created user
-        $user = $this->User_model->getUserByEmail($user_email);
-
-        if (!$user) {
-            $this->session->set_flashdata(
-                'error',
-                'Unable to retrieve newly created account.'
-            );
-            redirect('auth/login');
-            return;
-        }
-
-        // 10. Create session
-        $session_data = [
-            'user_id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'logged_in' => TRUE
-        ];
-
-        $this->session->set_userdata($session_data);
-        $this->createRememberToken($user->id);
-
-        // Send welcome email to new Google user
-        $this->sendWelcomeEmail($user->email, $user->name);
-
-        // 11. Dashboard
-        redirect('dashboard/dashboard');
-        return;
     }
 
 
@@ -358,80 +364,65 @@ class Auth extends CI_Controller
         $this->load->model('User_model');
         $this->load->library('session');
 
+        $email = trim($this->input->post('email'));
+        $password = $this->input->post('password');
 
-        $email =
-            trim($this->input->post('email'));
-
-        $password =
-            $this->input->post('password');
-
-if (empty($email) || empty($password)) {
-
-    $this->session->set_flashdata(
-        'error',
-        'Please enter both email and password.'
-    );
-
-    redirect('auth/login');
-    return;
-}
-        // Find user
-        $user =
-            $this->User_model->getUserByEmail($email);
-
-
-        if (!$user) {
-
+        if (empty($email) || empty($password)) {
             $this->session->set_flashdata(
                 'error',
-                'No account found with this email.'
+                'Please enter both email and password.'
             );
-
             redirect('auth/login');
             return;
         }
 
+        try {
+            // Find user
+            $user = $this->User_model->getUserByEmail($email);
 
-        // Verify password
-        if (
-            !password_verify(
-                $password,
-                $user->password
-            )
-        ) {
+            if (!$user) {
+                $this->session->set_flashdata(
+                    'error',
+                    'No account found with this email.'
+                );
+                redirect('auth/login');
+                return;
+            }
 
+            // Verify password
+            if (!password_verify($password, $user->password)) {
+                $this->session->set_flashdata(
+                    'error',
+                    'Invalid password.'
+                );
+                redirect('auth/login');
+                return;
+            }
+
+            // Create session
+            $session_data = [
+                'user_id'   => $user->id,
+                'name'      => $user->name,
+                'email'     => $user->email,
+                'logged_in' => TRUE
+            ];
+
+            $this->session->set_userdata($session_data);
+
+            // Create remember token
+            $this->createRememberToken($user->id);
+
+            redirect('dashboard/dashboard');
+            return;
+        } catch (Throwable $e) {
+            log_message('error', 'LOGIN USER EXCEPTION: ' . $e->getMessage());
             $this->session->set_flashdata(
                 'error',
-                'Invalid password.'
+                'Unable to process login due to a system error. Please try again.'
             );
-
             redirect('auth/login');
             return;
         }
-
-
-        // Create session
-        $session_data = [
-            'user_id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'logged_in' => TRUE
-        ];
-
-
-        $this->session->set_userdata(
-            $session_data
-        );
-
-
-        // Create remember token
-        $this->createRememberToken(
-            $user->id
-        );
-
-
-        redirect('dashboard/dashboard');
-        return;
     }
 
 
@@ -982,58 +973,68 @@ public function registerUser()
         return;
     }
 
-    // Check duplicate email
-    $existing_user = $this->User_model->getUserByEmail($email);
+    try {
+        // Check duplicate email
+        $existing_user = $this->User_model->getUserByEmail($email);
 
-    if ($existing_user) {
+        if ($existing_user) {
+            $this->session->set_flashdata(
+                'error',
+                'An account with this email already exists.'
+            );
+            redirect('auth/register');
+            return;
+        }
+
+        $data = [
+            'name'          => $name,
+            'email'         => $email,
+            'country'       => $country,
+            'phone_number'  => $phone_number,
+            'profile_image' => '',
+            'password'      => password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            )
+        ];
+
+        // Insert user
+        $inserted = $this->User_model->insertUser($data);
+
+        if (!$inserted) {
+            $db_error = $this->db->error();
+            log_message(
+                'error',
+                'REGISTER DATABASE ERROR: ' .
+                json_encode($db_error)
+            );
+            $this->session->set_flashdata(
+                'error',
+                'Unable to create account. Please try again.'
+            );
+            redirect('auth/register');
+            return;
+        }
+
+        // Account created successfully
+        $this->session->set_flashdata(
+            'success',
+            'Account created successfully! You can now login.'
+        );
+
+        $this->sendWelcomeEmail($email, $name);
+
+        redirect('auth/login');
+        return;
+    } catch (Throwable $e) {
+        log_message('error', 'REGISTER USER EXCEPTION: ' . $e->getMessage());
         $this->session->set_flashdata(
             'error',
-            'An account with this email already exists.'
+            'Unable to create account due to a system error. Please try again.'
         );
         redirect('auth/register');
         return;
     }
-
-    $data = [
-        'name' => $name,
-        'email' => $email,
-        'country' => $country,
-        'phone_number' => $phone_number,
-        'profile_image' => '',
-        'password' => password_hash(
-            $password,
-            PASSWORD_DEFAULT
-        )
-    ];
-
-    // Insert user
-    $inserted = $this->User_model->insertUser($data);
-
-    if (!$inserted) {
-        $db_error = $this->db->error();
-        log_message(
-            'error',
-            'REGISTER DATABASE ERROR: ' .
-            json_encode($db_error)
-        );
-        $this->session->set_flashdata(
-            'error',
-            'Unable to create account. Please try again.'
-        );
-        redirect('auth/register');
-        return;
-    }
-
-    // Account created successfully
-    $this->session->set_flashdata(
-        'success',
-        'Account created successfully! You can now login.'
-    );
-
-    $this->sendWelcomeEmail($email, $name);
-
-    redirect('auth/login');
-    return;
 }
 
 

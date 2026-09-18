@@ -175,29 +175,23 @@ class CI_DB_mysqli_driver extends CI_DB {
 			empty($this->encrypt['ssl_capath']) OR $ssl['capath'] = $this->encrypt['ssl_capath'];
 			empty($this->encrypt['ssl_cipher']) OR $ssl['cipher'] = $this->encrypt['ssl_cipher'];
 
+			$client_flags |= MYSQLI_CLIENT_SSL;
+
 			if (isset($this->encrypt['ssl_verify']))
 			{
-				$client_flags |= MYSQLI_CLIENT_SSL;
-
 				if ($this->encrypt['ssl_verify'])
 				{
 					defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') && $this->_mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, TRUE);
 				}
-				// Apparently (when it exists), setting MYSQLI_OPT_SSL_VERIFY_SERVER_CERT
-				// to FALSE didn't do anything, so PHP 5.6.16 introduced yet another
-				// constant ...
-				//
-				// https://secure.php.net/ChangeLog-5.php#5.6.16
-				// https://bugs.php.net/bug.php?id=68344
-				elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
+				else
 				{
-					$client_flags |= MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
+					defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') && $client_flags |= MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
+					defined('MYSQLI_OPT_SSL_VERIFY_SERVER_CERT') && $this->_mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, FALSE);
 				}
 			}
 
 			if ( ! empty($ssl))
 			{
-				$client_flags |= MYSQLI_CLIENT_SSL;
 				$this->_mysqli->ssl_set(
 					isset($ssl['key'])    ? $ssl['key']    : NULL,
 					isset($ssl['cert'])   ? $ssl['cert']   : NULL,
@@ -205,6 +199,10 @@ class CI_DB_mysqli_driver extends CI_DB {
 					isset($ssl['capath']) ? $ssl['capath'] : NULL,
 					isset($ssl['cipher']) ? $ssl['cipher'] : NULL
 				);
+			}
+			else
+			{
+				$this->_mysqli->ssl_set(NULL, NULL, NULL, NULL, NULL);
 			}
 		}
 
@@ -299,7 +297,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 			return $this->data_cache['version'];
 		}
 
-		return $this->data_cache['version'] = $this->conn_id->server_info;
+		return $this->data_cache['version'] = is_object($this->conn_id) ? $this->conn_id->server_info : '';
 	}
 
 	// --------------------------------------------------------------------
@@ -312,6 +310,15 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _execute($sql)
 	{
+		if ( ! is_object($this->conn_id))
+		{
+			$this->initialize();
+			if ( ! is_object($this->conn_id))
+			{
+				return FALSE;
+			}
+		}
+
 		return $this->conn_id->query($this->_prep_query($sql));
 	}
 
@@ -346,6 +353,15 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _trans_begin()
 	{
+		if ( ! is_object($this->conn_id))
+		{
+			$this->initialize();
+			if ( ! is_object($this->conn_id))
+			{
+				return FALSE;
+			}
+		}
+
 		$this->conn_id->autocommit(FALSE);
 		return is_php('5.5')
 			? $this->conn_id->begin_transaction()
@@ -361,6 +377,11 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _trans_commit()
 	{
+		if ( ! is_object($this->conn_id))
+		{
+			return FALSE;
+		}
+
 		if ($this->conn_id->commit())
 		{
 			$this->conn_id->autocommit(TRUE);
@@ -379,6 +400,11 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _trans_rollback()
 	{
+		if ( ! is_object($this->conn_id))
+		{
+			return FALSE;
+		}
+
 		if ($this->conn_id->rollback())
 		{
 			$this->conn_id->autocommit(TRUE);
@@ -398,7 +424,17 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _escape_str($str)
 	{
-		return $this->conn_id->real_escape_string($str);
+		if (is_object($this->conn_id))
+		{
+			return $this->conn_id->real_escape_string($str);
+		}
+
+		if ($this->initialize() && is_object($this->conn_id))
+		{
+			return $this->conn_id->real_escape_string($str);
+		}
+
+		return addslashes($str);
 	}
 
 	// --------------------------------------------------------------------
@@ -410,7 +446,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	public function affected_rows()
 	{
-		return $this->conn_id->affected_rows;
+		return is_object($this->conn_id) ? $this->conn_id->affected_rows : 0;
 	}
 
 	// --------------------------------------------------------------------
@@ -422,7 +458,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	public function insert_id()
 	{
-		return $this->conn_id->insert_id;
+		return is_object($this->conn_id) ? $this->conn_id->insert_id : 0;
 	}
 
 	// --------------------------------------------------------------------
@@ -516,7 +552,12 @@ class CI_DB_mysqli_driver extends CI_DB {
 			);
 		}
 
-		return array('code' => $this->conn_id->errno, 'message' => $this->conn_id->error);
+		if (is_object($this->conn_id))
+		{
+			return array('code' => $this->conn_id->errno, 'message' => $this->conn_id->error);
+		}
+
+		return array('code' => 0, 'message' => '');
 	}
 
 	// --------------------------------------------------------------------
@@ -548,7 +589,10 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _close()
 	{
-		$this->conn_id->close();
+		if (is_object($this->conn_id))
+		{
+			$this->conn_id->close();
+		}
 	}
 
 }
