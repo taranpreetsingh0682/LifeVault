@@ -19,15 +19,21 @@ class Document_model extends CI_Model
     {
         $this->db->select('COALESCE(SUM(file_size), 0) AS total_size');
         $this->db->where('user_id', $user_id);
-        return $this->db->get('documents')->row()->total_size;
+        $query = $this->db->get('documents');
+        if (is_object($query)) {
+            $row = $query->row();
+            return $row ? (float) $row->total_size : 0;
+        }
+        return 0;
     }
 
     public function get_recent_documents($user_id, $limit = 5)
     {
-        return $this->db->where('user_id', $user_id)
+        $query = $this->db->where('user_id', $user_id)
             ->order_by('uploaded_at', 'DESC')
             ->limit($limit)
-            ->get('documents')->result();
+            ->get('documents');
+        return is_object($query) ? $query->result() : array();
     }
 
     // Counts all documents by category.
@@ -36,7 +42,8 @@ class Document_model extends CI_Model
         $this->db->select('category, COUNT(*) AS total');
         $this->db->where('user_id', $user_id);
         $this->db->group_by('category');
-        return $this->db->get('documents')->result();
+        $query = $this->db->get('documents');
+        return is_object($query) ? $query->result() : array();
     }
 
     // Counts only starred/important documents.
@@ -70,15 +77,17 @@ class Document_model extends CI_Model
             $this->db->group_end();
         }
 
-        return $this->db->order_by('uploaded_at', 'DESC')
-            ->get('documents')->result();
+        $query = $this->db->order_by('uploaded_at', 'DESC')
+            ->get('documents');
+        return is_object($query) ? $query->result() : array();
     }
 
     public function get_document($id, $user_id)
     {
-        return $this->db->where('id', $id)
+        $query = $this->db->where('id', $id)
             ->where('user_id', $user_id)
-            ->get('documents')->row();
+            ->get('documents');
+        return is_object($query) ? $query->row() : NULL;
     }
 
     public function insert_document($data)
@@ -119,8 +128,9 @@ class Document_model extends CI_Model
             $this->db->where('category', strtolower($category));
         }
 
-        return $this->db->order_by('starred_at', 'DESC')
-            ->get('documents')->result();
+        $query = $this->db->order_by('starred_at', 'DESC')
+            ->get('documents');
+        return is_object($query) ? $query->result() : array();
     }
 
     // Number of starred documents inside one category.
@@ -135,21 +145,23 @@ class Document_model extends CI_Model
     // Most recently starred document.
     public function get_last_important_document($user_id)
     {
-        return $this->db->where('user_id', $user_id)
+        $query = $this->db->where('user_id', $user_id)
             ->where('is_important', 1)
             ->where('starred_at IS NOT NULL', null, false)
             ->order_by('starred_at', 'DESC')
             ->limit(1)
-            ->get('documents')->row();
+            ->get('documents');
+        return is_object($query) ? $query->row() : NULL;
     }
 
     // Recent uploads are displayed by the navbar notification bell.
     public function get_recent_notifications($user_id, $limit = 5)
     {
-        return $this->db->where('user_id', $user_id)
+        $query = $this->db->where('user_id', $user_id)
             ->order_by('uploaded_at', 'DESC')
             ->limit($limit)
-            ->get('documents')->result();
+            ->get('documents');
+        return is_object($query) ? $query->result() : array();
     }
 
     // Number of uploads made during the last 24 hours.
@@ -186,7 +198,10 @@ class Document_model extends CI_Model
         $this->db->where('user_id', $user_id);
         $this->db->where('is_important', 1);
         $query = $this->db->get('documents');
-        $row   = $query->row();
-        return ($row && $row->last_starred) ? $row->last_starred : NULL;
+        if (is_object($query)) {
+            $row = $query->row();
+            return ($row && $row->last_starred) ? $row->last_starred : NULL;
+        }
+        return NULL;
     }
 }
